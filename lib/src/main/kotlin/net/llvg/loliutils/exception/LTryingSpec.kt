@@ -3,9 +3,10 @@ package net.llvg.loliutils.exception
 import java.lang.AutoCloseable
 
 interface LTryingSpec {
-        fun <C : AutoCloseable> use(autoCloseable: C): C
+        fun <C : AutoCloseable> includeResource(autoCloseable: C): C
         
-        val AutoCloseable.using get() = use(this)
+        @Suppress("unused")
+        fun <C : AutoCloseable> C.using() = includeResource(this)
         
         fun close()
 }

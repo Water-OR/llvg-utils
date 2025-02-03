@@ -3,6 +3,7 @@ package net.llvg.loliutils.iterating.list
 import net.llvg.loliutils.iterating.LIterator
 import net.llvg.loliutils.iterating.reverse
 
+@Suppress("unused")
 class LArrayList<T>(private var activeSize: Int) : LList<T> {
         constructor() : this(16)
         

@@ -8,7 +8,7 @@ import java.lang.AutoCloseable
 class LLinkTryingSpec : LTryingSpec {
         private val storage: LLink<AutoCloseable> = LNormalLink()
         
-        override fun <C : AutoCloseable> use(autoCloseable: C): C {
+        override fun <C : AutoCloseable> includeResource(autoCloseable: C): C {
                 storage.tail().insertPrev(autoCloseable)
                 return autoCloseable
         }

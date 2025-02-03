@@ -8,9 +8,12 @@ class LTryingResult<R>(val r: LResultSpec<R>, val e: Exception?) {
                 triggered = true
         }
         
+        @Suppress("unused")
         fun orElse(fallback: R): R? = if (!triggered) fallback else r.result
         
+        @Suppress("unused")
         fun orNull(): R? = if (!triggered) null else r.result
         
+        @Suppress("unused")
         fun orThrow(): R? = if (!triggered) throw RuntimeException(e) else r.result
 }

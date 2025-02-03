@@ -3,6 +3,7 @@ package net.llvg.loliutils.iterating.link
 import net.llvg.loliutils.iterating.LIterator
 import net.llvg.loliutils.iterating.reverse
 
+@Suppress("unused")
 class LNormalLink<T> : LLink<T> {
         private var head = object : SideNode("Head") {
                 private lateinit var next: LNormalLink<T>.Node

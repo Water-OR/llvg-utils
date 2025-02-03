@@ -2,6 +2,7 @@
 
 package net.llvg.loliutils.iterating
 
+@Suppress("unused")
 fun LCanBeEmpty.notEmpty() = !isEmpty()
 
 private class ReverseIterator<T>(val raw: LIterator<T>) : LIterator<T> {
@@ -23,6 +24,7 @@ operator fun <T> LIterator<T>.inc(): LIterator<T> = increase()
 
 operator fun <T> LIterator<T>.dec(): LIterator<T> = decrease()
 
+@Suppress("unused")
 inline fun <T, R> LIterable<T>.collect(result: R, crossinline collector: R.(T) -> Unit): R {
         val it = begin()
         while (it != end()) {
@@ -33,6 +35,7 @@ inline fun <T, R> LIterable<T>.collect(result: R, crossinline collector: R.(T) -
         return result
 }
 
+@Suppress("unused")
 inline infix fun <T> LIterable<T>.runEach(crossinline action: T.() -> Unit) = letEach(action)
 inline infix fun <T> LIterable<T>.letEach(crossinline action: (T) -> Unit): LIterable<T> {
         val it = begin()
@@ -40,6 +43,11 @@ inline infix fun <T> LIterable<T>.letEach(crossinline action: (T) -> Unit): LIte
                 action(it.get())
                 it.increase()
         }
+        /*
+        Think about cpp iterator
+        
+        for (Iterable::Iterator it = iterable.begin(); it != iterable.end(); ++it)
+         */
         return this
 }
 
