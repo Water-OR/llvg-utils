@@ -33,7 +33,7 @@ inline fun <R, reified E: Throwable> LTryingResult<R>.catching(
         action: LResultSpec<R>.(E) -> Unit
 ): LTryingResult<R> = catching(action)
 
-inline fun <R, reified E: Throwable> LTryingResult<R>.catching(
+inline infix fun <R, reified E: Throwable> LTryingResult<R>.catching(
         action: LResultSpec<R>.(E) -> Unit
 ): LTryingResult<R> {
         if (!triggered && e as? E != null) {
