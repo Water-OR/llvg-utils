@@ -34,8 +34,7 @@ java {
 kotlin {
         compilerOptions {
                 val args = listOf(
-                        "-Xjvm-default=all",
-                        "-Xsuppress-warning=UNUSED"
+                        "-Xjvm-default=all"
                 )
                 freeCompilerArgs.addAll(args)
         }

@@ -1,6 +1,6 @@
 package net.llvg.loliutils.exception
 
-import net.llvg.loliutils.iterating.letEach
+import net.llvg.loliutils.iterating.letEachReverse
 import net.llvg.loliutils.iterating.link.LLink
 import net.llvg.loliutils.iterating.link.LNormalLink
 import java.lang.AutoCloseable
@@ -14,7 +14,7 @@ class LLinkTryingSpec : LTryingSpec {
         }
         
         override fun close() {
-                storage.letEach(AutoCloseable::close)
+                storage.letEachReverse(AutoCloseable::close)
                 storage.clear()
         }
 }

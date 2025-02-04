@@ -39,11 +39,11 @@ class LNormalLink<T> : LLink<T> {
         override fun head(): LLink.Node<T> = head
         override fun tail(): LLink.Node<T> = tail
         
-        override fun begin(): LIterator<T> = LinkIterator(head.next())
-        override fun end(): LIterator<T> = LinkIterator(tail)
+        override fun begin(): LIterator<T> = LLink.Iterator(head.next())
+        override fun end(): LIterator<T> = LLink.Iterator(tail)
         
-        override fun rBegin(): LIterator<T> = LinkIterator(tail.prev()).reverse
-        override fun rEnd(): LIterator<T> = LinkIterator(head.next()).reverse
+        override fun rBegin(): LIterator<T> = LLink.Iterator(tail.prev()).reverse
+        override fun rEnd(): LIterator<T> = LLink.Iterator(head).reverse
         
         override fun size(): Int = size
         
@@ -57,11 +57,8 @@ class LNormalLink<T> : LLink<T> {
                 abstract fun prev(node: Node)
                 abstract fun next(node: Node)
                 
-                abstract override fun prev(): Node
-                abstract override fun next(): Node
-                
-                override fun insertPrev(value: T): Node = NormalNode(value, prev(), this)
-                override fun insertNext(value: T): Node = NormalNode(value, this, next())
+                override fun insertPrev(value: T): Node = NormalNode(value, prev() as Node, this)
+                override fun insertNext(value: T): Node = NormalNode(value, this, next() as Node)
         }
         
         private inner class NormalNode(
@@ -106,24 +103,5 @@ class LNormalLink<T> : LLink<T> {
                 override fun get(): T = throw NoSuchElementException("$side node is always empty!")
                 override fun set(value: T): T = throw NoSuchElementException("$side node is always empty!")
                 override fun isEmpty(): Boolean = true
-        }
-        
-        private inner class LinkIterator(private var node: Node) : LIterator<T> {
-                override fun increase(): LIterator<T> {
-                        node = node.next()
-                        return this
-                }
-                
-                override fun decrease(): LIterator<T> {
-                        node = node.prev()
-                        return this
-                }
-                
-                override fun get(): T = node.get()
-                override fun set(other: T): T = node.set(other)
-                
-                override fun clone(): LIterator<T> = LinkIterator(node)
-                
-                override fun isEmpty(): Boolean = node.isEmpty()
         }
 }

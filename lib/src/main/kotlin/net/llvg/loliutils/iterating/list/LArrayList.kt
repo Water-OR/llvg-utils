@@ -92,6 +92,8 @@ class LArrayList<T>(private var activeSize: Int) : LList<T> {
                 
                 override fun clone(): LIterator<T> = ListIterator(index)
                 
+                override fun isSameTo(other: LIterator<T>): Boolean = other is ListIterator && other.index == index
+                
                 override fun isEmpty(): Boolean = index in 0..<activeSize
         }
 }

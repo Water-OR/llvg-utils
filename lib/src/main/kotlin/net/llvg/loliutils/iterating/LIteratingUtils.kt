@@ -14,11 +14,15 @@ private class ReverseIterator<T>(val raw: LIterator<T>) : LIterator<T> {
         
         override fun clone(): LIterator<T> = ReverseIterator(raw.clone())
         
+        override fun isSameTo(other: LIterator<T>): Boolean = other isSameTo raw
+        
         override fun isEmpty(): Boolean = raw.isEmpty()
 }
 
 @get:JvmName("reverse")
 val <T> LIterator<T>.reverse: LIterator<T> get() = if (this is ReverseIterator) raw else ReverseIterator(this)
+
+infix fun <T> LIterator<T>.notSameTo(other: LIterator<T>) = !isSameTo(other)
 
 operator fun <T> LIterator<T>.inc(): LIterator<T> = increase()
 
@@ -27,7 +31,8 @@ operator fun <T> LIterator<T>.dec(): LIterator<T> = decrease()
 @Suppress("unused")
 inline fun <T, R> LIterable<T>.collect(result: R, crossinline collector: R.(T) -> Unit): R {
         val it = begin()
-        while (it != end()) {
+        val end = end()
+        while (it notSameTo end) {
                 collector(result, it.get())
                 it.increase()
         }
@@ -36,18 +41,45 @@ inline fun <T, R> LIterable<T>.collect(result: R, crossinline collector: R.(T) -
 }
 
 @Suppress("unused")
-inline infix fun <T> LIterable<T>.runEach(crossinline action: T.() -> Unit) = letEach(action)
-inline infix fun <T> LIterable<T>.letEach(crossinline action: (T) -> Unit): LIterable<T> {
+inline infix fun <T> LIterable<T>.runEach(crossinline action: T.() -> Unit): LIterable<T> {
         val it = begin()
-        while (it != end()) {
+        val end = end()
+        while (it notSameTo end) {
                 action(it.get())
                 it.increase()
         }
-        /*
-        Think about cpp iterator
-        
-        for (Iterable::Iterator it = iterable.begin(); it != iterable.end(); ++it)
-         */
         return this
 }
 
+@Suppress("unused")
+inline infix fun <T> LIterable<T>.letEach(crossinline action: (T) -> Unit): LIterable<T> {
+        val it = begin()
+        val end = end()
+        while (it notSameTo end) {
+                action(it.get())
+                it.increase()
+        }
+        return this
+}
+
+@Suppress("unused")
+inline infix fun <T> LIterable<T>.runEachReverse(crossinline action: T.() -> Unit): LIterable<T> {
+        val it = end()
+        val end = begin()
+        if (it notSameTo end) do {
+                it.decrease()
+                action(it.get())
+        } while (it notSameTo end)
+        return this
+}
+
+@Suppress("unused")
+inline infix fun <T> LIterable<T>.letEachReverse(crossinline action: (T) -> Unit): LIterable<T> {
+        val it = end()
+        val end = begin()
+        if (it notSameTo end) do {
+                it.decrease()
+                action(it.get())
+        } while (it notSameTo end)
+        return this
+}

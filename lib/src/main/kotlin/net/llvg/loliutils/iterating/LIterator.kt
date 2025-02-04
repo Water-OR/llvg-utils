@@ -9,7 +9,7 @@ interface LIterator<T> : Cloneable, LCanBeEmpty {
         
         fun get(): T
         
-        infix fun compare(other: LIterator<T>) = get() === other.get()
+        infix fun isSameTo(other: LIterator<T>): Boolean
         
         public override fun clone(): LIterator<T>
 }
