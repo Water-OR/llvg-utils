@@ -7,6 +7,9 @@ import kotlin.reflect.KClass
 @Suppress("unused")
 inline fun <reified T> Any?.castTo() = this as T
 
+@Suppress("unused", "unchecked_cast")
+inline val <T> T?.asNotNull: T get() = this as T
+
 @Suppress("unused")
 inline fun <R> trying(
         spec: LTryingSpec = LLinkTryingSpec(),
