@@ -8,6 +8,9 @@ import kotlin.reflect.KClass
 inline fun <reified T> Any?.castTo() = this as T
 
 @Suppress("unused", "unchecked_cast")
+fun <T, R> T.uncheckedCast() = this as R
+
+@Suppress("unused", "unchecked_cast")
 inline val <T> T?.asNotNull: T get() = this as T
 
 @Suppress("unused")
