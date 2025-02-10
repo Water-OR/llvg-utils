@@ -2,46 +2,15 @@
 
 package net.llvg.loliutils.exception
 
-import kotlin.reflect.KClass
-
-@Suppress("unused")
-inline fun <reified T> Any?.castTo() = this as T
-
 @Suppress("unused", "unchecked_cast")
 fun <T, R> T.uncheckedCast() = this as R
 
 @Suppress("unused", "unchecked_cast")
+@get:JvmName("asNotNull")
 inline val <T> T?.asNotNull: T get() = this as T
 
-@Suppress("unused")
-inline fun <R> trying(
-        spec: LTryingSpec = LLinkTryingSpec(),
-        crossinline action: LTryingSpec.() -> R
-): LTryingResult<R> {
-        var result: R? = null
-        var exception: Exception? = null
-        try {
-                result = action(spec)
-        } catch (e: Exception) {
-                exception = e
-        } finally {
-                spec.close()
-        }
-        return LTryingResult(LResultSpec(result), exception)
-}
+fun <R> throwTyped(e: Throwable): R = throw e
 
-@Suppress("unused", "unused_parameter")
-inline fun <R, reified E: Throwable> LTryingResult<R>.catching(
-        type: KClass<E>,
-        action: LResultSpec<R>.(E) -> Unit
-): LTryingResult<R> = catching(action)
+fun <R> unknownType(type: Class<*>): R = throw UnknownTypeException("Type $type is unknown")
 
-inline infix fun <R, reified E: Throwable> LTryingResult<R>.catching(
-        action: LResultSpec<R>.(E) -> Unit
-): LTryingResult<R> {
-        if (!triggered && e as? E != null) {
-                action(r, e)
-                triggered()
-        }
-        return this
-}
+fun <R> Any.typeUnknown(): R = unknownType(javaClass)

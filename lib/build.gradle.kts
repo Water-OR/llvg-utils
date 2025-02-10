@@ -25,6 +25,7 @@ testing.suites {
 java {
         toolchain {
                 languageVersion = JavaLanguageVersion.of(8)
+                vendor = JvmVendorSpec.AZUL
         }
         
         withSourcesJar()
