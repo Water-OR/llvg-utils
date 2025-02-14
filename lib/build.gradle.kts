@@ -8,7 +8,7 @@ plugins {
 
 val projVer: String by properties
 
-group = "net.llvg.loliutils"
+group = "net.llvg"
 version = projVer
 
 repositories {
@@ -52,12 +52,10 @@ publishing {
                         artifact(tasks["sourcesJar"])
                         artifact(tasks["javadocJar"])
                         pom {
-                                groupId = "net.llvg"
                                 artifactId = "loli-utils"
                                 name = "loli-utils"
                                 description = "LolI Vanguard's utils <3"
                                 url = "https://github.com/Water-OR/llvg-utils"
-                                
                         }
                 }
         }
