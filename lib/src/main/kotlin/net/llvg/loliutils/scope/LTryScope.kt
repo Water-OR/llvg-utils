@@ -63,7 +63,7 @@ inline fun tryAct(
         manager: TryScopeManager = TryScopeManagerImpl(),
         crossinline action: TryScope.() -> Unit
 ): TryResult<Unit> {
-        contract { callsInPlace(action, InvocationKind.EXACTLY_ONCE) }
+        contract { callsInPlace(action, InvocationKind.AT_MOST_ONCE) }
         
         return try {
                 TryResult.Success(manager.scope().action())
@@ -80,7 +80,7 @@ inline fun <R> tryRun(
         manager: TryScopeManager = TryScopeManagerImpl(),
         crossinline action: TryScope.() -> R
 ): TryResult<R> {
-        contract { callsInPlace(action, InvocationKind.EXACTLY_ONCE) }
+        contract { callsInPlace(action, InvocationKind.AT_MOST_ONCE) }
         
         return try {
                 TryResult.Success(manager.scope().action())
