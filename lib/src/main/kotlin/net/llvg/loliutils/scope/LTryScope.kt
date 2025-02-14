@@ -14,7 +14,7 @@ import kotlin.Unit
 import kotlin.contracts.*
 
 interface TryScope {
-        fun <T : AutoCloseable> T.use()
+        fun <T : AutoCloseable> T.use(): T
 }
 
 interface TryScopeManager {
@@ -27,8 +27,9 @@ interface TryScopeManager {
 internal class TryScopeManagerImpl : TryScopeManager, TryScope {
         private val autoCloseableQueue: Deque<AutoCloseable> = LinkedList()
         
-        override fun <T : AutoCloseable> T.use() {
+        override fun <T : AutoCloseable> T.use(): T {
                 autoCloseableQueue.offerFirst(this@use)
+                return this
         }
         
         override fun scope(): TryScope = this
