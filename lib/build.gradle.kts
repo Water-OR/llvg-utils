@@ -6,10 +6,11 @@ plugins {
         publishing
 }
 
-val projVer: String by properties
+@Suppress("PropertyName")
+val project_version: String by properties
 
 group = "net.llvg"
-version = projVer
+version = project_version
 
 repositories {
         mavenCentral()
