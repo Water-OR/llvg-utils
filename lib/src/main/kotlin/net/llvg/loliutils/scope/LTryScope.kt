@@ -116,7 +116,8 @@ interface FailureScope<T> {
 
 @Suppress("unused")
 @OptIn(ExperimentalContracts::class)
-inline fun <R, reified E : Throwable> TryResult<R>.onExcept(crossinline action: FailureScope<R>.(E) -> Unit): TryResult<R> {
+inline infix
+fun <R, reified E : Throwable> TryResult<R>.onExcept(crossinline action: FailureScope<R>.(E) -> Unit): TryResult<R> {
         contract { callsInPlace(action, InvocationKind.AT_MOST_ONCE) }
         if (this is Failure && !executed && e is E) {
                 val scope = FailureScopeImpl(this)
@@ -132,15 +133,15 @@ fun <R> TryResult<R>.orElse(fallback: R): R =
         if (this is Success) v else fallback
 
 @Suppress("unused")
-@get:JvmName("orNull")
-inline val <R> TryResult<R>.orNull: R?
+@get:JvmName("orNull") inline
+val <R> TryResult<R>.orNull: R?
         get() = if (this is Success) v else null
 
 @Suppress("unused")
-@get:JvmName("orThrow")
-inline val <R> TryResult<R>.orThrow: R
+@get:JvmName("orThrow") inline
+val <R> TryResult<R>.orThrow: R
         get() = if (this is Success) v else if (this is Failure) throwTyped(e) else typeUnknown()
 
-@Suppress("unused")
-inline fun <R> TryResult<R>.orRun(crossinline action: (Failure<R>) -> R): R =
+@Suppress("unused") inline infix
+fun <R> TryResult<R>.orRun(crossinline action: (Failure<R>) -> R): R =
         if (this is Success) v else if (this is Failure) action(this) else typeUnknown()
