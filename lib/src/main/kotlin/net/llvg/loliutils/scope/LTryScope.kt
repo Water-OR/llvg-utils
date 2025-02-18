@@ -13,6 +13,12 @@ import kotlin.Throwable
 import kotlin.Unit
 import kotlin.contracts.*
 
+@DslMarker
+@Target(AnnotationTarget.CLASS, AnnotationTarget.TYPE)
+@Retention(AnnotationRetention.RUNTIME)
+annotation class TryMark
+
+@TryMark
 interface TryScope {
         fun <T : AutoCloseable> T.use(): T
 }
@@ -61,7 +67,7 @@ internal class FailureScopeImpl<T>(
 @OptIn(ExperimentalContracts::class)
 inline fun tryAct(
         manager: TryScopeManager = TryScopeManagerImpl(),
-        crossinline action: TryScope.() -> Unit
+        action: TryScope.() -> Unit
 ): TryResult<Unit> {
         contract { callsInPlace(action, InvocationKind.AT_MOST_ONCE) }
         
@@ -78,7 +84,7 @@ inline fun tryAct(
 @OptIn(ExperimentalContracts::class)
 inline fun <R> tryRun(
         manager: TryScopeManager = TryScopeManagerImpl(),
-        crossinline action: TryScope.() -> R
+        action: TryScope.() -> R
 ): TryResult<R> {
         contract { callsInPlace(action, InvocationKind.AT_MOST_ONCE) }
         
