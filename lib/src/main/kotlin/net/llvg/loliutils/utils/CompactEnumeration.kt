@@ -1,4 +1,4 @@
-package net.llvg.loliutils.exception
+package net.llvg.loliutils.utils
 
 import java.util.Enumeration
 

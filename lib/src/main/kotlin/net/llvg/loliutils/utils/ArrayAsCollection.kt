@@ -1,7 +1,7 @@
-package net.llvg.loliutils.exception
+package net.llvg.loliutils.utils
 
 @Suppress("UNUSED")
-class ArrayCollection<T>(private val array: Array<out T>) : Collection<T> {
+class ArrayAsCollection<T>(private val array: Array<out T>) : Collection<T> {
         override val size: Int get() = array.size
         override fun isEmpty(): Boolean = array.isEmpty()
         override fun iterator(): Iterator<T> = array.iterator()
