@@ -25,16 +25,20 @@ const val nanoSecondToMilliSecond = 1_000_000.0
 
 const val nanoSecondToSecond = 1_000_000_000.0
 
-val systemNanoTime: Long get() = System.nanoTime()
+val systemNanoTime: Long
+        get() = System.nanoTime()
 
 @Suppress("UNUSED")
-val systemMicroTime: Double get() = systemNanoTime / nanoSecondToMicroSecond
+val systemMicroTime: Double
+        get() = systemNanoTime / nanoSecondToMicroSecond
 
 @Suppress("UNUSED")
-val systemMilliTime: Double get() = systemNanoTime / nanoSecondToMilliSecond
+val systemMilliTime: Double
+        get() = systemNanoTime / nanoSecondToMilliSecond
 
 @Suppress("UNUSED")
-val systemTime: Double get() = systemNanoTime / nanoSecondToSecond
+val systemTime: Double
+        get() = systemNanoTime / nanoSecondToSecond
 
 @Suppress("UNUSED")
 inline fun runWithTime(
