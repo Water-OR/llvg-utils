@@ -25,9 +25,12 @@ import java.util.LinkedList
 class LinkedListTryScope : TryScope, TryScopeContainer {
         private val storage: Deque<AutoCloseable> = LinkedList()
         
-        override val <T : AutoCloseable> T.use: T get() = apply(storage::offerFirst)
+        override val <T : AutoCloseable> T.use: T
+                get() = apply(storage::offerFirst)
         
-        override val scope: TryScope get() = this
+        override val scope: TryScope
+                get() = this
         
-        override fun close() = storage.forEach(AutoCloseable::close)
+        override fun close(
+        ) = storage.forEach(AutoCloseable::close)
 }
