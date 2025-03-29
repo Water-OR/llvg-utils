@@ -54,7 +54,7 @@ inline val <R> TryResult<R>.isFailure: Boolean
         get() = this is TryResult.Failure
 
 @Suppress("UNUSED")
-inline fun <R, reified E : Throwable> TryResult<R>.onExcept(
+inline infix fun <R, reified E : Throwable> TryResult<R>.onExcept(
         action: TryFailureScope<R>.(E) -> Unit
 ): TryResult<R> {
         if (this is TryResult.Failure && !executed && e is E) {
