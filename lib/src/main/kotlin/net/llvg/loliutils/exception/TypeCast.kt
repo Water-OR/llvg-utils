@@ -62,6 +62,11 @@ fun <R> ValueWrapper<*>.cast(
 ): R = value as R
 
 @Suppress("UNUSED", "UNCHECKED_CAST")
+fun <R> cast(
+        value: Any?
+): R = value as R
+
+@Suppress("UNUSED", "UNCHECKED_CAST")
 @get:JvmName("asNotNull")
 inline val <T> T?.asNotNull: T
         get() = this as T
