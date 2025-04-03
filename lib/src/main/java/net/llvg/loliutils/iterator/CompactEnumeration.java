@@ -17,7 +17,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.utils;
+package net.llvg.loliutils.iterator;
 
 import java.util.*;
 
