@@ -17,7 +17,17 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.exception
+package net.llvg.loliutils.delegate
 
-@Deprecated("use delegate.ValRef<T> instead")
-data class ValueWrapper<T>(@JvmField val value: T)
+import java.util.function.Supplier
+
+interface ValRef<T> {
+        fun get(): T
+        
+        data class Impl<T>(
+                private val getter: Supplier<T>
+        ) : ValRef<T> {
+                override fun get(
+                ): T = getter.get()
+        }
+}
