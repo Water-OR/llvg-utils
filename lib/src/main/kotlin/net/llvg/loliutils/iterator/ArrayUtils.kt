@@ -34,7 +34,7 @@ inline val <T> Array<T>.asList: List<T>
 @Suppress("UNUSED")
 inline fun <reified T> Array<T>.subArray(
         begin: Int = 0,
-        length: Int = size
+        length: Int = size - begin
 ): Array<T> = Array(length) {
         get(it - begin)
 }
