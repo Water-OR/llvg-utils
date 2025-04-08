@@ -29,7 +29,7 @@ inline val <T> Array<T>.asCollection: Collection<T>
 
 @Suppress("UNUSED", "ReplaceJavaStaticMethodWithKotlinAnalog")
 inline val <T> Array<T>.asList: List<T>
-        get() = Arrays.asList<T>(*this)
+        get() = Arrays.asList(*this)
 
 @Suppress("UNUSED")
 inline fun <reified T> Array<T>.subArray(
