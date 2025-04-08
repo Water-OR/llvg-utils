@@ -21,6 +21,20 @@
 
 package net.llvg.loliutils.iterator
 
+import java.util.Arrays
+
 @Suppress("UNUSED")
 inline val <T> Array<T>.asCollection: Collection<T>
         get() = ArrayAsCollection(this)
+
+@Suppress("UNUSED", "ReplaceJavaStaticMethodWithKotlinAnalog")
+inline val <T> Array<T>.asList: List<T>
+        get() = Arrays.asList<T>(*this)
+
+@Suppress("UNUSED")
+inline fun <reified T> Array<T>.subArray(
+        begin: Int = 0,
+        length: Int = size
+): Array<T> = Array(length) {
+        get(it - begin)
+}
