@@ -24,3 +24,11 @@ package net.llvg.loliutils.iterator
 @Suppress("UNUSED")
 inline val <T> Array<T>.asCollection: Collection<T>
         get() = ArrayAsCollection(this)
+
+@Suppress("UNUSED")
+inline fun <reified T> Array<T>.subArray(
+        begin: Int = 0,
+        length: Int = size
+): Array<T> = Array(length) {
+        get(it - begin)
+}
