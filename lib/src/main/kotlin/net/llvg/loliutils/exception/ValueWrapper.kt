@@ -19,4 +19,5 @@
 
 package net.llvg.loliutils.exception
 
+@Deprecated("use delegate.ValRef<T> instead")
 data class ValueWrapper<T>(@JvmField val value: T)
