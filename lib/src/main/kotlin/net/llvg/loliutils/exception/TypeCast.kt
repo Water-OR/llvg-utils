@@ -49,19 +49,9 @@ inline val <N : Number> N.short
 inline val <N : Number> N.byte
         get() = toByte()
 
-@Suppress("UNUSED", "DEPRECATION")
-@Deprecated("use delegate.DelegateUtils::<T>T.wrapBox->delegate.ValRef<T> instead", ReplaceWith(".wrapBox"))
-inline val <T> T.wrapped: ValueWrapper<T>
-        get() = ValueWrapper(this)
-
 @Suppress("UNUSED", "UNCHECKED_CAST")
 fun <T, R> T.uncheckedCast(
 ) = this as R
-
-@Suppress("UNUSED", "UNCHECKED_CAST", "DEPRECATION")
-@Deprecated("use delegate.DelegateUtils::<R>ValRef<*>.cast()->R instead", ReplaceWith(".wrapBox"))
-fun <R> ValueWrapper<*>.cast(
-): R = value as R
 
 @Suppress("UNUSED", "UNCHECKED_CAST")
 fun <R> cast(
