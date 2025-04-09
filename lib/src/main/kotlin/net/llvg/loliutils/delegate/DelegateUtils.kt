@@ -26,11 +26,8 @@ import kotlin.reflect.KProperty
 import kotlin.reflect.KProperty0
 
 @Suppress("UNUSED")
-inline val <T> T.wrapBox: ValRef<T>
-        get() = object : ValRef<T> {
-                override fun get(
-                ): T = this@wrapBox
-        }
+inline val <T> T.wrapBox: ValBox<T>
+        get() = ValBox(this)
 
 @Suppress("UNUSED")
 inline val <T> KProperty0<T>.wrapVal: ValRef<T>
