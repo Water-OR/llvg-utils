@@ -58,8 +58,9 @@ fun ByteArray.subArray(
                 checkRangeTill(this.size, from)
                 return copyOf(size)
         } else {
-                checkRangeFromTill(this.size, from, size - from)
-                return Arrays.copyOfRange(this, from, size - from)
+                val till = from + size
+                checkRangeFromTill(this.size, from, till)
+                return Arrays.copyOfRange(this, from, till)
         }
 }
 
@@ -72,8 +73,9 @@ fun ShortArray.subArray(
                 checkRangeTill(this.size, from)
                 return copyOf(size)
         } else {
-                checkRangeFromTill(this.size, from, size - from)
-                return Arrays.copyOfRange(this, from, size - from)
+                val till = from + size
+                checkRangeFromTill(this.size, from, till)
+                return Arrays.copyOfRange(this, from, till)
         }
 }
 
@@ -86,8 +88,9 @@ fun IntArray.subArray(
                 checkRangeTill(this.size, from)
                 return copyOf(size)
         } else {
-                checkRangeFromTill(this.size, from, size - from)
-                return Arrays.copyOfRange(this, from, size - from)
+                val till = from + size
+                checkRangeFromTill(this.size, from, till)
+                return Arrays.copyOfRange(this, from, till)
         }
 }
 
@@ -100,8 +103,9 @@ fun LongArray.subArray(
                 checkRangeTill(this.size, from)
                 return copyOf(size)
         } else {
-                checkRangeFromTill(this.size, from, size - from)
-                return Arrays.copyOfRange(this, from, size - from)
+                val till = from + size
+                checkRangeFromTill(this.size, from, till)
+                return Arrays.copyOfRange(this, from, till)
         }
 }
 
@@ -114,8 +118,9 @@ fun CharArray.subArray(
                 checkRangeTill(this.size, from)
                 return copyOf(size)
         } else {
-                checkRangeFromTill(this.size, from, size - from)
-                return Arrays.copyOfRange(this, from, size - from)
+                val till = from + size
+                checkRangeFromTill(this.size, from, till)
+                return Arrays.copyOfRange(this, from, till)
         }
 }
 
@@ -128,8 +133,9 @@ fun FloatArray.subArray(
                 checkRangeTill(this.size, from)
                 return copyOf(size)
         } else {
-                checkRangeFromTill(this.size, from, size - from)
-                return Arrays.copyOfRange(this, from, size - from)
+                val till = from + size
+                checkRangeFromTill(this.size, from, till)
+                return Arrays.copyOfRange(this, from, till)
         }
 }
 
@@ -142,8 +148,9 @@ fun DoubleArray.subArray(
                 checkRangeTill(this.size, from)
                 return copyOf(size)
         } else {
-                checkRangeFromTill(this.size, from, size - from)
-                return Arrays.copyOfRange(this, from, size - from)
+                val till = from + size
+                checkRangeFromTill(this.size, from, till)
+                return Arrays.copyOfRange(this, from, till)
         }
 }
 
@@ -156,8 +163,9 @@ fun BooleanArray.subArray(
                 checkRangeTill(this.size, from)
                 return copyOf(size)
         } else {
-                checkRangeFromTill(this.size, from, size - from)
-                return Arrays.copyOfRange(this, from, size - from)
+                val till = from + size
+                checkRangeFromTill(this.size, from, till)
+                return Arrays.copyOfRange(this, from, till)
         }
 }
 
@@ -170,7 +178,8 @@ fun <T> Array<T>.subArray(
                 checkRangeTill(this.size, from)
                 return Arrays.copyOf(this, size)
         } else {
-                checkRangeFromTill(this.size, from, size - from)
-                return Arrays.copyOfRange(this, from, size - from)
+                val till = from + size
+                checkRangeFromTill(this.size, from, till)
+                return Arrays.copyOfRange(this, from, till)
         }
 }
