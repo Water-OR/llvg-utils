@@ -28,13 +28,13 @@ class TimeScope {
         
         @Suppress("UNUSED")
         val currentMicroTime: Double
-                get() = currentNanoTime / nanoSecondToMicroSecond
+                get() = (System.nanoTime() - start) / nanoSecondToMicroSecond
         
         @Suppress("UNUSED")
         val currentMilliTime: Double
-                get() = currentNanoTime / nanoSecondToMilliSecond
+                get() = (System.nanoTime() - start) / nanoSecondToMilliSecond
         
         @Suppress("UNUSED")
         val currentTime: Double
-                get() = currentNanoTime / nanoSecondToSecond
+                get() = (System.nanoTime() - start) / nanoSecondToSecond
 }
