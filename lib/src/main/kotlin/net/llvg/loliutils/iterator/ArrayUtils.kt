@@ -37,6 +37,6 @@ fun <T> Array<T>.subArray(
         length: Int = size - begin
 ): Array<T> {
         val result = arrayOfNulls<Any>(length)
-        System.arraycopy(this, 0, result, begin, length)
+        System.arraycopy(this, begin, result, 0, length)
         return result as Array<T>
 }
