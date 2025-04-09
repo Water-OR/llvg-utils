@@ -31,10 +31,12 @@ inline val <T> Array<T>.asCollection: Collection<T>
 inline val <T> Array<T>.asList: List<T>
         get() = Arrays.asList(*this)
 
-@Suppress("UNUSED")
-inline fun <reified T> Array<T>.subArray(
+@Suppress("UNUSED", "UNCHECKED_CAST")
+fun <T> Array<T>.subArray(
         begin: Int = 0,
         length: Int = size - begin
-): Array<T> = Array(length) {
-        get(it + begin)
+): Array<T> {
+        val result = arrayOfNulls<Any>(length)
+        System.arraycopy(this, 0, result, begin, length)
+        return result as Array<T>
 }
