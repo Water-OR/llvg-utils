@@ -36,5 +36,5 @@ inline fun <reified T> Array<T>.subArray(
         begin: Int = 0,
         length: Int = size - begin
 ): Array<T> = Array(length) {
-        get(it - begin)
+        get(it + begin)
 }
