@@ -24,6 +24,23 @@ package net.llvg.loliutils.iterator
 import java.util.Arrays
 
 @Suppress("UNUSED")
+fun <T> newArray(
+        type: Class<T>,
+        size: Int
+): Array<T> = ArrayHelper.array(
+        type,
+        size
+)
+
+@Suppress("UNUSED")
+inline fun <reified T> newArray(
+        size: Int
+): Array<T> = ArrayHelper.array(
+        T::class.java,
+        size
+)
+
+@Suppress("UNUSED")
 inline val <T> Array<T>.asCollection: Collection<T>
         get() = ArrayAsCollection(this)
 
