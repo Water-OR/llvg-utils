@@ -22,12 +22,13 @@
 package net.llvg.loliutils.iterator
 
 import java.util.Arrays
+import net.llvg.loliutils.iterator.ArrayHelper.*
 
 @Suppress("UNUSED")
 fun <T> newArray(
         type: Class<T>,
         size: Int
-): Array<T> = ArrayHelper.array(
+): Array<T> = array(
         type,
         size
 )
@@ -35,7 +36,7 @@ fun <T> newArray(
 @Suppress("UNUSED")
 inline fun <reified T> newArray(
         size: Int
-): Array<T> = ArrayHelper.array(
+): Array<T> = array(
         T::class.java,
         size
 )
@@ -48,12 +49,128 @@ inline val <T> Array<T>.asCollection: Collection<T>
 inline val <T> Array<T>.asList: List<T>
         get() = Arrays.asList(*this)
 
-@Suppress("UNUSED", "UNCHECKED_CAST")
+@Suppress("UNUSED")
+fun ByteArray.subArray(
+        from: Int = 0,
+        size: Int = this.size - from
+): ByteArray {
+        if (from == 0) {
+                checkRangeTill(this.size, from)
+                return copyOf(size)
+        } else {
+                checkRangeFromTill(this.size, from, size - from)
+                return Arrays.copyOfRange(this, from, size - from)
+        }
+}
+
+@Suppress("UNUSED")
+fun ShortArray.subArray(
+        from: Int = 0,
+        size: Int = this.size - from
+): ShortArray {
+        if (from == 0) {
+                checkRangeTill(this.size, from)
+                return copyOf(size)
+        } else {
+                checkRangeFromTill(this.size, from, size - from)
+                return Arrays.copyOfRange(this, from, size - from)
+        }
+}
+
+@Suppress("UNUSED")
+fun IntArray.subArray(
+        from: Int = 0,
+        size: Int = this.size - from
+): IntArray {
+        if (from == 0) {
+                checkRangeTill(this.size, from)
+                return copyOf(size)
+        } else {
+                checkRangeFromTill(this.size, from, size - from)
+                return Arrays.copyOfRange(this, from, size - from)
+        }
+}
+
+@Suppress("UNUSED")
+fun LongArray.subArray(
+        from: Int = 0,
+        size: Int = this.size - from
+): LongArray {
+        if (from == 0) {
+                checkRangeTill(this.size, from)
+                return copyOf(size)
+        } else {
+                checkRangeFromTill(this.size, from, size - from)
+                return Arrays.copyOfRange(this, from, size - from)
+        }
+}
+
+@Suppress("UNUSED")
+fun CharArray.subArray(
+        from: Int = 0,
+        size: Int = this.size - from
+): CharArray {
+        if (from == 0) {
+                checkRangeTill(this.size, from)
+                return copyOf(size)
+        } else {
+                checkRangeFromTill(this.size, from, size - from)
+                return Arrays.copyOfRange(this, from, size - from)
+        }
+}
+
+@Suppress("UNUSED")
+fun FloatArray.subArray(
+        from: Int = 0,
+        size: Int = this.size - from
+): FloatArray {
+        if (from == 0) {
+                checkRangeTill(this.size, from)
+                return copyOf(size)
+        } else {
+                checkRangeFromTill(this.size, from, size - from)
+                return Arrays.copyOfRange(this, from, size - from)
+        }
+}
+
+@Suppress("UNUSED")
+fun DoubleArray.subArray(
+        from: Int = 0,
+        size: Int = this.size - from
+): DoubleArray {
+        if (from == 0) {
+                checkRangeTill(this.size, from)
+                return copyOf(size)
+        } else {
+                checkRangeFromTill(this.size, from, size - from)
+                return Arrays.copyOfRange(this, from, size - from)
+        }
+}
+
+@Suppress("UNUSED")
+fun BooleanArray.subArray(
+        from: Int = 0,
+        size: Int = this.size - from
+): BooleanArray {
+        if (from == 0) {
+                checkRangeTill(this.size, from)
+                return copyOf(size)
+        } else {
+                checkRangeFromTill(this.size, from, size - from)
+                return Arrays.copyOfRange(this, from, size - from)
+        }
+}
+
+@Suppress("UNUSED", "ReplaceJavaStaticMethodWithKotlinAnalog")
 fun <T> Array<T>.subArray(
-        begin: Int = 0,
-        length: Int = size - begin
+        from: Int = 0,
+        size: Int = this.size - from
 ): Array<T> {
-        val result = arrayOfNulls<Any>(length)
-        System.arraycopy(this, begin, result, 0, length)
-        return result as Array<T>
+        if (from == 0) {
+                checkRangeTill(this.size, from)
+                return Arrays.copyOf(this, size)
+        } else {
+                checkRangeFromTill(this.size, from, size - from)
+                return Arrays.copyOfRange(this, from, size - from)
+        }
 }
