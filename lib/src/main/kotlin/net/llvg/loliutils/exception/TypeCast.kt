@@ -58,6 +58,32 @@ fun <R> cast(
         value: Any?
 ): R = value as R
 
+@Suppress("UNUSED")
+inline fun <reified T> Class<*>.isExtend(): Boolean {
+        return T::class.java.isAssignableFrom(this)
+}
+
+@Suppress("UNUSED", "UNCHECKED_CAST")
+inline fun <reified T> Class<*>.tryExtend(): Class<out T>? {
+        if (T::class.java.isAssignableFrom(this))
+                return this as Class<out T>
+        
+        return null
+}
+
+@Suppress("UNUSED")
+inline fun <reified T> Class<*>.isSuper(): Boolean {
+        return isAssignableFrom(T::class.java)
+}
+
+@Suppress("UNUSED", "UNCHECKED_CAST")
+inline fun <reified T> Class<*>.trySuper(): Class<in T>? {
+        if (isAssignableFrom(T::class.java))
+                return this as Class<in T>
+        
+        return null
+}
+
 @Suppress("UNUSED", "UNCHECKED_CAST")
 @get:JvmName("asNotNull")
 inline val <T> T?.asNotNull: T
