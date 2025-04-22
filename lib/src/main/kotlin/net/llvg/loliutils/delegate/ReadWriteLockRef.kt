@@ -17,38 +17,27 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:[JvmName("DelegateUtils") Suppress("UNUSED", "NOTHING_TO_INLINE")]
-
 package net.llvg.loliutils.delegate
 
-import kotlin.reflect.KMutableProperty0
-import kotlin.reflect.KProperty
-import kotlin.reflect.KProperty0
+import java.util.concurrent.locks.ReadWriteLock
+import java.util.concurrent.locks.ReentrantReadWriteLock
+import kotlin.concurrent.withLock
 
-inline val <T> T.wrapBox: ValBox<T>
-        get() = ValBox(this)
-
-inline val <T> KProperty0<T>.wrapVal: ValRef<T>
-        get() = ValRef.Impl(this)
-
-inline val <T> KMutableProperty0<T>.wrapVar: VarRef<T>
-        get() = VarRef.Impl(this) { set(it) }
-
-@Suppress("UNCHECKED_CAST")
-inline fun <R> ValRef<*>.cast(
-): R =
-        get() as R
-
-inline operator fun <T> ValRef<T>.getValue(
-        self: Any?,
-        property: KProperty<*>
-): T =
-        get()
-
-inline operator fun <T> VarRef<T>.setValue(
-        self: Any?,
-        property: KProperty<*>,
-        o: T
-) {
-        set(o)
+@Suppress("UNUSED")
+class ReadWriteLockRef<T>(
+        private var value: T,
+        private val lock: ReadWriteLock = ReentrantReadWriteLock()
+) : VarRef<T> {
+        override fun set(
+                o: T
+        ) {
+                lock.writeLock().withLock {
+                        value = o
+                }
+        }
+        
+        override fun get(): T =
+                lock.readLock().withLock {
+                        value
+                }
 }
