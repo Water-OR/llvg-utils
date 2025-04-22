@@ -17,7 +17,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:JvmName("DelegateUtils")
+@file:[JvmName("DelegateUtils") Suppress("UNUSED", "NOTHING_TO_INLINE")]
 
 package net.llvg.loliutils.delegate
 
@@ -25,56 +25,27 @@ import kotlin.reflect.KMutableProperty0
 import kotlin.reflect.KProperty
 import kotlin.reflect.KProperty0
 
-@Suppress("UNUSED")
 inline val <T> T.wrapBox: ValBox<T>
         get() = ValBox(this)
 
-@Suppress("UNUSED")
-fun <T> makeValBox(
-        self: T
-): ValBox<T> =
-        ValBox(self)
-
-@Suppress("UNUSED")
 inline val <T> KProperty0<T>.wrapVal: ValRef<T>
         get() = ValRef.Impl(this)
 
-@Suppress("UNUSED")
-fun <T> makeValRef(
-        getter: () -> T
-): ValRef<T> =
-        ValRef.Impl(
-                getter
-        )
-
-@Suppress("UNUSED")
 inline val <T> KMutableProperty0<T>.wrapVar: VarRef<T>
         get() = VarRef.Impl(this) { set(it) }
 
-@Suppress("UNUSED")
-fun <T> makeVarRef(
-        getter: () -> T,
-        setter: (T) -> Unit
-): VarRef<T> =
-        VarRef.Impl(
-                getter,
-                setter
-        )
-
-@Suppress("UNUSED", "UNCHECKED_CAST")
-fun <R> ValRef<*>.cast(
+@Suppress("UNCHECKED_CAST")
+inline fun <R> ValRef<*>.cast(
 ): R =
         get() as R
 
-@Suppress("UNUSED")
-operator fun <T> ValRef<T>.getValue(
+inline operator fun <T> ValRef<T>.getValue(
         self: Any?,
         property: KProperty<*>
 ): T =
         get()
 
-@Suppress("UNUSED")
-operator fun <T> VarRef<T>.setValue(
+inline operator fun <T> VarRef<T>.setValue(
         self: Any?,
         property: KProperty<*>,
         o: T
