@@ -26,14 +26,44 @@ fun interface VoidPredicate {
     
     infix fun and(
         o: VoidPredicate
-    ): VoidPredicate =
-        VoidPredicate { test() && o.test() }
+    ): VoidPredicate {
+        if (o === True) return this
+        if (o === False) return False
+        
+        return VoidPredicate { test() && o.test() }
+    }
     
     infix fun or(
         o: VoidPredicate
-    ): VoidPredicate =
-        VoidPredicate { test() || o.test() }
+    ): VoidPredicate {
+        if (o === True) return True
+        if (o === False) return this
+        
+        return VoidPredicate { test() || o.test() }
+    }
     
     fun negate(): VoidPredicate =
         VoidPredicate { !test() }
+    
+    private data object True : VoidPredicate {
+        override fun test() = true
+        override fun and(o: VoidPredicate) = o
+        override fun or(o: VoidPredicate) = this
+        override fun negate(): VoidPredicate = False
+    }
+    
+    private data object False : VoidPredicate {
+        override fun test(): Boolean = false
+        override fun and(o: VoidPredicate) = this
+        override fun or(o: VoidPredicate) = o
+        override fun negate(): VoidPredicate = True
+    }
+    
+    companion object {
+        @JvmField
+        val FALSE: VoidPredicate = False
+        
+        @JvmField
+        val TRUE: VoidPredicate = True
+    }
 }
