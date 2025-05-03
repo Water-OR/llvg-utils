@@ -29,7 +29,9 @@ public class CompactEnumeration<T>
     private final Enumeration<T>[] enums;
     private int index = 0;
     
-    public CompactEnumeration(Enumeration<T>[] enums) {
+    public CompactEnumeration(
+      Enumeration<T>[] enums
+    ) {
         this.enums = enums;
     }
     

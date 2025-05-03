@@ -23,13 +23,25 @@ package net.llvg.loliutils.concurrent
 
 import java.util.concurrent.locks.ReadWriteLock
 import kotlin.concurrent.withLock
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 inline fun <R> ReadWriteLock.withReadLock(
     action: () -> R
-): R =
-    readLock().withLock(action)
+): R {
+    contract {
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
+    }
+    
+    return readLock().withLock(action)
+}
 
 inline fun <R> ReadWriteLock.withWriteLock(
     action: () -> R
-): R =
-    writeLock().withLock(action)
+): R {
+    contract {
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
+    }
+    
+    return writeLock().withLock(action)
+}

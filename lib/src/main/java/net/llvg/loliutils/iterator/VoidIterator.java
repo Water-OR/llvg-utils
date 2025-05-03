@@ -66,12 +66,16 @@ public final class VoidIterator
     }
     
     @Override
-    public void set(Void unused) {
+    public void set(
+      Void unused
+    ) {
         throw new UnsupportedOperationException();
     }
     
     @Override
-    public void add(Void unused) {
+    public void add(
+      Void unused
+    ) {
         throw new UnsupportedOperationException();
     }
     

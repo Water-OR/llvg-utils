@@ -24,9 +24,7 @@ import net.llvg.loliutils.scope.LScopeContext
 
 @Suppress("UNUSED")
 sealed interface TryScopeContext<in R> : LScopeContext<R> {
-    fun resource(
-        resource: AutoCloseable
-    ): AutoCloseable
+    infix fun resource(resource: AutoCloseable): AutoCloseable
     
     val AutoCloseable.use: AutoCloseable
     
@@ -37,13 +35,13 @@ sealed interface TryScopeContext<in R> : LScopeContext<R> {
         override fun resource(
             resource: AutoCloseable
         ): AutoCloseable {
-            owner.resource(resource)
+            owner resource resource
             return resource
         }
         
         override val AutoCloseable.use: AutoCloseable
             get() {
-                owner.resource(this)
+                owner resource this
                 return this
             }
     }

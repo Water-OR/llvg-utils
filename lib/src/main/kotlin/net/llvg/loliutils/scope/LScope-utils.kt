@@ -21,6 +21,9 @@
 
 package net.llvg.loliutils.scope
 
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
+
 inline operator fun <R> LScopeBreak.get(
     scope: LScope<R, *>
 ): R =
@@ -33,47 +36,93 @@ inline operator fun LScopeBreak.get(
 
 inline infix fun <R, C : LScopeContext<R>> LScope<R, C>.runLScope(
     action: C.() -> R
-): R =
-    try {
+): R {
+    contract {
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
+    }
+    
+    return try {
         context.action()
     } catch (e: LScopeBreak) {
         e[this]
     }
+}
 
 inline fun <R> runLScope(
     action: EmptyLScopeContext<R>.() -> R
-): R = EmptyLScope<R>().runLScope(action)
+): R {
+    contract {
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
+    }
+    
+    return EmptyLScope<R>().runLScope(action)
+}
 
 inline fun <T, R, C : LScopeContext<R>> T.letLScope(
     scope: LScope<R, C>,
     action: C.(T) -> R
-): R = scope.runLScope { action(this@letLScope) }
+): R {
+    contract {
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
+    }
+    
+    return scope.runLScope { action(this@letLScope) }
+}
 
 inline infix fun <T, R> T.letLScope(
     action: EmptyLScopeContext<R>.(T) -> R
-): R = EmptyLScope<R>().runLScope { action(this@letLScope) }
+): R {
+    contract {
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
+    }
+    
+    return EmptyLScope<R>().runLScope { action(this@letLScope) }
+}
 
 inline infix fun <C : LScopeContext<Unit>> LScope<Unit, C>.prfLScope(
     action: C.() -> Unit
-) =
+) {
+    contract {
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
+    }
+    
     try {
         context.action()
     } catch (e: LScopeBreak) {
         e[this]
     }
+}
 
 inline fun prfLScope(
     action: EmptyLScopeContext<Unit>.() -> Unit
-) = EmptyLScope<Unit>().prfLScope(action)
+) {
+    contract {
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
+    }
+    
+    EmptyLScope<Unit>().prfLScope(action)
+}
 
 inline fun <T, C : LScopeContext<Unit>> T.actLScope(
     scope: LScope<Unit, C>,
     action: C.(T) -> Unit
-) = scope.prfLScope { action(this@actLScope) }
+) {
+    contract {
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
+    }
+    
+    scope.prfLScope { action(this@actLScope) }
+}
 
 inline infix fun <T> T.actLScope(
     action: EmptyLScopeContext<Unit>.(T) -> Unit
-) = EmptyLScope<Unit>().prfLScope { action(this@actLScope) }
+) {
+    contract {
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
+    }
+    
+    EmptyLScope<Unit>().prfLScope { action(this@actLScope) }
+}
 
 inline infix fun <R> LScopeContext<R>.broke(
     value: R

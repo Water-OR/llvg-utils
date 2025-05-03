@@ -30,25 +30,23 @@ import net.llvg.loliutils.others.exec
 class InitOnceRef<T> : VarRef<T> {
     val initialized: Boolean
         @JvmName("isInitialized")
-        get() = lock.withReadLock {
-            box?.eval { true } ?: false
-        }
+        get() =
+            lock.withReadLock { box }
+              ?.eval { true } ?: false
     
     private val lock: ReadWriteLock = ReentrantReadWriteLock()
     private var box: BoxRef<T>? = null
     
     override fun get(): T =
-        lock.withReadLock {
-            box?.get() ?: throwUninitialized()
-        }
+        lock.withReadLock { box }
+          ?.get() ?: throwUninitialized()
     
     
     override fun set(
         value: T
     ) {
-        lock.withReadLock {
-            box?.exec { throwReinitialized() }
-        }
+        lock.withReadLock { box }
+          ?.exec { throwReinitialized() }
         
         lock.withWriteLock {
             box?.exec { throwReinitialized() }
