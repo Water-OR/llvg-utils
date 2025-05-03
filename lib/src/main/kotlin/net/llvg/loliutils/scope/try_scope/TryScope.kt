@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Water-OR
+ * Copyright (C) 2025-2025 Water-OR
  *
  * This file is part of LolI Utils
  *
@@ -17,19 +17,15 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.iterator;
+package net.llvg.loliutils.scope.try_scope
 
-import java.lang.reflect.Array;
+import net.llvg.loliutils.scope.LScope
 
-@SuppressWarnings ("unused")
-public final class ArrayHelper {
-    private ArrayHelper() { }
+@Suppress("UNUSED")
+interface TryScope<in R> : LScope<R, TryScopeContext<R>>, AutoCloseable {
+    fun resource(resource: AutoCloseable)
     
-    @SuppressWarnings ("unchecked")
-    public static <T> T[] newArray(
-      Class<? extends T> type,
-      int size
-    ) {
-        return (T[]) Array.newInstance(type, size);
-    }
+    override val context: TryScopeContext<R>
+    
+    override fun close()
 }

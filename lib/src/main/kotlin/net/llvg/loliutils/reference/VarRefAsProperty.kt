@@ -17,19 +17,25 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.iterator;
+package net.llvg.loliutils.reference
 
-import java.lang.reflect.Array;
+import kotlin.properties.ReadWriteProperty
+import kotlin.reflect.KProperty
 
-@SuppressWarnings ("unused")
-public final class ArrayHelper {
-    private ArrayHelper() { }
+@[JvmInline Suppress("UNUSED", "OVERRIDE_BY_INLINE", "NOTHING_TO_INLINE")]
+value class VarRefAsProperty<T>(
+    val ref: VarRef<T>
+) : ReadWriteProperty<Any?, T> {
+    override inline fun getValue(
+        thisRef: Any?,
+        property: KProperty<*>
+    ): T =
+        ref.get()
     
-    @SuppressWarnings ("unchecked")
-    public static <T> T[] newArray(
-      Class<? extends T> type,
-      int size
-    ) {
-        return (T[]) Array.newInstance(type, size);
-    }
+    override inline fun setValue(
+        thisRef: Any?,
+        property: KProperty<*>,
+        value: T
+    ) =
+        ref.set(value)
 }

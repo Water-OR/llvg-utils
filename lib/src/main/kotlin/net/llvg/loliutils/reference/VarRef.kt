@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Water-OR
+ * Copyright (C) 2025-2025 Water-OR
  *
  * This file is part of LolI Utils
  *
@@ -17,19 +17,13 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.iterator;
+package net.llvg.loliutils.reference
 
-import java.lang.reflect.Array;
+import net.llvg.loliutils.function.Settable
 
-@SuppressWarnings ("unused")
-public final class ArrayHelper {
-    private ArrayHelper() { }
+@Suppress("UNUSED")
+interface VarRef<T> : ValRef<T>, Settable<T> {
+    override fun get(): T
     
-    @SuppressWarnings ("unchecked")
-    public static <T> T[] newArray(
-      Class<? extends T> type,
-      int size
-    ) {
-        return (T[]) Array.newInstance(type, size);
-    }
+    override fun set(value: T)
 }

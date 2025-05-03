@@ -17,6 +17,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+@file:[JvmName("TimeUtils") Suppress("UNUSED")]
+
 package net.llvg.loliutils.time
 
 const val nanoSecondToMicroSecond = 1_000.0
@@ -25,23 +27,14 @@ const val nanoSecondToMilliSecond = 1_000_000.0
 
 const val nanoSecondToSecond = 1_000_000_000.0
 
-@Suppress("UNUSED")
-val systemNanoTime: Long
-        get() = (System.nanoTime())
+inline val systemNanoTime: Long
+    get() = System.nanoTime()
 
-@Suppress("UNUSED")
-val systemMicroTime: Double
-        get() = (System.nanoTime()) / nanoSecondToMicroSecond
+inline val systemMicroTime: Double
+    get() = System.nanoTime() / nanoSecondToMicroSecond
 
-@Suppress("UNUSED")
-val systemMilliTime: Double
-        get() = (System.nanoTime()) / nanoSecondToMilliSecond
+inline val systemMilliTime: Double
+    get() = System.nanoTime() / nanoSecondToMilliSecond
 
-@Suppress("UNUSED")
-val systemTime: Double
-        get() = (System.nanoTime()) / nanoSecondToSecond
-
-@Suppress("UNUSED")
-inline fun runWithTime(
-        action: TimeScope.() -> Unit
-) = TimeScope().apply(action)
+inline val systemTime: Double
+    get() = System.nanoTime() / nanoSecondToSecond

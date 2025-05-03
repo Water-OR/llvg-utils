@@ -17,19 +17,24 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.iterator;
+@file:[JvmName("ValRefUtils") Suppress("UNUSED", "NOTHING_TO_INLINE")]
 
-import java.lang.reflect.Array;
+package net.llvg.loliutils.reference
 
-@SuppressWarnings ("unused")
-public final class ArrayHelper {
-    private ArrayHelper() { }
-    
-    @SuppressWarnings ("unchecked")
-    public static <T> T[] newArray(
-      Class<? extends T> type,
-      int size
-    ) {
-        return (T[]) Array.newInstance(type, size);
-    }
-}
+import kotlin.reflect.KProperty
+import kotlin.reflect.KProperty0
+import net.llvg.loliutils.function.Gettable
+
+inline val <T> KProperty0<T>.asValRef: PropertyAsValRef<T>
+    get() = PropertyAsValRef(this)
+
+inline fun <T> makeRef(
+    getter: Gettable<T>
+): LambdaValRef<T> =
+    LambdaValRef(getter)
+
+inline operator fun <T> ValRef<T>.provideDelegate(
+    thisRef: Any?,
+    property: KProperty<*>
+): ValRefAsProperty<T> =
+    ValRefAsProperty(this)

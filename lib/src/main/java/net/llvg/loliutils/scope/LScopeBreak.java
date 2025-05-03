@@ -17,19 +17,37 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.iterator;
+package net.llvg.loliutils.scope;
 
-import java.lang.reflect.Array;
+import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings ("unused")
-public final class ArrayHelper {
-    private ArrayHelper() { }
+public class LScopeBreak
+  extends Throwable
+{
+    @NotNull
+    public final Object ident;
+    public final Object value;
+    
+    public LScopeBreak(
+      @NotNull
+      Object ident,
+      Object value
+    ) {
+        Objects.requireNonNull(ident, "[ident] should not be null");
+        
+        this.ident = ident;
+        this.value = value;
+    }
     
     @SuppressWarnings ("unchecked")
-    public static <T> T[] newArray(
-      Class<? extends T> type,
-      int size
-    ) {
-        return (T[]) Array.newInstance(type, size);
+    public <T> T value() {
+        return (T) value;
+    }
+    
+    @Override
+    public Throwable fillInStackTrace() {
+        return this;
     }
 }

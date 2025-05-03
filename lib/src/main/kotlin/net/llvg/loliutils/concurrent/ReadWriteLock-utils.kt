@@ -17,19 +17,19 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.iterator;
+@file:[JvmName("ReadWriteLockUtils") Suppress("UNUSED")]
 
-import java.lang.reflect.Array;
+package net.llvg.loliutils.concurrent
 
-@SuppressWarnings ("unused")
-public final class ArrayHelper {
-    private ArrayHelper() { }
-    
-    @SuppressWarnings ("unchecked")
-    public static <T> T[] newArray(
-      Class<? extends T> type,
-      int size
-    ) {
-        return (T[]) Array.newInstance(type, size);
-    }
-}
+import java.util.concurrent.locks.ReadWriteLock
+import kotlin.concurrent.withLock
+
+inline fun <R> ReadWriteLock.withReadLock(
+    action: () -> R
+): R =
+    readLock().withLock(action)
+
+inline fun <R> ReadWriteLock.withWriteLock(
+    action: () -> R
+): R =
+    writeLock().withLock(action)

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Water-OR
+ * Copyright (C) 2025-2025 Water-OR
  *
  * This file is part of LolI Utils
  *
@@ -17,19 +17,25 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.iterator;
+package net.llvg.loliutils.scope.try_scope
 
-import java.lang.reflect.Array;
+import net.llvg.loliutils.scope.LScopeContext
+import net.llvg.loliutils.scope.broke
 
-@SuppressWarnings ("unused")
-public final class ArrayHelper {
-    private ArrayHelper() { }
+@Suppress("UNUSED")
+sealed interface TryFailureScopeContext<in R> : LScopeContext<Unit> {
+    override val ident: Any
     
-    @SuppressWarnings ("unchecked")
-    public static <T> T[] newArray(
-      Class<? extends T> type,
-      int size
-    ) {
-        return (T[]) Array.newInstance(type, size);
+    fun fallback(value: R)
+    
+    class Impl<in R>(
+        private val context: LScopeContext<R>
+    ) : TryFailureScopeContext<R> {
+        override val ident = Any()
+        
+        override fun fallback(
+            value: R
+        ) =
+            context broke value
     }
 }

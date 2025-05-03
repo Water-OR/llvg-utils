@@ -17,19 +17,27 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.iterator;
+@file:[JvmName("NumberUtils") Suppress("UNUSED")]
 
-import java.lang.reflect.Array;
+package net.llvg.loliutils.primitive
 
-@SuppressWarnings ("unused")
-public final class ArrayHelper {
-    private ArrayHelper() { }
-    
-    @SuppressWarnings ("unchecked")
-    public static <T> T[] newArray(
-      Class<? extends T> type,
-      int size
-    ) {
-        return (T[]) Array.newInstance(type, size);
-    }
-}
+inline val Number.double: Double
+    get() = toDouble()
+
+inline val Number.float: Float
+    get() = toFloat()
+
+inline val Number.long: Long
+    get() = toLong()
+
+inline val Number.int: Int
+    get() = toInt()
+
+inline val Number.char: Char
+    get() = toInt().toChar()
+
+inline val Number.short: Short
+    get() = toShort()
+
+inline val Number.byte: Byte
+    get() = toByte()

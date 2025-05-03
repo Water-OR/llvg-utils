@@ -17,19 +17,11 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.iterator;
+package net.llvg.loliutils.scope
 
-import java.lang.reflect.Array;
-
-@SuppressWarnings ("unused")
-public final class ArrayHelper {
-    private ArrayHelper() { }
+@Suppress("UNUSED")
+interface LScope<in R, out C : LScopeContext<R>> {
+    val context: C
     
-    @SuppressWarnings ("unchecked")
-    public static <T> T[] newArray(
-      Class<? extends T> type,
-      int size
-    ) {
-        return (T[]) Array.newInstance(type, size);
-    }
+    fun check(ident: Any): Boolean
 }

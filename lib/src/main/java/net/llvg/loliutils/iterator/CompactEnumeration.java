@@ -19,32 +19,37 @@
 
 package net.llvg.loliutils.iterator;
 
-import java.util.*;
+import java.util.Enumeration;
+import java.util.NoSuchElementException;
 
 @SuppressWarnings ("unused")
-public class CompactEnumeration<T> implements Enumeration<T> {
-        private final Enumeration<T>[] enums;
-        private int index = 0;
-        
-        public CompactEnumeration(Enumeration<T>[] enums) {
-                this.enums = enums;
+public class CompactEnumeration<T>
+  implements Enumeration<T>
+{
+    private final Enumeration<T>[] enums;
+    private int index = 0;
+    
+    public CompactEnumeration(Enumeration<T>[] enums) {
+        this.enums = enums;
+    }
+    
+    @Override
+    public T nextElement() {
+        if (hasMoreElements()) {
+            return enums[index].nextElement();
         }
         
-        @Override public boolean hasMoreElements() {
-                while (index < enums.length) {
-                        if (enums[index].hasMoreElements()) {
-                                return true;
-                        }
-                        ++index;
-                }
-                return false;
+        throw new NoSuchElementException();
+    }
+    
+    @Override
+    public boolean hasMoreElements() {
+        while (index < enums.length) {
+            if (enums[index].hasMoreElements()) {
+                return true;
+            }
+            ++index;
         }
-        
-        @Override public T nextElement() {
-                if (hasMoreElements()) {
-                        return enums[index].nextElement();
-                }
-                
-                throw new NoSuchElementException();
-        }
+        return false;
+    }
 }

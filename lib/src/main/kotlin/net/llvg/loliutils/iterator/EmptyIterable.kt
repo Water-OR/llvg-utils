@@ -19,7 +19,8 @@
 
 package net.llvg.loliutils.iterator
 
+@Suppress("UNUSED")
 object EmptyIterable : Iterable<Nothing> {
-        override fun iterator(): Iterator<Nothing> =
-                EmptyIterator
+    override fun iterator(): Iterator<Nothing> =
+        EmptyIterator
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Water-OR
+ * Copyright (C) 2025-2025 Water-OR
  *
  * This file is part of LolI Utils
  *
@@ -19,10 +19,36 @@
 
 package net.llvg.loliutils.iterator
 
-object EmptyIterator : Iterator<Nothing> {
-        override fun hasNext(): Boolean =
-                false
-        
-        override fun next(): Nothing =
-                throw UnsupportedOperationException()
+@Suppress("UNUSED")
+object EmptyIterator : Iterator<Nothing>, MutableIterator<Nothing>, ListIterator<Nothing>, MutableListIterator<Nothing> {
+    override fun hasNext(): Boolean =
+        false
+    
+    override fun next(): Nothing =
+        throw UnsupportedOperationException()
+    
+    override fun nextIndex(): Int =
+        throw UnsupportedOperationException()
+    
+    override fun hasPrevious(): Boolean =
+        false
+    
+    override fun previous(): Nothing =
+        throw UnsupportedOperationException()
+    
+    override fun previousIndex(): Int =
+        throw UnsupportedOperationException()
+    
+    override fun set(
+        element: Nothing
+    ) =
+        throw UnsupportedOperationException()
+    
+    override fun add(
+        element: Nothing
+    ) =
+        throw UnsupportedOperationException()
+    
+    override fun remove() =
+        throw UnsupportedOperationException()
 }
