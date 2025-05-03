@@ -21,6 +21,8 @@
 
 package net.llvg.loliutils.scope.try_scope
 
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import net.llvg.loliutils.scope.EmptyLScope
 import net.llvg.loliutils.scope.LScopeBreak
 import net.llvg.loliutils.scope.get
@@ -30,8 +32,12 @@ import net.llvg.loliutils.scope.runLScope
 inline fun <R> tryRun(
     scope: TryScope<R> = ListTryScope(ArrayList()),
     action: TryScopeContext<R>.() -> R
-): TryResult<R> =
-    scope.use {
+): TryResult<R> {
+    contract {
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
+    }
+    
+    return scope.use {
         try {
             TryResult.Success(it runLScope action)
         } catch (e: LScopeBreak) {
@@ -40,12 +46,17 @@ inline fun <R> tryRun(
             TryResult.Failure(e)
         }
     }
+}
 
 inline fun <T, R> T.tryLet(
     scope: TryScope<R> = ListTryScope(ArrayList()),
     action: TryScopeContext<R>.(T) -> R
-): TryResult<R> =
-    scope.use {
+): TryResult<R> {
+    contract {
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
+    }
+    
+    return scope.use {
         try {
             TryResult.Success(it runLScope { action(this@tryLet) })
         } catch (e: LScopeBreak) {
@@ -54,12 +65,17 @@ inline fun <T, R> T.tryLet(
             TryResult.Failure(e)
         }
     }
+}
 
 inline fun tryPrf(
     scope: TryScope<Unit> = ListTryScope(ArrayList()),
     action: TryScopeContext<Unit>.() -> Unit
-): TryResult<Unit> =
-    scope.use {
+): TryResult<Unit> {
+    contract {
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
+    }
+    
+    return scope.use {
         try {
             TryResult.Success(it prfLScope action)
         } catch (e: LScopeBreak) {
@@ -68,12 +84,17 @@ inline fun tryPrf(
             TryResult.Failure(e)
         }
     }
+}
 
 inline fun <T> T.tryAct(
     scope: TryScope<Unit> = ListTryScope(ArrayList()),
     action: TryScopeContext<Unit>.(T) -> Unit
-): TryResult<Unit> =
-    scope.use {
+): TryResult<Unit> {
+    contract {
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
+    }
+    
+    return scope.use {
         try {
             TryResult.Success(it prfLScope { action(this@tryAct) })
         } catch (e: LScopeBreak) {
@@ -82,16 +103,33 @@ inline fun <T> T.tryAct(
             TryResult.Failure(e)
         }
     }
+}
 
-inline val <R> TryResult<R>.isSuccess: Boolean
-    get() = this is TryResult.Success
+inline fun <R> TryResult<R>.isSuccess(): Boolean {
+    contract {
+        returns(true) implies (this@isSuccess is TryResult.Success)
+        returns(false) implies (this@isSuccess is TryResult.Failure)
+    }
+    
+    return this is TryResult.Success
+}
 
-inline val <R> TryResult<R>.isFailure: Boolean
-    get() = this is TryResult.Failure
+inline fun <R> TryResult<R>.isFailure(): Boolean {
+    contract {
+        returns(true) implies (this@isFailure is TryResult.Failure)
+        returns(false) implies (this@isFailure is TryResult.Success)
+    }
+    
+    return this is TryResult.Failure
+}
 
 inline infix fun <R, reified E : Throwable> TryResult<R>.runExcept(
     action: TryFailureScopeContext<R>.(E) -> Unit
 ): TryResult<R> {
+    contract {
+        callsInPlace(action, InvocationKind.AT_MOST_ONCE)
+    }
+    
     if (this is TryResult.Failure && e is E) EmptyLScope<R>().run {
         try {
             TryFailureScopeContext.Impl(context).action(e)
@@ -106,6 +144,10 @@ inline infix fun <R, reified E : Throwable> TryResult<R>.runExcept(
 inline infix fun <reified E : Throwable> TryResult<Unit>.prfExcept(
     action: TryFailureScopeContext<Unit>.(E) -> Unit
 ): TryResult<Unit> {
+    contract {
+        callsInPlace(action, InvocationKind.AT_MOST_ONCE)
+    }
+    
     if (this is TryResult.Failure && e is E) EmptyLScope<Unit>().run {
         try {
             TryFailureScopeContext.Impl(context).action(e)
@@ -120,15 +162,12 @@ inline infix fun <reified E : Throwable> TryResult<Unit>.prfExcept(
 inline fun <R> TryResult<R>.orElse(
     fallback: R
 ): R =
-    if (this is TryResult.Success) r else fallback
+    if (isSuccess()) r else fallback
 
 inline val <R> TryResult<R>.orNull: R?
     @JvmName("orNull")
-    get() = if (this is TryResult.Success) r else null
+    get() = if (isSuccess()) r else null
 
 inline val <R> TryResult<R>.orThrow: R
     @JvmName("orThrow")
-    get() = when (this) {
-        is TryResult.Success -> r
-        is TryResult.Failure -> throw e
-    }
+    get() = if (isSuccess()) r else throw e

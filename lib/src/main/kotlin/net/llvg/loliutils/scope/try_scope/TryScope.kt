@@ -23,7 +23,7 @@ import net.llvg.loliutils.scope.LScope
 
 @Suppress("UNUSED")
 interface TryScope<in R> : LScope<R, TryScopeContext<R>>, AutoCloseable {
-    fun resource(resource: AutoCloseable)
+    infix fun resource(resource: AutoCloseable)
     
     override val context: TryScopeContext<R>
     

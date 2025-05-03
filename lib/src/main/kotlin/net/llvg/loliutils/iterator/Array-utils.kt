@@ -22,21 +22,25 @@
 package net.llvg.loliutils.iterator
 
 import java.util.Arrays
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 inline fun <T> newArray(
     type: Class<T>,
     size: Int
-): Array<T> = ArrayHelper.newArray(
-    type,
-    size
-)
+): Array<T> =
+    ArrayHelper.newArray(
+        type,
+        size
+    )
 
 inline fun <reified T> newArray(
     size: Int
-): Array<T> = newArray(
-    T::class.java,
-    size
-)
+): Array<T> =
+    newArray(
+        T::class.java,
+        size
+    )
 
 inline val <T> Array<T>.asCollection: Collection<T>
     get() = ArrayAsCollection(this)
@@ -52,6 +56,10 @@ internal inline fun <R> subArrayRangeCheck(
     size: Int,
     onSuccess: (Int) -> R
 ): R {
+    contract {
+        callsInPlace(onSuccess, InvocationKind.EXACTLY_ONCE)
+    }
+    
     require(0 <= from) {
         "Failed in check 0 <= from, from=$from"
     }

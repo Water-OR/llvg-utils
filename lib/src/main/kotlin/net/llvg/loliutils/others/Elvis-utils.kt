@@ -17,42 +17,97 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:[JvmName("ElvisUtils") Suppress("UNUSED")]
+@file:[JvmName("ElvisUtils") Suppress("UNUSED", "NOTHING_TO_INLINE")]
 
 package net.llvg.loliutils.others
 
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
+
 inline val Boolean.takeTrue: Boolean?
-    get() = if (this) true else null
+    get() = takeTrue()
+
+inline fun Boolean.takeTrue(): Boolean? {
+    contract {
+        returns(null) implies !this@takeTrue
+        returnsNotNull() implies this@takeTrue
+    }
+    
+    return if (this) true else null
+}
 
 inline val Boolean.takeFalse: Boolean?
-    get() = if (this) null else false
+    get() = takeFalse()
+
+inline fun Boolean.takeFalse(): Boolean? {
+    contract {
+        returns(null) implies this@takeFalse
+        returnsNotNull() implies !this@takeFalse
+    }
+    
+    return if (this) null else false
+}
 
 inline val Any?.invertElvis: Unit?
-    get() = if (this === null) Unit else null
+    get() = invertElvis()
+
+inline fun Any?.invertElvis(): Unit? {
+    contract {
+        returns(null) implies (this@invertElvis !== null)
+        returnsNotNull() implies (this@invertElvis === null)
+    }
+    
+    return if (this === null) Unit else null
+}
 
 inline fun <T> T.prf(
     action: T.() -> Unit
-) =
+) {
+    contract {
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
+    }
+    
     action()
+}
 
 inline fun <T> T.act(
     action: (T) -> Unit
-) =
+) {
+    contract {
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
+    }
+    
     action(this)
+}
 
 inline fun prf(
     action: () -> Unit
-) =
+) {
+    contract {
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
+    }
+    
     action()
+}
 
 @Suppress("UnusedReceiverParameter")
 inline fun Any?.exec(
     action: () -> Unit
-) =
+) {
+    contract {
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
+    }
+    
     action()
+}
 
 @Suppress("UnusedReceiverParameter")
 inline fun <R> Any?.eval(
     action: () -> R
-): R =
-    action()
+): R {
+    contract {
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
+    }
+    
+    return action()
+}
