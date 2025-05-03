@@ -6,6 +6,6 @@ package net.llvg.loliutils
 import kotlin.test.Test
 
 class LoliUtilsTest {
-        @Test fun someLibraryMethodReturnsTrue() {
-        }
+    @Test
+    fun test() = Unit
 }

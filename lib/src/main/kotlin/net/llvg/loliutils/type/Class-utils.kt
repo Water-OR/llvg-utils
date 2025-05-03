@@ -17,19 +17,20 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.iterator;
+@file:[JvmName("ClassUtils") Suppress("UNUSED")]
 
-import java.lang.reflect.Array;
+package net.llvg.loliutils.type
 
-@SuppressWarnings ("unused")
-public final class ArrayHelper {
-    private ArrayHelper() { }
-    
-    @SuppressWarnings ("unchecked")
-    public static <T> T[] newArray(
-      Class<? extends T> type,
-      int size
-    ) {
-        return (T[]) Array.newInstance(type, size);
-    }
-}
+inline fun <reified T> Class<*>.isExtend(): Boolean =
+    T::class.java.isAssignableFrom(this)
+
+@Suppress("UNCHECKED_CAST")
+inline fun <reified T> Class<*>.tryExtend(): Class<out T>? =
+    if (isExtend<T>()) this as Class<out T> else null
+
+inline fun <reified T> Class<*>.isSuper(): Boolean =
+    isAssignableFrom(T::class.java)
+
+@Suppress("UNCHECKED_CAST")
+inline fun <reified T> Class<*>.trySuper(): Class<in T>? =
+    if (isSuper<T>()) this as Class<in T> else null

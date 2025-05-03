@@ -17,19 +17,19 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.iterator;
+@file:[JvmName("SettableUtils") Suppress("UNUSED", "NOTHING_TO_INLINE")]
 
-import java.lang.reflect.Array;
+package net.llvg.loliutils.function
 
-@SuppressWarnings ("unused")
-public final class ArrayHelper {
-    private ArrayHelper() { }
-    
-    @SuppressWarnings ("unchecked")
-    public static <T> T[] newArray(
-      Class<? extends T> type,
-      int size
-    ) {
-        return (T[]) Array.newInstance(type, size);
-    }
-}
+inline infix operator fun <T> Settable<T>.invoke(
+    value: T
+) =
+    set(value)
+
+inline val <T> Settable<T>.asLambda: (T) -> Unit
+    get() = ::set
+
+inline fun <T> makeSettable(
+    crossinline action: (T) -> Unit
+): Settable<T> =
+    Settable { action(it) }

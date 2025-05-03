@@ -7,4 +7,4 @@
 build
 
 # Ignore test directory
-/lib/src/test/
+lib/src/test

@@ -17,19 +17,29 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.iterator;
+package net.llvg.loliutils.reference
 
-import java.lang.reflect.Array;
+import java.util.concurrent.locks.ReadWriteLock
+import java.util.concurrent.locks.ReentrantReadWriteLock
+import net.llvg.loliutils.concurrent.withReadLock
+import net.llvg.loliutils.concurrent.withWriteLock
 
-@SuppressWarnings ("unused")
-public final class ArrayHelper {
-    private ArrayHelper() { }
+@Suppress("UNUSED")
+class ReadWriteLockRef<T>(
+    ref: VarRef<T>,
+    private val lock: ReadWriteLock = ReentrantReadWriteLock()
+) : VarRef<T> {
+    private var value by ref
     
-    @SuppressWarnings ("unchecked")
-    public static <T> T[] newArray(
-      Class<? extends T> type,
-      int size
-    ) {
-        return (T[]) Array.newInstance(type, size);
-    }
+    override fun set(
+        value: T
+    ) =
+        lock.withWriteLock {
+            this.value = value
+        }
+    
+    override fun get(): T =
+        lock.withReadLock {
+            value
+        }
 }

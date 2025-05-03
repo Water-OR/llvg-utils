@@ -17,19 +17,21 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.iterator;
+@file:[JvmName("TypeUtils") Suppress("UNUSED", "NOTHING_TO_INLINE")]
 
-import java.lang.reflect.Array;
+package net.llvg.loliutils.type
 
-@SuppressWarnings ("unused")
-public final class ArrayHelper {
-    private ArrayHelper() { }
-    
-    @SuppressWarnings ("unchecked")
-    public static <T> T[] newArray(
-      Class<? extends T> type,
-      int size
-    ) {
-        return (T[]) Array.newInstance(type, size);
-    }
-}
+@Suppress("UNCHECKED_CAST")
+inline fun <R> Any?.castTo(): R =
+    this as R
+
+@Suppress("UNCHECKED_CAST")
+inline fun <R> cast(
+    value: Any?
+): R =
+    value as R
+
+@Suppress("UNCHECKED_CAST")
+@get:JvmName("asNotNull")
+inline val <T> T?.asNotNull: T
+    get() = this as T

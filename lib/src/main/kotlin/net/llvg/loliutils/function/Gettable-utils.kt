@@ -17,19 +17,22 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.iterator;
+@file:[JvmName("GettableUtils") Suppress("UNUSED", "NOTHING_TO_INLINE")]
 
-import java.lang.reflect.Array;
+package net.llvg.loliutils.function
 
-@SuppressWarnings ("unused")
-public final class ArrayHelper {
-    private ArrayHelper() { }
-    
-    @SuppressWarnings ("unchecked")
-    public static <T> T[] newArray(
-      Class<? extends T> type,
-      int size
-    ) {
-        return (T[]) Array.newInstance(type, size);
-    }
-}
+import net.llvg.loliutils.type.castTo
+
+inline operator fun <T> Gettable<T>.invoke(): T =
+    get()
+
+inline val <T> Gettable<T>.asLambda: () -> T
+    get() = ::get
+
+inline fun <T> makeGettable(
+    crossinline action: () -> T
+): Gettable<T> =
+    Gettable { action() }
+
+inline fun <R> Gettable<*>.cast(): R =
+    get().castTo()

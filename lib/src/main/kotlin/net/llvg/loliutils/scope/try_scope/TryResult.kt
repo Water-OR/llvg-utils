@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Water-OR
+ * Copyright (C) 2025-2025 Water-OR
  *
  * This file is part of LolI Utils
  *
@@ -17,19 +17,15 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.iterator;
+package net.llvg.loliutils.scope.try_scope
 
-import java.lang.reflect.Array;
-
-@SuppressWarnings ("unused")
-public final class ArrayHelper {
-    private ArrayHelper() { }
+@Suppress("UNUSED")
+sealed interface TryResult<out R> {
+    class Success<out R> @PublishedApi internal constructor(
+        val r: R
+    ) : TryResult<R>
     
-    @SuppressWarnings ("unchecked")
-    public static <T> T[] newArray(
-      Class<? extends T> type,
-      int size
-    ) {
-        return (T[]) Array.newInstance(type, size);
-    }
+    class Failure<out R> @PublishedApi internal constructor(
+        val e: Throwable
+    ) : TryResult<R>
 }

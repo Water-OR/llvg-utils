@@ -19,17 +19,25 @@
 
 package net.llvg.loliutils.iterator;
 
-import java.lang.reflect.Array;
+import java.util.Iterator;
+import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings ("unused")
-public final class ArrayHelper {
-    private ArrayHelper() { }
+public class VoidIterable
+  implements Iterable<Void>
+{
+    private VoidIterable() { }
+    
+    public static final VoidIterable INSTANCE = new VoidIterable();
     
     @SuppressWarnings ("unchecked")
-    public static <T> T[] newArray(
-      Class<? extends T> type,
-      int size
-    ) {
-        return (T[]) Array.newInstance(type, size);
+    public static <T> Iterable<T> typed() {
+        return (Iterable<T>) INSTANCE;
+    }
+    
+    @NotNull
+    @Override
+    public Iterator<Void> iterator() {
+        return VoidIterator.INSTANCE;
     }
 }
