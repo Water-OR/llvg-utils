@@ -42,23 +42,16 @@ inline infix fun <R, C : LScopeContext<R>> LScope<R, C>.runLScope(
 
 inline fun <R> runLScope(
     action: EmptyLScopeContext<R>.() -> R
-): R = EmptyLScope<R>().run {
-    try {
-        context.action()
-    } catch (e: LScopeBreak) {
-        e[this]
-    }
-}
+): R = EmptyLScope<R>().runLScope(action)
+
+inline fun <T, R, C : LScopeContext<R>> T.letLScope(
+    scope: LScope<R, C>,
+    action: C.(T) -> R
+): R = scope.runLScope { action(this@letLScope) }
 
 inline infix fun <T, R> T.letLScope(
     action: EmptyLScopeContext<R>.(T) -> R
-): R = EmptyLScope<R>().run {
-    try {
-        context.action(this@letLScope)
-    } catch (e: LScopeBreak) {
-        e[this]
-    }
-}
+): R = EmptyLScope<R>().runLScope { action(this@letLScope) }
 
 inline infix fun <C : LScopeContext<Unit>> LScope<Unit, C>.prfLScope(
     action: C.() -> Unit
@@ -71,23 +64,16 @@ inline infix fun <C : LScopeContext<Unit>> LScope<Unit, C>.prfLScope(
 
 inline fun prfLScope(
     action: EmptyLScopeContext<Unit>.() -> Unit
-) = EmptyLScope<Unit>().run {
-    try {
-        context.action()
-    } catch (e: LScopeBreak) {
-        e[this]
-    }
-}
+) = EmptyLScope<Unit>().prfLScope(action)
+
+inline fun <T, C : LScopeContext<Unit>> T.actLScope(
+    scope: LScope<Unit, C>,
+    action: C.(T) -> Unit
+) = scope.prfLScope { action(this@actLScope) }
 
 inline infix fun <T> T.actLScope(
     action: EmptyLScopeContext<Unit>.(T) -> Unit
-) = EmptyLScope<Unit>().run {
-    try {
-        context.action(this@actLScope)
-    } catch (e: LScopeBreak) {
-        e[this]
-    }
-}
+) = EmptyLScope<Unit>().prfLScope { action(this@actLScope) }
 
 inline infix fun <R> LScopeContext<R>.broke(
     value: R
