@@ -24,8 +24,8 @@ package net.llvg.loliutils.scope.try_scope
 import net.llvg.loliutils.scope.EmptyLScope
 import net.llvg.loliutils.scope.LScopeBreak
 import net.llvg.loliutils.scope.get
-import net.llvg.loliutils.scope.runLScope
 import net.llvg.loliutils.scope.prfLScope
+import net.llvg.loliutils.scope.runLScope
 
 inline fun <R> tryRun(
     scope: TryScope<R> = ListTryScope(ArrayList()),
@@ -89,7 +89,7 @@ inline val <R> TryResult<R>.isSuccess: Boolean
 inline val <R> TryResult<R>.isFailure: Boolean
     get() = this is TryResult.Failure
 
-inline infix fun <R, reified E : Throwable> TryResult<R>.onExcept(
+inline infix fun <R, reified E : Throwable> TryResult<R>.runExcept(
     action: TryFailureScopeContext<R>.(E) -> Unit
 ): TryResult<R> {
     if (this is TryResult.Failure && e is E) EmptyLScope<R>().run {
@@ -103,7 +103,7 @@ inline infix fun <R, reified E : Throwable> TryResult<R>.onExcept(
     return this
 }
 
-inline infix fun <reified E : Throwable> TryResult<Unit>.onExcept(
+inline infix fun <reified E : Throwable> TryResult<Unit>.prfExcept(
     action: TryFailureScopeContext<Unit>.(E) -> Unit
 ): TryResult<Unit> {
     if (this is TryResult.Failure && e is E) EmptyLScope<Unit>().run {
