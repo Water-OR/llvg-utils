@@ -35,10 +35,11 @@ inline fun <T> makeRef(
 ): LambdaVarRef<T> =
     LambdaVarRef(getter, setter)
 
+inline val <T> VarRef<T>.asProperty: VarRefAsProperty<T>
+    get() = VarRefAsProperty(this)
+
 inline operator fun <T> VarRef<T>.provideDelegate(
     thisRef: Any?,
     property: KProperty<*>
 ): VarRefAsProperty<T> =
-    VarRefAsProperty(this)
-
-var x: Int = 0
+    asProperty
