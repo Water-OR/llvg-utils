@@ -23,7 +23,7 @@ import java.util.Iterator;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings ("unused")
-public class VoidIterable
+public final class VoidIterable
   implements Iterable<Void>
 {
     private VoidIterable() { }

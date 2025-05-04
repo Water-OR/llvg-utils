@@ -23,7 +23,7 @@ import java.util.Enumeration;
 import java.util.NoSuchElementException;
 
 @SuppressWarnings ("unused")
-public class CompactEnumeration<T>
+public final class CompactEnumeration<T>
   implements Enumeration<T>
 {
     private final Enumeration<T>[] enums;

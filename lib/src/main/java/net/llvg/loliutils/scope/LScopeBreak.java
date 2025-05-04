@@ -42,7 +42,7 @@ public class LScopeBreak
     }
     
     @SuppressWarnings ("unchecked")
-    public <T> T value() {
+    final public <T> T value() {
         return (T) value;
     }
     
