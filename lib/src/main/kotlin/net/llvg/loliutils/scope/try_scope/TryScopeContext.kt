@@ -24,22 +24,22 @@ import net.llvg.loliutils.scope.LScopeContext
 
 @Suppress("UNUSED")
 sealed interface TryScopeContext<in R> : LScopeContext<R> {
-    infix fun resource(resource: AutoCloseable): AutoCloseable
+    infix fun <T : AutoCloseable> resource(resource: T): T
     
-    val AutoCloseable.use: AutoCloseable
+    val <T : AutoCloseable> T.use: T
     
     class Impl<in R>(
         private val owner: TryScope<R>,
         ident: Any
     ) : AbstractLScopeContext<R>(ident), TryScopeContext<R> {
-        override fun resource(
-            resource: AutoCloseable
-        ): AutoCloseable {
+        override fun <T : AutoCloseable> resource(
+            resource: T
+        ): T {
             owner resource resource
             return resource
         }
         
-        override val AutoCloseable.use: AutoCloseable
+        override val <T : AutoCloseable> T.use: T
             get() {
                 owner resource this
                 return this
