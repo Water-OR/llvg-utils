@@ -53,6 +53,7 @@ kotlin.compilerOptions {
         "-Xnested-type-aliases",
         "-Xexplicit-api=warning",
         "-Xsuppress-warning=UNUSED",
+        "-Xsuppress-warning=NOTHING_TO_INLINE",
         "-opt-in=kotlin.contracts.ExperimentalContracts"
     )
     freeCompilerArgs.addAll(args)
