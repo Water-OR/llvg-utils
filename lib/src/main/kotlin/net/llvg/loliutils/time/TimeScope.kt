@@ -19,20 +19,19 @@
 
 package net.llvg.loliutils.time
 
-@Suppress("UNUSED")
-class TimeScope {
+public class TimeScope {
     @PublishedApi
-    internal val start = System.nanoTime()
+    internal val start: Long = System.nanoTime()
     
-    inline val currentNanoTime: Long
+    public inline val currentNanoTime: Long
         get() = (System.nanoTime() - start)
     
-    inline val currentMicroTime: Double
+    public inline val currentMicroTime: Double
         get() = (System.nanoTime() - start) / nanoSecondToMicroSecond
     
-    inline val currentMilliTime: Double
+    public inline val currentMilliTime: Double
         get() = (System.nanoTime() - start) / nanoSecondToMilliSecond
     
-    inline val currentTime: Double
+    public inline val currentTime: Double
         get() = (System.nanoTime() - start) / nanoSecondToSecond
 }

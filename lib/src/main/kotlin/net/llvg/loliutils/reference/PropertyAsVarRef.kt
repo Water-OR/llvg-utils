@@ -22,15 +22,13 @@ package net.llvg.loliutils.reference
 import kotlin.reflect.KMutableProperty0
 
 @JvmInline
-@Suppress("UNUSED", "OVERRIDE_BY_INLINE", "NOTHING_TO_INLINE")
-value class PropertyAsVarRef<T>(
-    val property: KMutableProperty0<T>
-) : VarRef<T> {
+@Suppress("OVERRIDE_BY_INLINE")
+public value class PropertyAsVarRef<T>(public val property: KMutableProperty0<T>) :
+  VarRef<T> {
     override inline fun get(): T =
         property.get()
     
-    override inline fun set(
-        value: T
-    ) =
+    override inline fun set(value: T) {
         property.set(value)
+    }
 }

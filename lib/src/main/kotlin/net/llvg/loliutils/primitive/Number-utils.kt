@@ -17,27 +17,27 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:[JvmName("NumberUtils") Suppress("UNUSED")]
+@file:JvmName("NumberUtils")
 
 package net.llvg.loliutils.primitive
 
-inline val Number.double: Double
+public inline val Number.double: Double
     get() = toDouble()
 
-inline val Number.float: Float
+public inline val Number.float: Float
     get() = toFloat()
 
-inline val Number.long: Long
+public inline val Number.long: Long
     get() = toLong()
 
-inline val Number.int: Int
+public inline val Number.int: Int
     get() = toInt()
 
-inline val Number.char: Char
+public inline val Number.char: Char
     get() = toInt().toChar()
 
-inline val Number.short: Short
+public inline val Number.short: Short
     get() = toShort()
 
-inline val Number.byte: Byte
+public inline val Number.byte: Byte
     get() = toByte()

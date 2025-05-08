@@ -19,8 +19,7 @@
 
 package net.llvg.loliutils.function
 
-@Suppress("UNUSED")
 @FunctionalInterface
-fun interface Settable<in T> {
-    infix fun set(value: T)
+public fun interface Settable<in T> {
+    public infix fun set(value: T)
 }

@@ -22,20 +22,18 @@ package net.llvg.loliutils.scope.try_scope
 import net.llvg.loliutils.scope.LScopeContext
 import net.llvg.loliutils.scope.broke
 
-@Suppress("UNUSED")
-sealed interface TryFailureScopeContext<in R> : LScopeContext<Unit> {
+public sealed interface TryFailureScopeContext<in R> :
+  LScopeContext<Unit> {
     override val ident: Any
     
-    fun fallback(value: R)
+    public fun fallback(value: R)
     
-    class Impl<in R>(
-        private val context: LScopeContext<R>
-    ) : TryFailureScopeContext<R> {
-        override val ident = Any()
+    public class Impl<in R>(private val context: LScopeContext<R>) :
+      TryFailureScopeContext<R> {
+        override val ident: Any = Any()
         
-        override fun fallback(
-            value: R
-        ) =
+        override fun fallback(value: R) {
             context broke value
+        }
     }
 }

@@ -17,7 +17,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:[JvmName("ArrayUtils") Suppress("UNUSED", "NOTHING_TO_INLINE", "ReplaceJavaStaticMethodWithKotlinAnalog")]
+@file:JvmName("ArrayUtils")
+@file:Suppress("ReplaceJavaStaticMethodWithKotlinAnalog")
 
 package net.llvg.loliutils.iterator
 
@@ -25,7 +26,7 @@ import java.util.Arrays
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-inline fun <T> newArray(
+public inline fun <T> newArray(
     type: Class<T>,
     size: Int
 ): Array<T> =
@@ -34,19 +35,17 @@ inline fun <T> newArray(
         size
     )
 
-inline fun <reified T> newArray(
-    size: Int
-): Array<T> =
+public inline fun <reified T> newArray(size: Int): Array<T> =
     newArray(
         T::class.java,
         size
     )
 
-inline val <T> Array<T>.asCollection: Collection<T>
+public inline val <T> Array<T>.asCollection: Collection<T>
     get() = ArrayAsCollection(this)
 
 @Suppress("ReplaceJavaStaticMethodWithKotlinAnalog")
-inline val <T> Array<T>.asList: List<T>
+public inline val <T> Array<T>.asList: List<T>
     get() = Arrays.asList(*this)
 
 @PublishedApi
@@ -73,7 +72,7 @@ internal inline fun <R> subArrayRangeCheck(
     return onSuccess(till)
 }
 
-inline fun ByteArray.subArray(
+public inline fun ByteArray.subArray(
     from: Int = 0,
     size: Int = this.size - from
 ): ByteArray =
@@ -85,7 +84,7 @@ inline fun ByteArray.subArray(
         }
     }
 
-inline fun ShortArray.subArray(
+public inline fun ShortArray.subArray(
     from: Int = 0,
     size: Int = this.size - from
 ): ShortArray =
@@ -97,7 +96,7 @@ inline fun ShortArray.subArray(
         }
     }
 
-inline fun IntArray.subArray(
+public inline fun IntArray.subArray(
     from: Int = 0,
     size: Int = this.size - from
 ): IntArray =
@@ -109,7 +108,7 @@ inline fun IntArray.subArray(
         }
     }
 
-inline fun LongArray.subArray(
+public inline fun LongArray.subArray(
     from: Int = 0,
     size: Int = this.size - from
 ): LongArray =
@@ -121,7 +120,7 @@ inline fun LongArray.subArray(
         }
     }
 
-inline fun CharArray.subArray(
+public inline fun CharArray.subArray(
     from: Int = 0,
     size: Int = this.size - from
 ): CharArray =
@@ -133,7 +132,7 @@ inline fun CharArray.subArray(
         }
     }
 
-inline fun FloatArray.subArray(
+public inline fun FloatArray.subArray(
     from: Int = 0,
     size: Int = this.size - from
 ): FloatArray =
@@ -145,7 +144,7 @@ inline fun FloatArray.subArray(
         }
     }
 
-inline fun DoubleArray.subArray(
+public inline fun DoubleArray.subArray(
     from: Int = 0,
     size: Int = this.size - from
 ): DoubleArray =
@@ -157,7 +156,7 @@ inline fun DoubleArray.subArray(
         }
     }
 
-inline fun BooleanArray.subArray(
+public inline fun BooleanArray.subArray(
     from: Int = 0,
     size: Int = this.size - from
 ): BooleanArray =
@@ -169,7 +168,7 @@ inline fun BooleanArray.subArray(
         }
     }
 
-inline fun <T> Array<T>.subArray(
+public inline fun <T> Array<T>.subArray(
     from: Int = 0,
     size: Int = this.size - from
 ): Array<T> =

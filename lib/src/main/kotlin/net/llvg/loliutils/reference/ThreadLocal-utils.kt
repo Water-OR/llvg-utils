@@ -17,21 +17,19 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:[JvmName("ThreadLocalUtils") Suppress("UNUSED", "NOTHING_TO_INLINE")]
+@file:JvmName("ThreadLocalUtils")
 
 package net.llvg.loliutils.reference
 
 import kotlin.reflect.KProperty
 
-inline val <T> ThreadLocal<T>.asRef: ThreadLocalAsRef<T>
+public inline val <T> ThreadLocal<T>.asRef: ThreadLocalAsRef<T>
     get() = ThreadLocalAsRef(this)
 
-inline fun <T> ThreadLocal(
-    crossinline initializer: () -> T
-): ThreadLocal<T> =
+public inline fun <T> ThreadLocal(crossinline initializer: () -> T): ThreadLocal<T> =
     ThreadLocal.withInitial { initializer() }
 
-inline operator fun <T> ThreadLocal<T>.provideDelegate(
+public inline operator fun <T> ThreadLocal<T>.provideDelegate(
     self: Any?,
     property: KProperty<*>
 ): ThreadLocalAsRef<T> =

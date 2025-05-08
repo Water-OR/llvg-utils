@@ -19,8 +19,7 @@
 
 package net.llvg.loliutils.function
 
-@Suppress("UNUSED")
 @FunctionalInterface
-fun interface Gettable<out T> {
-    fun get(): T
+public fun interface Gettable<out T> {
+    public fun get(): T
 }

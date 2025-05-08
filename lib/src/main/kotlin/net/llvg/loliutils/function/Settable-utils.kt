@@ -17,19 +17,15 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:[JvmName("SettableUtils") Suppress("UNUSED", "NOTHING_TO_INLINE")]
+@file:JvmName("SettableUtils")
 
 package net.llvg.loliutils.function
 
-inline infix operator fun <T> Settable<T>.invoke(
-    value: T
-) =
+public inline infix operator fun <T> Settable<T>.invoke(value: T) =
     set(value)
 
-inline val <T> Settable<T>.asLambda: (T) -> Unit
+public inline val <T> Settable<T>.asLambda: (T) -> Unit
     get() = ::set
 
-inline fun <T> makeSettable(
-    crossinline action: (T) -> Unit
-): Settable<T> =
+public inline fun <T> makeSettable(crossinline action: (T) -> Unit): Settable<T> =
     Settable { action(it) }

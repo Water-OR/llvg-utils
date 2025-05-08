@@ -17,22 +17,20 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:[JvmName("GettableUtils") Suppress("UNUSED", "NOTHING_TO_INLINE")]
+@file:JvmName("GettableUtils")
 
 package net.llvg.loliutils.function
 
 import net.llvg.loliutils.type.castTo
 
-inline operator fun <T> Gettable<T>.invoke(): T =
+public inline operator fun <T> Gettable<T>.invoke(): T =
     get()
 
-inline val <T> Gettable<T>.asLambda: () -> T
+public inline val <T> Gettable<T>.asLambda: () -> T
     get() = ::get
 
-inline fun <T> makeGettable(
-    crossinline action: () -> T
-): Gettable<T> =
+public inline fun <T> makeGettable(crossinline action: () -> T): Gettable<T> =
     Gettable { action() }
 
-inline fun <R> Gettable<*>.cast(): R =
+public inline fun <R> Gettable<*>.cast(): R =
     get().castTo()

@@ -22,19 +22,19 @@ package net.llvg.loliutils.scope.try_scope
 import net.llvg.loliutils.scope.AbstractLScopeContext
 import net.llvg.loliutils.scope.LScopeContext
 
-@Suppress("UNUSED")
-sealed interface TryScopeContext<in R> : LScopeContext<R> {
-    infix fun <T : AutoCloseable> resource(resource: T): T
+public sealed interface TryScopeContext<in R> :
+  LScopeContext<R> {
+    public infix fun <T : AutoCloseable> resource(resource: T): T
     
-    val <T : AutoCloseable> T.use: T
+    public val <T : AutoCloseable> T.use: T
     
-    class Impl<in R>(
+    public class Impl<in R>(
         private val owner: TryScope<R>,
         ident: Any
-    ) : AbstractLScopeContext<R>(ident), TryScopeContext<R> {
-        override fun <T : AutoCloseable> resource(
-            resource: T
-        ): T {
+    ) :
+      AbstractLScopeContext<R>(ident),
+      TryScopeContext<R> {
+        override fun <T : AutoCloseable> resource(resource: T): T {
             owner resource resource
             return resource
         }

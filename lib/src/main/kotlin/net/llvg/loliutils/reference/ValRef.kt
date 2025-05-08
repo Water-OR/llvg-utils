@@ -21,7 +21,7 @@ package net.llvg.loliutils.reference
 
 import net.llvg.loliutils.function.Gettable
 
-@Suppress("UNUSED")
-interface ValRef<out T> : Gettable<T> {
+public interface ValRef<out T> :
+  Gettable<T> {
     override fun get(): T
 }

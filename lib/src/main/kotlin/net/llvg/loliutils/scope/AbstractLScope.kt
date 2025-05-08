@@ -19,16 +19,14 @@
 
 package net.llvg.loliutils.scope
 
-@Suppress("UNUSED", "MemberVisibilityCanBePrivate")
-abstract class AbstractLScope<in R, out C : LScopeContext<R>> : LScope<R, C> {
+public abstract class AbstractLScope<in R, out C : LScopeContext<R>> :
+  LScope<R, C> {
     protected val ident: Any = Any()
     
     protected abstract fun context(): C
     
     final override val context: C by lazy { context() }
     
-    override fun check(
-        ident: Any
-    ): Boolean =
+    override fun check(ident: Any): Boolean =
         this.ident === ident
 }

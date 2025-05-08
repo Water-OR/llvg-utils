@@ -1,9 +1,13 @@
+@file:Suppress("SpellCheckingInspection")
+
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
+
+
 plugins {
     kotlin("jvm") version libs.versions.kotlin
     
     `java-library`
-    `maven-publish`
-    publishing
 }
 
 @Suppress("PropertyName")
@@ -18,7 +22,7 @@ repositories {
 
 @Suppress("UnstableApiUsage")
 testing.suites {
-    val test by getting(JvmTestSuite::class) {
+    getByName<JvmTestSuite>("test") {
         useKotlinTest(libs.versions.kotlin)
     }
 }
@@ -29,36 +33,28 @@ java {
         vendor = JvmVendorSpec.AZUL
     }
     
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+    
     withSourcesJar()
     withJavadocJar()
 }
 
-kotlin {
-    compilerOptions {
-        val args = listOf(
-            "-Xjvm-default=all",
-            "-opt-in=kotlin.contracts.ExperimentalContracts"
-        )
-        freeCompilerArgs.addAll(args)
-    }
-}
-
-publishing {
-    repositories {
-        mavenLocal()
-    }
+kotlin.compilerOptions {
+    apiVersion = KotlinVersion.KOTLIN_2_2
+    languageVersion = KotlinVersion.KOTLIN_2_2
     
-    publications {
-        val maven by registering(MavenPublication::class) {
-            from(components["kotlin"])
-            artifact(tasks["sourcesJar"])
-            artifact(tasks["javadocJar"])
-            pom {
-                artifactId = "loli-utils"
-                name = "loli-utils"
-                description = "LolI Vanguard's utils <3"
-                url = "https://github.com/Water-OR/llvg-utils"
-            }
-        }
-    }
+    jvmTarget = JvmTarget.JVM_1_8
+    
+    val args = listOf(
+        "-Xwhen-guards",
+        "-Xjvm-default=all",
+        "-Xcontext-parameters",
+        "-Xnested-type-aliases",
+        "-Xexplicit-api=warning",
+        "-Xsuppress-warning=UNUSED",
+        "-Xsuppress-warning=NOTHING_TO_INLINE",
+        "-opt-in=kotlin.contracts.ExperimentalContracts"
+    )
+    freeCompilerArgs.addAll(args)
 }

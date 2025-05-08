@@ -20,10 +20,9 @@
 package net.llvg.loliutils.reference
 
 @JvmInline
-@Suppress("UNUSED")
-value class BoxRef<out T>(
-    val value: T
-) : ValRef<T> {
-    override fun get(): T =
+@Suppress("OVERRIDE_BY_INLINE")
+public value class BoxRef<out T>(public val value: T) :
+  ValRef<T> {
+    override inline fun get(): T =
         value
 }

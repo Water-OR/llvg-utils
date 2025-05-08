@@ -19,7 +19,5 @@
 
 package net.llvg.loliutils.scope
 
-@Suppress("UNUSED")
-class EmptyLScopeContext<in R>(
-    ident: Any
-) : AbstractLScopeContext<R>(ident)
+public class EmptyLScopeContext(ident: Any) :
+  AbstractLScopeContext<Any?>(ident)

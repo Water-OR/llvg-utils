@@ -26,9 +26,9 @@ import net.llvg.loliutils.concurrent.withWriteLock
 import net.llvg.loliutils.others.eval
 import net.llvg.loliutils.others.exec
 
-@Suppress("UNUSED", "NOTHING_TO_INLINE")
-class InitOnceRef<T> : VarRef<T> {
-    val initialized: Boolean
+public class InitOnceRef<T> :
+  VarRef<T> {
+    public val initialized: Boolean
         @JvmName("isInitialized")
         get() =
             lock.withReadLock { box }
@@ -42,9 +42,7 @@ class InitOnceRef<T> : VarRef<T> {
           ?.get() ?: throwUninitialized()
     
     
-    override fun set(
-        value: T
-    ) {
+    override fun set(value: T) {
         lock.withReadLock { box }
           ?.exec { throwReinitialized() }
         

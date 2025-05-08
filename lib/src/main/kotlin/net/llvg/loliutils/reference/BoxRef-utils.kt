@@ -21,5 +21,5 @@
 
 package net.llvg.loliutils.reference
 
-val <T> T.boxed: BoxRef<T>
+public inline val <T> T.boxed: BoxRef<T>
     get() = BoxRef(this)

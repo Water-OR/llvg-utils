@@ -24,22 +24,20 @@ import java.util.concurrent.locks.ReentrantReadWriteLock
 import net.llvg.loliutils.concurrent.withReadLock
 import net.llvg.loliutils.concurrent.withWriteLock
 
-@Suppress("UNUSED")
-class ReadWriteLockRef<T>(
-    ref: VarRef<T>,
+public class ReadWriteLockRef<T>(
+    private val ref: VarRef<T>,
     private val lock: ReadWriteLock = ReentrantReadWriteLock()
-) : VarRef<T> {
-    private var value by ref
-    
-    override fun set(
-        value: T
-    ) =
-        lock.withWriteLock {
-            this.value = value
-        }
+) :
+  VarRef<T> {
     
     override fun get(): T =
         lock.withReadLock {
-            value
+            ref.get()
         }
+    
+    override fun set(value: T) {
+        lock.withWriteLock {
+            ref.set(value)
+        }
+    }
 }
