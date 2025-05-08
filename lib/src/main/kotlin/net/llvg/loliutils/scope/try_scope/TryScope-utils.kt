@@ -132,11 +132,11 @@ public inline infix fun <R, reified E : Throwable> TryResult<R>.runExcept(action
         callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
     
-    if (this is TryResult.Failure && e is E) EmptyLScope<R>().run {
+    if (this is TryResult.Failure && e is E) EmptyLScope().run {
         try {
             TryFailureScopeContext.Impl(context).action(e)
         } catch (e: LScopeBreak) {
-            return TryResult.Success(e[this])
+            return TryResult.Success(e.get<R>(this))
         }
     }
     
@@ -148,7 +148,7 @@ public inline infix fun <reified E : Throwable> TryResult<Unit>.prfExcept(action
         callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
     
-    if (this is TryResult.Failure && e is E) EmptyLScope<Unit>().run {
+    if (this is TryResult.Failure && e is E) EmptyLScope().run {
         try {
             TryFailureScopeContext.Impl(context).action(e)
         } catch (e: LScopeBreak) {
