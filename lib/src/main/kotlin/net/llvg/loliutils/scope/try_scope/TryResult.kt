@@ -19,13 +19,10 @@
 
 package net.llvg.loliutils.scope.try_scope
 
-@Suppress("UNUSED")
-sealed interface TryResult<out R> {
-    class Success<out R> @PublishedApi internal constructor(
-        val r: R
-    ) : TryResult<R>
+public sealed interface TryResult<out R> {
+    public class Success<out R> @PublishedApi internal constructor(public val r: R) :
+      TryResult<R>
     
-    class Failure<out R> @PublishedApi internal constructor(
-        val e: Throwable
-    ) : TryResult<R>
+    public class Failure<out R> @PublishedApi internal constructor(public val e: Throwable) :
+      TryResult<R>
 }

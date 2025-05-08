@@ -19,8 +19,8 @@
 
 package net.llvg.loliutils.scope
 
-@Suppress("UNUSED")
-class EmptyLScope<in R> : AbstractLScope<R, EmptyLScopeContext<R>>() {
-    override fun context(): EmptyLScopeContext<R> =
+public class EmptyLScope :
+  AbstractLScope<Any?, EmptyLScopeContext>() {
+    override fun context(): EmptyLScopeContext =
         EmptyLScopeContext(ident)
 }

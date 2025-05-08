@@ -17,24 +17,24 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:[JvmName("TimeUtils") Suppress("UNUSED")]
+@file:JvmName("TimeUtils")
 
 package net.llvg.loliutils.time
 
-const val nanoSecondToMicroSecond = 1_000.0
+public const val nanoSecondToMicroSecond: Double = 1_000.0
 
-const val nanoSecondToMilliSecond = 1_000_000.0
+public const val nanoSecondToMilliSecond: Double = 1_000_000.0
 
-const val nanoSecondToSecond = 1_000_000_000.0
+public const val nanoSecondToSecond: Double = 1_000_000_000.0
 
-inline val systemNanoTime: Long
+public inline val systemNanoTime: Long
     get() = System.nanoTime()
 
-inline val systemMicroTime: Double
+public inline val systemMicroTime: Double
     get() = System.nanoTime() / nanoSecondToMicroSecond
 
-inline val systemMilliTime: Double
+public inline val systemMilliTime: Double
     get() = System.nanoTime() / nanoSecondToMilliSecond
 
-inline val systemTime: Double
+public inline val systemTime: Double
     get() = System.nanoTime() / nanoSecondToSecond

@@ -17,26 +17,21 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:[JvmName("LScopeUtils") Suppress("UNUSED", "NOTHING_TO_INLINE")]
+@file:JvmName("LScopeUtils")
 
 package net.llvg.loliutils.scope
 
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-inline operator fun <R> LScopeBreak.get(
-    scope: LScope<R, *>
-): R =
+public inline operator fun <R> LScopeBreak.get(scope: LScope<R, *>): R =
     if (scope.check(ident)) value() else throw this
 
-inline operator fun LScopeBreak.get(
-    scope: LScope<Unit, *>
-) =
+public inline operator fun LScopeBreak.get(scope: LScope<Unit, *>) =
     if (scope.check(ident)) Unit else throw this
 
-inline infix fun <R, C : LScopeContext<R>> LScope<R, C>.runLScope(
-    action: C.() -> R
-): R {
+@Suppress("WRONG_INVOCATION_KIND")
+public inline infix fun <R, C : LScopeContext<R>> LScope<R, C>.runLScope(action: C.() -> R): R {
     contract {
         callsInPlace(action, InvocationKind.EXACTLY_ONCE)
     }
@@ -48,17 +43,16 @@ inline infix fun <R, C : LScopeContext<R>> LScope<R, C>.runLScope(
     }
 }
 
-inline fun <R> runLScope(
-    action: EmptyLScopeContext<R>.() -> R
-): R {
+@Suppress("WRONG_INVOCATION_KIND")
+public inline fun <R> runLScope(action: EmptyLScopeContext.() -> R): R {
     contract {
         callsInPlace(action, InvocationKind.EXACTLY_ONCE)
     }
     
-    return EmptyLScope<R>().runLScope(action)
+    return EmptyLScope().runLScope(action)
 }
 
-inline fun <T, R, C : LScopeContext<R>> T.letLScope(
+public inline fun <T, R, C : LScopeContext<R>> T.letLScope(
     scope: LScope<R, C>,
     action: C.(T) -> R
 ): R {
@@ -69,19 +63,16 @@ inline fun <T, R, C : LScopeContext<R>> T.letLScope(
     return scope.runLScope { action(this@letLScope) }
 }
 
-inline infix fun <T, R> T.letLScope(
-    action: EmptyLScopeContext<R>.(T) -> R
-): R {
+public inline infix fun <T, R> T.letLScope(action: EmptyLScopeContext.(T) -> R): R {
     contract {
         callsInPlace(action, InvocationKind.EXACTLY_ONCE)
     }
     
-    return EmptyLScope<R>().runLScope { action(this@letLScope) }
+    return EmptyLScope().runLScope { action(this@letLScope) }
 }
 
-inline infix fun <C : LScopeContext<Unit>> LScope<Unit, C>.prfLScope(
-    action: C.() -> Unit
-) {
+@Suppress("WRONG_INVOCATION_KIND")
+public inline infix fun <C : LScopeContext<Unit>> LScope<Unit, C>.prfLScope(action: C.() -> Unit) {
     contract {
         callsInPlace(action, InvocationKind.EXACTLY_ONCE)
     }
@@ -93,17 +84,15 @@ inline infix fun <C : LScopeContext<Unit>> LScope<Unit, C>.prfLScope(
     }
 }
 
-inline fun prfLScope(
-    action: EmptyLScopeContext<Unit>.() -> Unit
-) {
+public inline fun prfLScope(action: EmptyLScopeContext.() -> Unit) {
     contract {
         callsInPlace(action, InvocationKind.EXACTLY_ONCE)
     }
     
-    EmptyLScope<Unit>().prfLScope(action)
+    EmptyLScope().prfLScope(action)
 }
 
-inline fun <T, C : LScopeContext<Unit>> T.actLScope(
+public inline fun <T, C : LScopeContext<Unit>> T.actLScope(
     scope: LScope<Unit, C>,
     action: C.(T) -> Unit
 ) {
@@ -114,21 +103,17 @@ inline fun <T, C : LScopeContext<Unit>> T.actLScope(
     scope.prfLScope { action(this@actLScope) }
 }
 
-inline infix fun <T> T.actLScope(
-    action: EmptyLScopeContext<Unit>.(T) -> Unit
-) {
+public inline infix fun <T> T.actLScope(action: EmptyLScopeContext.(T) -> Unit) {
     contract {
         callsInPlace(action, InvocationKind.EXACTLY_ONCE)
     }
     
-    EmptyLScope<Unit>().prfLScope { action(this@actLScope) }
+    EmptyLScope().prfLScope { action(this@actLScope) }
 }
 
-inline infix fun <R> LScopeContext<R>.broke(
-    value: R
-): Nothing =
+public inline infix fun <R> LScopeContext<R>.broke(value: R): Nothing =
     throw LScopeBreak(ident, value)
 
-inline val LScopeContext<Unit>.broke: Nothing
+public inline val LScopeContext<Unit>.broke: Nothing
     @JvmName("broke")
     get() = throw LScopeBreak(ident, Unit)

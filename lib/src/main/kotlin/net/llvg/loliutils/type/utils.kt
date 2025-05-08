@@ -17,21 +17,20 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:[JvmName("TypeUtils") Suppress("UNUSED", "NOTHING_TO_INLINE")]
+@file:JvmName("TypeUtils")
 
 package net.llvg.loliutils.type
 
 @Suppress("UNCHECKED_CAST")
-inline fun <R> Any?.castTo(): R =
+public inline fun <R> Any?.castTo(): R =
     this as R
 
 @Suppress("UNCHECKED_CAST")
-inline fun <R> cast(
+public inline fun <R> cast(
     value: Any?
 ): R =
     value as R
 
 @Suppress("UNCHECKED_CAST")
-@get:JvmName("asNotNull")
-inline val <T> T?.asNotNull: T
+public inline val <T> T?.asNotNull: T
     get() = this as T

@@ -17,7 +17,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:[JvmName("VarRefUtils") Suppress("UNUSED", "NOTHING_TO_INLINE")]
+@file:JvmName("VarRefUtils")
 
 package net.llvg.loliutils.reference
 
@@ -26,19 +26,19 @@ import kotlin.reflect.KProperty
 import net.llvg.loliutils.function.Gettable
 import net.llvg.loliutils.function.Settable
 
-inline val <T> KMutableProperty0<T>.asVarRef: PropertyAsVarRef<T>
+public inline val <T> KMutableProperty0<T>.asVarRef: PropertyAsVarRef<T>
     get() = PropertyAsVarRef(this)
 
-inline fun <T> makeRef(
+public inline fun <T> makeRef(
     getter: Gettable<T>,
     setter: Settable<T>
 ): LambdaVarRef<T> =
     LambdaVarRef(getter, setter)
 
-inline val <T> VarRef<T>.asProperty: VarRefAsProperty<T>
+public inline val <T> VarRef<T>.asProperty: VarRefAsProperty<T>
     get() = VarRefAsProperty(this)
 
-inline operator fun <T> VarRef<T>.provideDelegate(
+public inline operator fun <T> VarRef<T>.provideDelegate(
     thisRef: Any?,
     property: KProperty<*>
 ): VarRefAsProperty<T> =

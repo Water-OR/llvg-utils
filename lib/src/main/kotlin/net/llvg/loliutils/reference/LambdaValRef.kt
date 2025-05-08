@@ -22,10 +22,8 @@ package net.llvg.loliutils.reference
 import net.llvg.loliutils.function.Gettable
 import net.llvg.loliutils.function.invoke
 
-@Suppress("UNUSED", "OVERRIDE_BY_INLINE", "NOTHING_TO_INLINE")
-class LambdaValRef<out T>(
-    val getter: Gettable<T>
-) : ValRef<T> {
-    override inline fun get(): T =
+public class LambdaValRef<out T>(public val getter: Gettable<T>) :
+  ValRef<T> {
+    override fun get(): T =
         getter()
 }

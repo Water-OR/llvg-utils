@@ -20,15 +20,13 @@
 package net.llvg.loliutils.reference
 
 @JvmInline
-@Suppress("UNUSED", "OVERRIDE_BY_INLINE", "NOTHING_TO_INLINE")
-value class ThreadLocalAsRef<T>(
-    val threadLocal: ThreadLocal<T>
-) : VarRef<T> {
+@Suppress("OVERRIDE_BY_INLINE")
+public value class ThreadLocalAsRef<T>(public val threadLocal: ThreadLocal<T>) :
+  VarRef<T> {
     override inline fun get(): T =
         threadLocal.get()
     
-    override inline fun set(
-        value: T
-    ) =
+    override inline fun set(value: T) {
         threadLocal.set(value)
+    }
 }

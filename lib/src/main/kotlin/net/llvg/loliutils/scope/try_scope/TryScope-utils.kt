@@ -17,7 +17,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:[JvmName("TryScopeUtils") Suppress("UNUSED", "NOTHING_TO_INLINE")]
+@file:JvmName("TryScopeUtils")
 
 package net.llvg.loliutils.scope.try_scope
 
@@ -29,7 +29,8 @@ import net.llvg.loliutils.scope.get
 import net.llvg.loliutils.scope.prfLScope
 import net.llvg.loliutils.scope.runLScope
 
-inline fun <R> tryRun(
+@Suppress("WRONG_INVOCATION_KIND")
+public inline fun <R> tryRun(
     scope: TryScope<R> = ListTryScope(ArrayList()),
     action: TryScopeContext<R>.() -> R
 ): TryResult<R> {
@@ -48,7 +49,8 @@ inline fun <R> tryRun(
     }
 }
 
-inline fun <T, R> T.tryLet(
+@Suppress("WRONG_INVOCATION_KIND")
+public inline fun <T, R> T.tryLet(
     scope: TryScope<R> = ListTryScope(ArrayList()),
     action: TryScopeContext<R>.(T) -> R
 ): TryResult<R> {
@@ -67,7 +69,8 @@ inline fun <T, R> T.tryLet(
     }
 }
 
-inline fun tryPrf(
+@Suppress("WRONG_INVOCATION_KIND")
+public inline fun tryPrf(
     scope: TryScope<Unit> = ListTryScope(ArrayList()),
     action: TryScopeContext<Unit>.() -> Unit
 ): TryResult<Unit> {
@@ -86,7 +89,8 @@ inline fun tryPrf(
     }
 }
 
-inline fun <T> T.tryAct(
+@Suppress("WRONG_INVOCATION_KIND")
+public inline fun <T> T.tryAct(
     scope: TryScope<Unit> = ListTryScope(ArrayList()),
     action: TryScopeContext<Unit>.(T) -> Unit
 ): TryResult<Unit> {
@@ -105,7 +109,7 @@ inline fun <T> T.tryAct(
     }
 }
 
-inline fun <R> TryResult<R>.isSuccess(): Boolean {
+public inline fun <R> TryResult<R>.isSuccess(): Boolean {
     contract {
         returns(true) implies (this@isSuccess is TryResult.Success)
         returns(false) implies (this@isSuccess is TryResult.Failure)
@@ -114,7 +118,7 @@ inline fun <R> TryResult<R>.isSuccess(): Boolean {
     return this is TryResult.Success
 }
 
-inline fun <R> TryResult<R>.isFailure(): Boolean {
+public inline fun <R> TryResult<R>.isFailure(): Boolean {
     contract {
         returns(true) implies (this@isFailure is TryResult.Failure)
         returns(false) implies (this@isFailure is TryResult.Success)
@@ -123,9 +127,7 @@ inline fun <R> TryResult<R>.isFailure(): Boolean {
     return this is TryResult.Failure
 }
 
-inline infix fun <R, reified E : Throwable> TryResult<R>.runExcept(
-    action: TryFailureScopeContext<R>.(E) -> Unit
-): TryResult<R> {
+public inline infix fun <R, reified E : Throwable> TryResult<R>.runExcept(action: TryFailureScopeContext<R>.(E) -> Unit): TryResult<R> {
     contract {
         callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
@@ -141,9 +143,7 @@ inline infix fun <R, reified E : Throwable> TryResult<R>.runExcept(
     return this
 }
 
-inline infix fun <reified E : Throwable> TryResult<Unit>.prfExcept(
-    action: TryFailureScopeContext<Unit>.(E) -> Unit
-): TryResult<Unit> {
+public inline infix fun <reified E : Throwable> TryResult<Unit>.prfExcept(action: TryFailureScopeContext<Unit>.(E) -> Unit): TryResult<Unit> {
     contract {
         callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
@@ -159,15 +159,13 @@ inline infix fun <reified E : Throwable> TryResult<Unit>.prfExcept(
     return this
 }
 
-inline fun <R> TryResult<R>.orElse(
-    fallback: R
-): R =
+public inline fun <R> TryResult<R>.orElse(fallback: R): R =
     if (isSuccess()) r else fallback
 
-inline val <R> TryResult<R>.orNull: R?
+public inline val <R> TryResult<R>.orNull: R?
     @JvmName("orNull")
     get() = if (isSuccess()) r else null
 
-inline val <R> TryResult<R>.orThrow: R
+public inline val <R> TryResult<R>.orThrow: R
     @JvmName("orThrow")
     get() = if (isSuccess()) r else throw e

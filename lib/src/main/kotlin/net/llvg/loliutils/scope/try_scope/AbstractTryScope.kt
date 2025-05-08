@@ -21,8 +21,9 @@ package net.llvg.loliutils.scope.try_scope
 
 import net.llvg.loliutils.scope.AbstractLScope
 
-@Suppress("UNUSED")
-abstract class AbstractTryScope<in R> : AbstractLScope<R, TryScopeContext<R>>(), TryScope<R> {
+public abstract class AbstractTryScope<in R> :
+  AbstractLScope<R, TryScopeContext<R>>(),
+  TryScope<R> {
     override fun context(): TryScopeContext<R> =
         TryScopeContext.Impl(this, ident)
 }

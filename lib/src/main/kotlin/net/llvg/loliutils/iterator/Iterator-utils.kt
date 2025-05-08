@@ -17,14 +17,14 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:[JvmName("IteratorUtils") Suppress("Unused", "NOTHING_TO_INLINE")]
+@file:JvmName("IteratorUtils")
 
 package net.llvg.loliutils.iterator
 
 import net.llvg.loliutils.type.castTo
 
-inline fun <T> emptyIterator(): MutableListIterator<T> =
+public inline fun <T> emptyIterator(): MutableListIterator<T> =
     EmptyIterator.castTo()
 
-inline fun <T> emptyIterable(): Iterable<T> =
+public inline fun <T> emptyIterable(): Iterable<T> =
     EmptyIterable

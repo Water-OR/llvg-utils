@@ -23,16 +23,15 @@ import net.llvg.loliutils.function.Gettable
 import net.llvg.loliutils.function.Settable
 import net.llvg.loliutils.function.invoke
 
-@Suppress("UNUSED", "OVERRIDE_BY_INLINE", "NOTHING_TO_INLINE")
-class LambdaVarRef<T>(
-    val getter: Gettable<T>,
-    val setter: Settable<T>
-) : VarRef<T> {
-    override inline fun get(): T =
+public class LambdaVarRef<T>(
+    public val getter: Gettable<T>,
+    public val setter: Settable<T>
+) :
+  VarRef<T> {
+    override fun get(): T =
         getter()
     
-    override inline fun set(
-        value: T
-    ) =
+    override fun set(value: T) {
         setter(value)
+    }
 }

@@ -17,7 +17,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:[JvmName("ReadWriteLockUtils") Suppress("UNUSED")]
+@file:JvmName("ReadWriteLockUtils")
 
 package net.llvg.loliutils.concurrent
 
@@ -26,9 +26,7 @@ import kotlin.concurrent.withLock
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-inline fun <R> ReadWriteLock.withReadLock(
-    action: () -> R
-): R {
+public inline fun <R> ReadWriteLock.withReadLock(action: () -> R): R {
     contract {
         callsInPlace(action, InvocationKind.EXACTLY_ONCE)
     }
@@ -36,9 +34,7 @@ inline fun <R> ReadWriteLock.withReadLock(
     return readLock().withLock(action)
 }
 
-inline fun <R> ReadWriteLock.withWriteLock(
-    action: () -> R
-): R {
+public inline fun <R> ReadWriteLock.withWriteLock(action: () -> R): R {
     contract {
         callsInPlace(action, InvocationKind.EXACTLY_ONCE)
     }

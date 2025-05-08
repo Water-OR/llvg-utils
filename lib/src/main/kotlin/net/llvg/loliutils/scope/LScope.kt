@@ -19,9 +19,8 @@
 
 package net.llvg.loliutils.scope
 
-@Suppress("UNUSED")
-interface LScope<in R, out C : LScopeContext<R>> {
-    val context: C
+public interface LScope<in R, out C : LScopeContext<R>> {
+    public val context: C
     
-    fun check(ident: Any): Boolean
+    public fun check(ident: Any): Boolean
 }

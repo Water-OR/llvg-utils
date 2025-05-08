@@ -19,7 +19,5 @@
 
 package net.llvg.loliutils.scope
 
-@Suppress("UNUSED")
-abstract class AbstractLScopeContext<in R>(
-    final override val ident: Any
-) : LScopeContext<R>
+public abstract class AbstractLScopeContext<in R>(final override val ident: Any) :
+  LScopeContext<R>

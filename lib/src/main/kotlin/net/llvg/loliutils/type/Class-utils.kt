@@ -17,20 +17,20 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:[JvmName("ClassUtils") Suppress("UNUSED")]
+@file:JvmName("ClassUtils")
 
 package net.llvg.loliutils.type
 
-inline fun <reified T> Class<*>.isExtend(): Boolean =
+public inline fun <reified T> Class<*>.isExtend(): Boolean =
     T::class.java.isAssignableFrom(this)
 
 @Suppress("UNCHECKED_CAST")
-inline fun <reified T> Class<*>.tryExtend(): Class<out T>? =
+public inline fun <reified T> Class<*>.tryExtend(): Class<out T>? =
     if (isExtend<T>()) this as Class<out T> else null
 
-inline fun <reified T> Class<*>.isSuper(): Boolean =
+public inline fun <reified T> Class<*>.isSuper(): Boolean =
     isAssignableFrom(T::class.java)
 
 @Suppress("UNCHECKED_CAST")
-inline fun <reified T> Class<*>.trySuper(): Class<in T>? =
+public inline fun <reified T> Class<*>.trySuper(): Class<in T>? =
     if (isSuper<T>()) this as Class<in T> else null

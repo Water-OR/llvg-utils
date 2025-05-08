@@ -21,8 +21,8 @@ package net.llvg.loliutils.reference
 
 import net.llvg.loliutils.function.Settable
 
-@Suppress("UNUSED")
-interface VarRef<T> : ValRef<T>, Settable<T> {
+public interface VarRef<T> :
+  ValRef<T>, Settable<T> {
     override fun get(): T
     
     override fun set(value: T)

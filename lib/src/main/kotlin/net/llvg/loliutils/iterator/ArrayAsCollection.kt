@@ -19,10 +19,8 @@
 
 package net.llvg.loliutils.iterator
 
-@Suppress("UNUSED")
-class ArrayAsCollection<T>(
-    val array: Array<out T>
-) : Collection<T> {
+public class ArrayAsCollection<T>(public val array: Array<out T>) :
+  Collection<T> {
     override val size: Int
         get() = array.size
     
@@ -32,13 +30,9 @@ class ArrayAsCollection<T>(
     override fun iterator(): Iterator<T> =
         array.iterator()
     
-    override fun contains(
-        element: T
-    ): Boolean =
+    override fun contains(element: T): Boolean =
         array.contains(element)
     
-    override fun containsAll(
-        elements: Collection<T>
-    ): Boolean =
+    override fun containsAll(elements: Collection<T>): Boolean =
         elements.all(array::contains)
 }

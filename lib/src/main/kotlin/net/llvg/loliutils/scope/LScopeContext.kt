@@ -19,7 +19,6 @@
 
 package net.llvg.loliutils.scope
 
-@Suppress("UNUSED")
-interface LScopeContext<in R> {
-    val ident: Any
+public interface LScopeContext<in R> {
+    public val ident: Any
 }

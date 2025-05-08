@@ -19,13 +19,9 @@
 
 package net.llvg.loliutils.scope.try_scope
 
-@Suppress("UNUSED")
-class ListTryScope<in R>(
-    private val resources: MutableList<AutoCloseable>
-) : AbstractTryScope<R>() {
-    override fun resource(
-        resource: AutoCloseable
-    ) {
+public class ListTryScope<in R>(private val resources: MutableList<AutoCloseable>) :
+  AbstractTryScope<R>() {
+    override fun resource(resource: AutoCloseable) {
         resources += resource
     }
     

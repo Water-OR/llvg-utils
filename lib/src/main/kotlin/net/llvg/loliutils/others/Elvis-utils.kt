@@ -17,17 +17,17 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:[JvmName("ElvisUtils") Suppress("UNUSED", "NOTHING_TO_INLINE")]
+@file:JvmName("ElvisUtils")
 
 package net.llvg.loliutils.others
 
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-inline val Boolean.takeTrue: Boolean?
+public inline val Boolean.takeTrue: Boolean?
     get() = takeTrue()
 
-inline fun Boolean.takeTrue(): Boolean? {
+public inline fun Boolean.takeTrue(): Boolean? {
     contract {
         returns(null) implies !this@takeTrue
         returnsNotNull() implies this@takeTrue
@@ -36,10 +36,10 @@ inline fun Boolean.takeTrue(): Boolean? {
     return if (this) true else null
 }
 
-inline val Boolean.takeFalse: Boolean?
+public inline val Boolean.takeFalse: Boolean?
     get() = takeFalse()
 
-inline fun Boolean.takeFalse(): Boolean? {
+public inline fun Boolean.takeFalse(): Boolean? {
     contract {
         returns(null) implies this@takeFalse
         returnsNotNull() implies !this@takeFalse
@@ -48,10 +48,10 @@ inline fun Boolean.takeFalse(): Boolean? {
     return if (this) null else false
 }
 
-inline val Any?.invertElvis: Unit?
+public inline val Any?.invertElvis: Unit?
     get() = invertElvis()
 
-inline fun Any?.invertElvis(): Unit? {
+public inline fun Any?.invertElvis(): Unit? {
     contract {
         returns(null) implies (this@invertElvis !== null)
         returnsNotNull() implies (this@invertElvis === null)
@@ -60,9 +60,7 @@ inline fun Any?.invertElvis(): Unit? {
     return if (this === null) Unit else null
 }
 
-inline fun <T> T.prf(
-    action: T.() -> Unit
-) {
+public inline fun <T> T.prf(action: T.() -> Unit) {
     contract {
         callsInPlace(action, InvocationKind.EXACTLY_ONCE)
     }
@@ -70,9 +68,7 @@ inline fun <T> T.prf(
     action()
 }
 
-inline fun <T> T.act(
-    action: (T) -> Unit
-) {
+public inline fun <T> T.act(action: (T) -> Unit) {
     contract {
         callsInPlace(action, InvocationKind.EXACTLY_ONCE)
     }
@@ -80,7 +76,16 @@ inline fun <T> T.act(
     action(this)
 }
 
-inline fun prf(
+public inline fun prf(action: () -> Unit) {
+    contract {
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
+    }
+    
+    action()
+}
+
+@Suppress("UnusedReceiverParameter")
+public inline fun Any?.exec(
     action: () -> Unit
 ) {
     contract {
@@ -91,18 +96,7 @@ inline fun prf(
 }
 
 @Suppress("UnusedReceiverParameter")
-inline fun Any?.exec(
-    action: () -> Unit
-) {
-    contract {
-        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
-    }
-    
-    action()
-}
-
-@Suppress("UnusedReceiverParameter")
-inline fun <R> Any?.eval(
+public inline fun <R> Any?.eval(
     action: () -> R
 ): R {
     contract {

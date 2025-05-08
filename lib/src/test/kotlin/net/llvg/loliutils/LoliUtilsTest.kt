@@ -5,7 +5,8 @@ package net.llvg.loliutils
 
 import kotlin.test.Test
 
-class LoliUtilsTest {
+@Suppress("NO_EXPLICIT_RETURN_TYPE_IN_API_MODE_WARNING")
+public class LoliUtilsTest {
     @Test
-    fun test() = Unit
+    public fun test() = Unit
 }

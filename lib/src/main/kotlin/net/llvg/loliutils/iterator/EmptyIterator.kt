@@ -19,8 +19,11 @@
 
 package net.llvg.loliutils.iterator
 
-@Suppress("UNUSED")
-object EmptyIterator : Iterator<Nothing>, MutableIterator<Nothing>, ListIterator<Nothing>, MutableListIterator<Nothing> {
+public object EmptyIterator :
+  Iterator<Nothing>,
+  MutableIterator<Nothing>,
+  ListIterator<Nothing>,
+  MutableListIterator<Nothing> {
     override fun hasNext(): Boolean =
         false
     
@@ -39,16 +42,15 @@ object EmptyIterator : Iterator<Nothing>, MutableIterator<Nothing>, ListIterator
     override fun previousIndex(): Int =
         throw UnsupportedOperationException()
     
-    override fun set(
-        element: Nothing
-    ) =
+    override fun set(element: Nothing) {
         throw UnsupportedOperationException()
+    }
     
-    override fun add(
-        element: Nothing
-    ) =
+    override fun add(element: Nothing) {
         throw UnsupportedOperationException()
+    }
     
-    override fun remove() =
+    override fun remove() {
         throw UnsupportedOperationException()
+    }
 }
