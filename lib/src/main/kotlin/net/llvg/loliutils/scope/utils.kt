@@ -24,13 +24,17 @@ package net.llvg.loliutils.scope
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-public inline infix fun <T> IdentifierProvider.broke(value: T): Nothing =
+public inline infix fun <T> IdentifierProvider.broke(
+    value: T
+): Nothing =
     throw IdentifiedReturn(ident, value)
 
 public inline val IdentifierProvider.broke: Nothing
     get() = throw IdentifiedReturn(ident, null)
 
-public inline fun prfWrapBlock(block: IdentifierProvider.() -> Unit) {
+public inline fun prfWrapBlock(
+    block: IdentifierProvider.() -> Unit
+) {
     contract {
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
@@ -70,7 +74,9 @@ public inline fun <R> runWrapBlock(
     }
 }
 
-public inline fun <reified R> runWrapBlock(block: IdentifierProvider.() -> R): R {
+public inline fun <reified R> runWrapBlock(
+    block: IdentifierProvider.() -> R
+): R {
     contract {
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }

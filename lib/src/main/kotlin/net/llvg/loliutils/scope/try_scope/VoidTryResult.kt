@@ -20,9 +20,9 @@
 package net.llvg.loliutils.scope.try_scope
 
 public sealed interface VoidTryResult {
-    public data object Success :
-      VoidTryResult
+    public data object Success : VoidTryResult
     
-    public class Failure(public val e: Throwable) :
-      VoidTryResult
+    public class Failure(
+        public val e: Throwable
+    ) : VoidTryResult
 }

@@ -60,7 +60,9 @@ public inline fun Any?.invertElvis(): Unit? {
     return if (this === null) Unit else null
 }
 
-public inline fun <T> T.prf(action: T.() -> Unit) {
+public inline fun <T> T.prf(
+    action: T.() -> Unit
+) {
     contract {
         callsInPlace(action, InvocationKind.EXACTLY_ONCE)
     }
@@ -68,7 +70,9 @@ public inline fun <T> T.prf(action: T.() -> Unit) {
     action()
 }
 
-public inline fun <T> T.act(action: (T) -> Unit) {
+public inline fun <T> T.act(
+    action: (T) -> Unit
+) {
     contract {
         callsInPlace(action, InvocationKind.EXACTLY_ONCE)
     }
@@ -76,7 +80,9 @@ public inline fun <T> T.act(action: (T) -> Unit) {
     action(this)
 }
 
-public inline fun prf(action: () -> Unit) {
+public inline fun prf(
+    action: () -> Unit
+) {
     contract {
         callsInPlace(action, InvocationKind.EXACTLY_ONCE)
     }

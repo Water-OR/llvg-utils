@@ -27,15 +27,16 @@ import net.llvg.loliutils.concurrent.withWriteLock
 public class ReadWriteLockRef<T>(
     private val ref: VarRef<T>,
     private val lock: ReadWriteLock = ReentrantReadWriteLock()
-) :
-  VarRef<T> {
+) : VarRef<T> {
     
     override fun get(): T =
         lock.withReadLock {
             ref.get()
         }
     
-    override fun set(value: T) {
+    override fun set(
+        value: T
+    ) {
         lock.withWriteLock {
             ref.set(value)
         }

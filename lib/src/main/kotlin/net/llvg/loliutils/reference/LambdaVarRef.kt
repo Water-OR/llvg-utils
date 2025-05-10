@@ -26,12 +26,13 @@ import net.llvg.loliutils.function.invoke
 public class LambdaVarRef<T>(
     public val getter: Gettable<T>,
     public val setter: Settable<T>
-) :
-  VarRef<T> {
+) : VarRef<T> {
     override fun get(): T =
         getter()
     
-    override fun set(value: T) {
+    override fun set(
+        value: T
+    ) {
         setter(value)
     }
 }

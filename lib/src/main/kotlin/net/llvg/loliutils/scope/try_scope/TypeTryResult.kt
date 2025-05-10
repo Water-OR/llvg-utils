@@ -20,9 +20,11 @@
 package net.llvg.loliutils.scope.try_scope
 
 public interface TypeTryResult<out R> {
-    public class Success<out R>(public val r: R) :
-      TypeTryResult<R>
+    public class Success<out R>(
+        public val r: R
+    ) : TypeTryResult<R>
     
-    public class Failure<out R>(public val e: Throwable) :
-      TypeTryResult<R>
+    public class Failure<out R>(
+        public val e: Throwable
+    ) : TypeTryResult<R>
 }

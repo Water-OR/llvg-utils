@@ -24,8 +24,12 @@ public interface TryScope : AutoCloseable {
     
     override fun close()
     
-    public class Context(private val scope: TryScope) {
-        public fun <T : AutoCloseable> resource(resource: T): T {
+    public class Context(
+        private val scope: TryScope
+    ) {
+        public fun <T : AutoCloseable> resource(
+            resource: T
+        ): T {
             scope resource resource
             return resource
         }

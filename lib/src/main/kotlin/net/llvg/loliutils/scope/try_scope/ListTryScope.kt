@@ -19,9 +19,12 @@
 
 package net.llvg.loliutils.scope.try_scope
 
-public class ListTryScope(private val list: MutableList<AutoCloseable>) :
-  TryScope {
-    override fun resource(resource: AutoCloseable) {
+public class ListTryScope(
+    private val list: MutableList<AutoCloseable>
+) : TryScope {
+    override fun resource(
+        resource: AutoCloseable
+    ) {
         list += resource
     }
     

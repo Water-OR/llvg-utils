@@ -26,7 +26,9 @@ import kotlin.concurrent.withLock
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-public inline fun <R> ReadWriteLock.withReadLock(action: () -> R): R {
+public inline fun <R> ReadWriteLock.withReadLock(
+    action: () -> R
+): R {
     contract {
         callsInPlace(action, InvocationKind.EXACTLY_ONCE)
     }
@@ -34,7 +36,9 @@ public inline fun <R> ReadWriteLock.withReadLock(action: () -> R): R {
     return readLock().withLock(action)
 }
 
-public inline fun <R> ReadWriteLock.withWriteLock(action: () -> R): R {
+public inline fun <R> ReadWriteLock.withWriteLock(
+    action: () -> R
+): R {
     contract {
         callsInPlace(action, InvocationKind.EXACTLY_ONCE)
     }

@@ -28,7 +28,9 @@ import net.llvg.loliutils.function.Gettable
 public inline val <T> KProperty0<T>.asValRef: PropertyAsValRef<T>
     get() = PropertyAsValRef(this)
 
-public inline fun <T> makeRef(getter: Gettable<T>): LambdaValRef<T> =
+public inline fun <T> makeRef(
+    getter: Gettable<T>
+): LambdaValRef<T> =
     LambdaValRef(getter)
 
 public inline val <T> ValRef<T>.asProperty: ValRefAsProperty<T>

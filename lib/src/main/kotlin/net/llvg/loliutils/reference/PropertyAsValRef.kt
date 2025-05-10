@@ -23,8 +23,9 @@ import kotlin.reflect.KProperty0
 
 @JvmInline
 @Suppress("OVERRIDE_BY_INLINE")
-public value class PropertyAsValRef<out T>(public val property: KProperty0<T>) :
-  ValRef<T> {
+public value class PropertyAsValRef<out T>(
+    public val property: KProperty0<T>
+) : ValRef<T> {
     override inline fun get(): T =
         property.get()
 }

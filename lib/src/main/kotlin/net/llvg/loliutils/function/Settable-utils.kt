@@ -21,11 +21,16 @@
 
 package net.llvg.loliutils.function
 
-public inline infix operator fun <T> Settable<T>.invoke(value: T) =
+public inline infix operator fun <T> Settable<T>.invoke(
+    value: T
+) {
     set(value)
+}
 
 public inline val <T> Settable<T>.asLambda: (T) -> Unit
     get() = ::set
 
-public inline fun <T> makeSettable(crossinline action: (T) -> Unit): Settable<T> =
+public inline fun <T> makeSettable(
+    crossinline action: (T) -> Unit
+): Settable<T> =
     Settable { action(it) }

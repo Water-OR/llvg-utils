@@ -24,8 +24,9 @@ import kotlin.reflect.KProperty
 
 @JvmInline
 @Suppress("OVERRIDE_BY_INLINE")
-public value class VarRefAsProperty<T>(public val ref: VarRef<T>) :
-  ReadWriteProperty<Any?, T> {
+public value class VarRefAsProperty<T>(
+    public val ref: VarRef<T>
+) : ReadWriteProperty<Any?, T> {
     override inline fun getValue(
         thisRef: Any?,
         property: KProperty<*>

@@ -26,7 +26,9 @@ import kotlin.reflect.KProperty
 public inline val <T> ThreadLocal<T>.asRef: ThreadLocalAsRef<T>
     get() = ThreadLocalAsRef(this)
 
-public inline fun <T> ThreadLocal(crossinline initializer: () -> T): ThreadLocal<T> =
+public inline fun <T> ThreadLocal(
+    crossinline initializer: () -> T
+): ThreadLocal<T> =
     ThreadLocal.withInitial { initializer() }
 
 public inline operator fun <T> ThreadLocal<T>.provideDelegate(

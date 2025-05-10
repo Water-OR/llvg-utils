@@ -21,7 +21,6 @@ package net.llvg.loliutils.reference
 
 import net.llvg.loliutils.function.Gettable
 
-public interface ValRef<out T> :
-  Gettable<T> {
+public interface ValRef<out T> : Gettable<T> {
     override fun get(): T
 }

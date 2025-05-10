@@ -29,7 +29,9 @@ public inline operator fun <T> Gettable<T>.invoke(): T =
 public inline val <T> Gettable<T>.asLambda: () -> T
     get() = ::get
 
-public inline fun <T> makeGettable(crossinline action: () -> T): Gettable<T> =
+public inline fun <T> makeGettable(
+    crossinline action: () -> T
+): Gettable<T> =
     Gettable { action() }
 
 public inline fun <R> Gettable<*>.cast(): R =

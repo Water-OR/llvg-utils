@@ -25,7 +25,9 @@ public sealed interface TypeFailureContext<in R> {
     public fun fallback(value: R): Nothing
     
     public class Impl<in R> : TypeFailureContext<R> {
-        override fun fallback(value: R): Nothing =
+        override fun fallback(
+            value: R
+        ): Nothing =
             throw IdentifiedReturn(this, value)
     }
 }

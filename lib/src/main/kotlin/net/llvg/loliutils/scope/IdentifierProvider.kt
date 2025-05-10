@@ -22,8 +22,7 @@ package net.llvg.loliutils.scope
 public interface IdentifierProvider {
     public val ident: Any
     
-    public class Impl() :
-      IdentifierProvider {
+    public class Impl() : IdentifierProvider {
         override val ident: Any = Any()
     }
 }

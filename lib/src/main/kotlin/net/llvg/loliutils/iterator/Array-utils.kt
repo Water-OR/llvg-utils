@@ -35,7 +35,9 @@ public inline fun <T> newArray(
         size
     )
 
-public inline fun <reified T> newArray(size: Int): Array<T> =
+public inline fun <reified T> newArray(
+    size: Int
+): Array<T> =
     newArray(
         T::class.java,
         size

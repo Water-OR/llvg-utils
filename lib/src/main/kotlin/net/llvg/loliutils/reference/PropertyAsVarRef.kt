@@ -23,12 +23,15 @@ import kotlin.reflect.KMutableProperty0
 
 @JvmInline
 @Suppress("OVERRIDE_BY_INLINE")
-public value class PropertyAsVarRef<T>(public val property: KMutableProperty0<T>) :
-  VarRef<T> {
+public value class PropertyAsVarRef<T>(
+    public val property: KMutableProperty0<T>
+) : VarRef<T> {
     override inline fun get(): T =
         property.get()
     
-    override inline fun set(value: T) {
+    override inline fun set(
+        value: T
+    ) {
         property.set(value)
     }
 }

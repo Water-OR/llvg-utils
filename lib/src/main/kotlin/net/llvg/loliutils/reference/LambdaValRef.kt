@@ -22,8 +22,9 @@ package net.llvg.loliutils.reference
 import net.llvg.loliutils.function.Gettable
 import net.llvg.loliutils.function.invoke
 
-public class LambdaValRef<out T>(public val getter: Gettable<T>) :
-  ValRef<T> {
+public class LambdaValRef<out T>(
+    public val getter: Gettable<T>
+) : ValRef<T> {
     override fun get(): T =
         getter()
 }

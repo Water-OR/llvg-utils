@@ -67,7 +67,9 @@ public inline fun <E> VoidTryResult.onExcept(
     return this
 }
 
-public inline infix fun <reified E> VoidTryResult.onExcept(action: VoidFailureContext.(E) -> Unit): VoidTryResult {
+public inline infix fun <reified E> VoidTryResult.onExcept(
+    action: VoidFailureContext.(E) -> Unit
+): VoidTryResult {
     contract {
         callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
