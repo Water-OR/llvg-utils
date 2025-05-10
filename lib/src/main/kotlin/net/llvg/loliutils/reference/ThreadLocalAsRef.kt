@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2025 Water-OR
  *
- * This file is part of LolI Utils
+ * This file is part of llvg-utils
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,12 +21,15 @@ package net.llvg.loliutils.reference
 
 @JvmInline
 @Suppress("OVERRIDE_BY_INLINE")
-public value class ThreadLocalAsRef<T>(public val threadLocal: ThreadLocal<T>) :
-  VarRef<T> {
+public value class ThreadLocalAsRef<T>(
+    public val threadLocal: ThreadLocal<T>
+) : VarRef<T> {
     override inline fun get(): T =
         threadLocal.get()
     
-    override inline fun set(value: T) {
+    override inline fun set(
+        value: T
+    ) {
         threadLocal.set(value)
     }
 }

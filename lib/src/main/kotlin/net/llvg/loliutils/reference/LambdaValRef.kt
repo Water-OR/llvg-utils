@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2025 Water-OR
  *
- * This file is part of LolI Utils
+ * This file is part of llvg-utils
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,8 +22,9 @@ package net.llvg.loliutils.reference
 import net.llvg.loliutils.function.Gettable
 import net.llvg.loliutils.function.invoke
 
-public class LambdaValRef<out T>(public val getter: Gettable<T>) :
-  ValRef<T> {
+public class LambdaValRef<out T>(
+    public val getter: Gettable<T>
+) : ValRef<T> {
     override fun get(): T =
         getter()
 }

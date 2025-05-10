@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2025 Water-OR
  *
- * This file is part of LolI Utils
+ * This file is part of llvg-utils
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,9 @@ import kotlin.concurrent.withLock
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-public inline fun <R> ReadWriteLock.withReadLock(action: () -> R): R {
+public inline fun <R> ReadWriteLock.withReadLock(
+    action: () -> R
+): R {
     contract {
         callsInPlace(action, InvocationKind.EXACTLY_ONCE)
     }
@@ -34,7 +36,9 @@ public inline fun <R> ReadWriteLock.withReadLock(action: () -> R): R {
     return readLock().withLock(action)
 }
 
-public inline fun <R> ReadWriteLock.withWriteLock(action: () -> R): R {
+public inline fun <R> ReadWriteLock.withWriteLock(
+    action: () -> R
+): R {
     contract {
         callsInPlace(action, InvocationKind.EXACTLY_ONCE)
     }

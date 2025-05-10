@@ -46,15 +46,13 @@ kotlin.compilerOptions {
     
     jvmTarget = JvmTarget.JVM_1_8
     
-    val args = listOf(
+    listOf(
         "-Xwhen-guards",
         "-Xjvm-default=all",
         "-Xcontext-parameters",
         "-Xnested-type-aliases",
         "-Xexplicit-api=warning",
-        "-Xsuppress-warning=UNUSED",
         "-Xsuppress-warning=NOTHING_TO_INLINE",
         "-opt-in=kotlin.contracts.ExperimentalContracts"
-    )
-    freeCompilerArgs.addAll(args)
+    ).let(freeCompilerArgs::addAll)
 }

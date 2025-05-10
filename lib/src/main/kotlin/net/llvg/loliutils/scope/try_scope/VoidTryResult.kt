@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2025 Water-OR
  *
- * This file is part of LLVG Utils
+ * This file is part of llvg-utils
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,9 @@
 package net.llvg.loliutils.scope.try_scope
 
 public sealed interface VoidTryResult {
-    public data object Success :
-      VoidTryResult
+    public data object Success : VoidTryResult
     
-    public class Failure(public val e: Throwable) :
-      VoidTryResult
+    public class Failure(
+        public val e: Throwable
+    ) : VoidTryResult
 }

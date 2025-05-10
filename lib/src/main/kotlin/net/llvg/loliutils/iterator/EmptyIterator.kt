@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2025-2025 Water-OR
+ * Copyright (C) 2025 Water-OR
  *
- * This file is part of LolI Utils
+ * This file is part of llvg-utils
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,11 +19,7 @@
 
 package net.llvg.loliutils.iterator
 
-public object EmptyIterator :
-  Iterator<Nothing>,
-  MutableIterator<Nothing>,
-  ListIterator<Nothing>,
-  MutableListIterator<Nothing> {
+public object EmptyIterator : Iterator<Nothing>, MutableIterator<Nothing>, ListIterator<Nothing>, MutableListIterator<Nothing> {
     override fun hasNext(): Boolean =
         false
     
@@ -42,11 +38,15 @@ public object EmptyIterator :
     override fun previousIndex(): Int =
         throw UnsupportedOperationException()
     
-    override fun set(element: Nothing) {
+    override fun set(
+        element: Nothing
+    ) {
         throw UnsupportedOperationException()
     }
     
-    override fun add(element: Nothing) {
+    override fun add(
+        element: Nothing
+    ) {
         throw UnsupportedOperationException()
     }
     

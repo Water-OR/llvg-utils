@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2025 Water-OR
  *
- * This file is part of LolI Utils
+ * This file is part of llvg-utils
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,12 +23,15 @@ import kotlin.reflect.KMutableProperty0
 
 @JvmInline
 @Suppress("OVERRIDE_BY_INLINE")
-public value class PropertyAsVarRef<T>(public val property: KMutableProperty0<T>) :
-  VarRef<T> {
+public value class PropertyAsVarRef<T>(
+    public val property: KMutableProperty0<T>
+) : VarRef<T> {
     override inline fun get(): T =
         property.get()
     
-    override inline fun set(value: T) {
+    override inline fun set(
+        value: T
+    ) {
         property.set(value)
     }
 }

@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2025 Water-OR
  *
- * This file is part of LLVG Utils
+ * This file is part of llvg-utils
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,8 +24,12 @@ public interface TryScope : AutoCloseable {
     
     override fun close()
     
-    public class Context(private val scope: TryScope) {
-        public fun <T : AutoCloseable> resource(resource: T): T {
+    public class Context(
+        private val scope: TryScope
+    ) {
+        public fun <T : AutoCloseable> resource(
+            resource: T
+        ): T {
             scope resource resource
             return resource
         }

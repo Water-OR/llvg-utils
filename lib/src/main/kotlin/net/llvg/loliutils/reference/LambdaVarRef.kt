@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2025 Water-OR
  *
- * This file is part of LolI Utils
+ * This file is part of llvg-utils
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,12 +26,13 @@ import net.llvg.loliutils.function.invoke
 public class LambdaVarRef<T>(
     public val getter: Gettable<T>,
     public val setter: Settable<T>
-) :
-  VarRef<T> {
+) : VarRef<T> {
     override fun get(): T =
         getter()
     
-    override fun set(value: T) {
+    override fun set(
+        value: T
+    ) {
         setter(value)
     }
 }

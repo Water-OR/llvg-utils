@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2025 Water-OR
  *
- * This file is part of LolI Utils
+ * This file is part of llvg-utils
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,8 +24,9 @@ import kotlin.reflect.KProperty
 
 @JvmInline
 @Suppress("OVERRIDE_BY_INLINE")
-public value class ValRefAsProperty<out T>(public val ref: ValRef<T>) :
-  ReadOnlyProperty<Any?, T> {
+public value class ValRefAsProperty<out T>(
+    public val ref: ValRef<T>
+) : ReadOnlyProperty<Any?, T> {
     override inline fun getValue(
         thisRef: Any?,
         property: KProperty<*>

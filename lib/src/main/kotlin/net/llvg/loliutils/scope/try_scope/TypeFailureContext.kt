@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2025 Water-OR
  *
- * This file is part of LLVG Utils
+ * This file is part of llvg-utils
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,9 @@ public sealed interface TypeFailureContext<in R> {
     public fun fallback(value: R): Nothing
     
     public class Impl<in R> : TypeFailureContext<R> {
-        override fun fallback(value: R): Nothing =
+        override fun fallback(
+            value: R
+        ): Nothing =
             throw IdentifiedReturn(this, value)
     }
 }

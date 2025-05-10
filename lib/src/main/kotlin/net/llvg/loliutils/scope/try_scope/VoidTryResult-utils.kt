@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2025 Water-OR
  *
- * This file is part of LLVG Utils
+ * This file is part of llvg-utils
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,7 +67,9 @@ public inline fun <E> VoidTryResult.onExcept(
     return this
 }
 
-public inline infix fun <reified E> VoidTryResult.onExcept(action: VoidFailureContext.(E) -> Unit): VoidTryResult {
+public inline infix fun <reified E> VoidTryResult.onExcept(
+    action: VoidFailureContext.(E) -> Unit
+): VoidTryResult {
     contract {
         callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }

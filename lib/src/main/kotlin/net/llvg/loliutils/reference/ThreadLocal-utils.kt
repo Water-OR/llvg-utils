@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2025 Water-OR
  *
- * This file is part of LolI Utils
+ * This file is part of llvg-utils
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,9 @@ import kotlin.reflect.KProperty
 public inline val <T> ThreadLocal<T>.asRef: ThreadLocalAsRef<T>
     get() = ThreadLocalAsRef(this)
 
-public inline fun <T> ThreadLocal(crossinline initializer: () -> T): ThreadLocal<T> =
+public inline fun <T> ThreadLocal(
+    crossinline initializer: () -> T
+): ThreadLocal<T> =
     ThreadLocal.withInitial { initializer() }
 
 public inline operator fun <T> ThreadLocal<T>.provideDelegate(

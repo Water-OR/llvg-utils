@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2025 Water-OR
  *
- * This file is part of LolI Utils
+ * This file is part of llvg-utils
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,9 @@
 
 package net.llvg.loliutils.iterator
 
-public class ArrayAsCollection<T>(public val array: Array<out T>) :
-  Collection<T> {
+public class ArrayAsCollection<T>(
+    public val array: Array<out T>
+) : Collection<T> {
     override val size: Int
         get() = array.size
     
@@ -30,9 +31,13 @@ public class ArrayAsCollection<T>(public val array: Array<out T>) :
     override fun iterator(): Iterator<T> =
         array.iterator()
     
-    override fun contains(element: T): Boolean =
+    override fun contains(
+        element: T
+    ): Boolean =
         array.contains(element)
     
-    override fun containsAll(elements: Collection<T>): Boolean =
+    override fun containsAll(
+        elements: Collection<T>
+    ): Boolean =
         elements.all(array::contains)
 }

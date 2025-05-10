@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2025 Water-OR
  *
- * This file is part of LolI Utils
+ * This file is part of llvg-utils
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,9 @@ public inline fun <T> newArray(
         size
     )
 
-public inline fun <reified T> newArray(size: Int): Array<T> =
+public inline fun <reified T> newArray(
+    size: Int
+): Array<T> =
     newArray(
         T::class.java,
         size

@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2025 Water-OR
  *
- * This file is part of LLVG Utils
+ * This file is part of llvg-utils
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,10 +77,14 @@ public inline infix fun <R, reified E> TypeTryResult<R>.onExcept(
     return onExcept(E::class.java, action)
 }
 
-public inline infix fun <R> TypeTryResult<R>.orElse(fallback: R): R =
+public inline infix fun <R> TypeTryResult<R>.orElse(
+    fallback: R
+): R =
     if (isSuccess()) r else fallback
 
-public inline infix  fun <R> TypeTryResult<R>.orGet(provider: (Throwable) -> R): R {
+public inline infix fun <R> TypeTryResult<R>.orGet(
+    provider: (Throwable) -> R
+): R {
     contract {
         callsInPlace(provider, InvocationKind.AT_MOST_ONCE)
     }

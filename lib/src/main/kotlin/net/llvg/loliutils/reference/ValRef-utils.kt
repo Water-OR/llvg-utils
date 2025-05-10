@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2025 Water-OR
  *
- * This file is part of LolI Utils
+ * This file is part of llvg-utils
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,9 @@ import net.llvg.loliutils.function.Gettable
 public inline val <T> KProperty0<T>.asValRef: PropertyAsValRef<T>
     get() = PropertyAsValRef(this)
 
-public inline fun <T> makeRef(getter: Gettable<T>): LambdaValRef<T> =
+public inline fun <T> makeRef(
+    getter: Gettable<T>
+): LambdaValRef<T> =
     LambdaValRef(getter)
 
 public inline val <T> ValRef<T>.asProperty: ValRefAsProperty<T>
