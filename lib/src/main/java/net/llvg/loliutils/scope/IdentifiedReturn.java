@@ -17,16 +17,37 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.scope
+package net.llvg.loliutils.scope;
 
-public abstract class AbstractLScope<in R, out C : LScopeContext<R>> :
-  LScope<R, C> {
-    protected val ident: Any = Any()
+import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
+
+@SuppressWarnings ("unused")
+public class IdentifiedReturn
+  extends Throwable
+{
+    @NotNull
+    public final Object ident;
+    public final Object value;
     
-    protected abstract fun context(): C
+    public IdentifiedReturn(
+      @NotNull
+      Object ident,
+      Object value
+    ) {
+        Objects.requireNonNull(ident, "[ident] must not be null");
+        
+        this.ident = ident;
+        this.value = value;
+    }
     
-    final override val context: C by lazy { context() }
+    @SuppressWarnings ("unchecked")
+    final public <T> T value() {
+        return (T) value;
+    }
     
-    override fun check(ident: Any): Boolean =
-        this.ident === ident
+    @Override
+    public Throwable fillInStackTrace() {
+        return this;
+    }
 }

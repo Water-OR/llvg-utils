@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2025-2025 Water-OR
+ * Copyright (C) 2025 Water-OR
  *
- * This file is part of LolI Utils
+ * This file is part of LLVG Utils
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,17 +19,15 @@
 
 package net.llvg.loliutils.scope.try_scope
 
-public class ListTryScope<in R>(private val resources: MutableList<AutoCloseable>) :
-  AbstractTryScope<R>() {
+public class ListTryScope(private val list: MutableList<AutoCloseable>) :
+  TryScope {
     override fun resource(resource: AutoCloseable) {
-        resources += resource
+        list += resource
     }
     
     override fun close() {
-        val it = resources.listIterator(resources.size)
-        it.previousIndex()
-        while (it.hasPrevious()) {
-            it.previous().close()
+        list.asReversed().forEach {
+            it.close()
         }
     }
 }

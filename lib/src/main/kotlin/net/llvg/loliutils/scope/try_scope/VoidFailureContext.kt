@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2025-2025 Water-OR
+ * Copyright (C) 2025 Water-OR
  *
- * This file is part of LolI Utils
+ * This file is part of LLVG Utils
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,13 @@
 
 package net.llvg.loliutils.scope.try_scope
 
-public sealed interface TryResult<out R> {
-    public class Success<out R> @PublishedApi internal constructor(public val r: R) :
-      TryResult<R>
+import net.llvg.loliutils.scope.IdentifiedReturn
+
+public sealed interface VoidFailureContext {
+    public fun fallback(): Nothing
     
-    public class Failure<out R> @PublishedApi internal constructor(public val e: Throwable) :
-      TryResult<R>
+    public class Impl : VoidFailureContext {
+        override fun fallback(): Nothing =
+            throw IdentifiedReturn(this, null)
+    }
 }
