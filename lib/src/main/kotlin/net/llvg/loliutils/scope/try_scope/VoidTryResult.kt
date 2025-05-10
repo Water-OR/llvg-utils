@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2025 Water-OR
  *
- * This file is part of LolI Utils
+ * This file is part of LLVG Utils
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,12 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.scope
+package net.llvg.loliutils.scope.try_scope
 
-public interface LScopeContext<in R> {
-    public val ident: Any
+public sealed interface VoidTryResult {
+    public data object Success :
+      VoidTryResult
+    
+    public class Failure(public val e: Throwable) :
+      VoidTryResult
 }

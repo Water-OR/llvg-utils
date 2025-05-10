@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2025 Water-OR
  *
- * This file is part of LolI Utils
+ * This file is part of LLVG Utils
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,10 +17,12 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.scope
+package net.llvg.loliutils.scope.try_scope
 
-public class EmptyLScope :
-  AbstractLScope<Any?, EmptyLScopeContext>() {
-    override fun context(): EmptyLScopeContext =
-        EmptyLScopeContext(ident)
+public interface TypeTryResult<out R> {
+    public class Success<out R>(public val r: R) :
+      TypeTryResult<R>
+    
+    public class Failure<out R>(public val e: Throwable) :
+      TypeTryResult<R>
 }

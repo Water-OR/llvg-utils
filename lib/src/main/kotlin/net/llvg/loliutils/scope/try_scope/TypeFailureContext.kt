@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2025 Water-OR
  *
- * This file is part of LolI Utils
+ * This file is part of LLVG Utils
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,15 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.scope
+package net.llvg.loliutils.scope.try_scope
 
-public abstract class AbstractLScopeContext<in R>(final override val ident: Any) :
-  LScopeContext<R>
+import net.llvg.loliutils.scope.IdentifiedReturn
+
+public sealed interface TypeFailureContext<in R> {
+    public fun fallback(value: R): Nothing
+    
+    public class Impl<in R> : TypeFailureContext<R> {
+        override fun fallback(value: R): Nothing =
+            throw IdentifiedReturn(this, value)
+    }
+}
