@@ -19,6 +19,10 @@
 
 package net.llvg.loliutils.builder
 
+@LBuilder.Mark
 public interface LBuilder<out R> {
     public fun build(): R
+    
+    @DslMarker
+    public annotation class Mark
 }
