@@ -44,9 +44,6 @@ public inline fun <reified T> newArray(
         size
     )
 
-public inline val <T> Array<T>.asCollection: Collection<T>
-    get() = ArrayAsCollection(this)
-
 @Suppress("ReplaceJavaStaticMethodWithKotlinAnalog")
 public inline val <T> Array<T>.asList: MutableList<T>
     get() = Arrays.asList(*this)
@@ -62,15 +59,9 @@ internal inline fun <R> subArrayRangeCheck(
         callsInPlace(onSuccess, InvocationKind.EXACTLY_ONCE)
     }
     
-    require(0 <= from) {
-        "Failed in check 0 <= from, from=$from"
-    }
-    require(from < till) {
-        "Failed in check from < till, from=$from, till=$till"
-    }
-    require(till < size) {
-        "Failed in check till < size, till=$till, size=$size"
-    }
+    require(0 <= from) { "Failed in check 0 <= from, from=$from" }
+    require(from < till) { "Failed in check from < till, from=$from, till=$till" }
+    require(till < size) { "Failed in check till < size, till=$till, size=$size" }
     
     return onSuccess(till)
 }
