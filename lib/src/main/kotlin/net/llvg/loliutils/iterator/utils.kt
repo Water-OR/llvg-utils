@@ -21,10 +21,17 @@
 
 package net.llvg.loliutils.iterator
 
-import net.llvg.loliutils.type.castTo
+public inline fun <T> emptyIterator(): Iterator<T> =
+    EmptyIterator
 
-public inline fun <T> emptyIterator(): MutableListIterator<T> =
-    EmptyIterator.castTo()
+public inline fun <T> emptyMutableIterator(): MutableIterator<T> =
+    EmptyIterator
+
+public inline fun <T> emptyListIterator(): ListIterator<T> =
+    EmptyIterator
 
 public inline fun <T> emptyIterable(): Iterable<T> =
+    EmptyIterable
+
+public inline fun <T> emptyMutableIterable(): MutableIterable<T> =
     EmptyIterable

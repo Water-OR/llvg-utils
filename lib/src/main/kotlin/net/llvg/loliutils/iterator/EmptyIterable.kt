@@ -19,7 +19,9 @@
 
 package net.llvg.loliutils.iterator
 
-public object EmptyIterable : Iterable<Nothing> {
-    override fun iterator(): Iterator<Nothing> =
+public object EmptyIterable :
+  Iterable<Nothing>,
+  MutableIterable<Nothing> {
+    override fun iterator(): MutableIterator<Nothing> =
         EmptyIterator
 }
