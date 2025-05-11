@@ -17,9 +17,9 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.iterator
+package net.llvg.array
 
-public class ArrayAsCollection<T>(
+public class ArrayAsCollection<out T>(
     public val array: Array<out T>
 ) : Collection<T> {
     override val size: Int
@@ -32,12 +32,12 @@ public class ArrayAsCollection<T>(
         array.iterator()
     
     override fun contains(
-        element: T
+        element: @UnsafeVariance T
     ): Boolean =
         array.contains(element)
     
     override fun containsAll(
-        elements: Collection<T>
+        elements: Collection<@UnsafeVariance T>
     ): Boolean =
         elements.all(array::contains)
 }
