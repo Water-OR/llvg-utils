@@ -19,7 +19,6 @@
 
 package net.llvg.loliutils.reference
 
-import kotlin.internal.InlineOnly
 import kotlin.reflect.KProperty0
 
 @JvmInline
@@ -27,7 +26,6 @@ import kotlin.reflect.KProperty0
 public value class PropertyAsValRef<out T>(
     public val property: KProperty0<T>
 ) : ValRef<T> {
-    @InlineOnly
-    override inline fun get(): T =
+    public override inline fun get(): T =
         property.get()
 }
