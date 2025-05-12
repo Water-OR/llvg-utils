@@ -57,4 +57,5 @@ kotlin.compilerOptions {
     ).let(freeCompilerArgs::addAll)
     
     optIn.add("kotlin.contracts.ExperimentalContracts")
+    optIn.add("net.llvg.loliutils.KotlinInternal")
 }

@@ -19,11 +19,14 @@
 
 package net.llvg.loliutils.reference
 
+import kotlin.internal.InlineOnly
+
 @JvmInline
 @Suppress("OVERRIDE_BY_INLINE")
 public value class BoxRef<out T>(
     public val value: T
 ) : ValRef<T> {
+    @InlineOnly
     override inline fun get(): T =
         value
 }

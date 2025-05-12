@@ -21,5 +21,9 @@
 
 package net.llvg.loliutils.reference
 
+import kotlin.internal.InlineOnly
+
+@InlineOnly
 public inline val <T> T.boxed: BoxRef<T>
+    @JvmSynthetic
     get() = BoxRef(this)

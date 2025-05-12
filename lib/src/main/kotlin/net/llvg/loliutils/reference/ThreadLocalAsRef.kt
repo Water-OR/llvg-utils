@@ -19,14 +19,18 @@
 
 package net.llvg.loliutils.reference
 
+import kotlin.internal.InlineOnly
+
 @JvmInline
 @Suppress("OVERRIDE_BY_INLINE")
 public value class ThreadLocalAsRef<T>(
     public val threadLocal: ThreadLocal<T>
 ) : VarRef<T> {
+    @InlineOnly
     override inline fun get(): T =
         threadLocal.get()
     
+    @InlineOnly
     override inline fun set(
         value: T
     ) {

@@ -19,6 +19,7 @@
 
 package net.llvg.loliutils.reference
 
+import kotlin.internal.InlineOnly
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
@@ -27,6 +28,7 @@ import kotlin.reflect.KProperty
 public value class ValRefAsProperty<out T>(
     public val ref: ValRef<T>
 ) : ReadOnlyProperty<Any?, T> {
+    @InlineOnly
     override inline fun getValue(
         thisRef: Any?,
         property: KProperty<*>

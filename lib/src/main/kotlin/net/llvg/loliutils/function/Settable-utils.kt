@@ -21,15 +21,20 @@
 
 package net.llvg.loliutils.function
 
+import kotlin.internal.InlineOnly
+
+@InlineOnly
 public inline infix operator fun <T> Settable<T>.invoke(
     value: T
 ) {
     set(value)
 }
 
+@InlineOnly
 public inline val <T> Settable<T>.asLambda: (T) -> Unit
     get() = ::set
 
+@InlineOnly
 public inline fun <T> makeSettable(
     crossinline action: (T) -> Unit
 ): Settable<T> =

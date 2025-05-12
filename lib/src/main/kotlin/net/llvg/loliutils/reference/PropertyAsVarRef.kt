@@ -19,6 +19,7 @@
 
 package net.llvg.loliutils.reference
 
+import kotlin.internal.InlineOnly
 import kotlin.reflect.KMutableProperty0
 
 @JvmInline
@@ -26,9 +27,11 @@ import kotlin.reflect.KMutableProperty0
 public value class PropertyAsVarRef<T>(
     public val property: KMutableProperty0<T>
 ) : VarRef<T> {
+    @InlineOnly
     override inline fun get(): T =
         property.get()
     
+    @InlineOnly
     override inline fun set(
         value: T
     ) {

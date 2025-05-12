@@ -23,7 +23,12 @@ package net.llvg.loliutils.scope.try_scope
 
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.internal.InlineOnly
+import net.llvg.loliutils.others.exec
+import net.llvg.loliutils.others.prf
 
+@InlineOnly
+@JvmSynthetic
 public inline fun tryPrf(
     scope: TryScope = ListTryScope(ArrayList()),
     action: TryScope.Context.() -> Unit
@@ -32,18 +37,17 @@ public inline fun tryPrf(
         callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
     
-    val context = TryScope.Context(scope)
-    
-    scope.use {
-        try {
-            context.action()
-            return VoidTryResult.Success
-        } catch (e: Throwable) {
-            return VoidTryResult.Failure(e)
-        }
+    try {
+        TryScope.Context(scope).action().exec { return VoidTryResult.Success }
+    } catch (e: Throwable) {
+        return VoidTryResult.Failure(e)
+    } finally {
+        scope.close()
     }
 }
 
+@InlineOnly
+@JvmSynthetic
 public inline fun <R> tryRun(
     scope: TryScope = ListTryScope(ArrayList()),
     action: TryScope.Context.() -> R
@@ -52,14 +56,11 @@ public inline fun <R> tryRun(
         callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
     
-    val context = TryScope.Context(scope)
-    
-    scope.use {
-        try {
-            val r = context.action()
-            return TypeTryResult.Success(r)
-        } catch (e: Throwable) {
-            return TypeTryResult.Failure(e)
-        }
+    try {
+        TryScope.Context(scope).action().prf { return TypeTryResult.Success(this) }
+    } catch (e: Throwable) {
+        return TypeTryResult.Failure(e)
+    } finally {
+        scope.close()
     }
 }

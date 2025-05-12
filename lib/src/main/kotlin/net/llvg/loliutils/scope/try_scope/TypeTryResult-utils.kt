@@ -23,8 +23,12 @@ package net.llvg.loliutils.scope.try_scope
 
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.internal.InlineOnly
+import net.llvg.loliutils.others.act
+import net.llvg.loliutils.others.prf
 import net.llvg.loliutils.scope.IdentifiedReturn
 
+@InlineOnly
 public inline fun <R> TypeTryResult<R>.isSuccess(): Boolean {
     contract {
         returns(true) implies (this@isSuccess is TypeTryResult.Success)
@@ -34,6 +38,7 @@ public inline fun <R> TypeTryResult<R>.isSuccess(): Boolean {
     return this is TypeTryResult.Success
 }
 
+@InlineOnly
 public inline fun <R> TypeTryResult<R>.isFailure(): Boolean {
     contract {
         returns(true) implies (this@isFailure is TypeTryResult.Failure)
@@ -43,7 +48,9 @@ public inline fun <R> TypeTryResult<R>.isFailure(): Boolean {
     return this is TypeTryResult.Failure
 }
 
-public inline fun <R, E> TypeTryResult<R>.onExcept(
+@InlineOnly
+@JvmSynthetic
+public inline fun <R, E : Throwable> TypeTryResult<R>.onExcept(
     clazz: Class<out E>,
     action: TypeFailureContext<R>.(E) -> Unit
 ): TypeTryResult<R> {
@@ -51,12 +58,11 @@ public inline fun <R, E> TypeTryResult<R>.onExcept(
         callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
     
-    if (isFailure() && clazz.isInstance(e)) {
-        val context = TypeFailureContext.Impl<R>()
+    if (isFailure() && clazz.isInstance(e)) TypeFailureContext.Impl<R>().prf {
         try {
-            context.action(clazz.cast(e))
+            action(clazz.cast(e))
         } catch (fallback: IdentifiedReturn) {
-            if (fallback.ident === context) {
+            if (fallback.ident === this) {
                 return TypeTryResult.Success(fallback.value())
             } else {
                 throw e
@@ -67,7 +73,9 @@ public inline fun <R, E> TypeTryResult<R>.onExcept(
     return this
 }
 
-public inline infix fun <R, reified E> TypeTryResult<R>.onExcept(
+@InlineOnly
+@JvmSynthetic
+public inline infix fun <R, reified E : Throwable> TypeTryResult<R>.onExcept(
     action: TypeFailureContext<R>.(E) -> Unit
 ): TypeTryResult<R> {
     contract {
@@ -77,11 +85,13 @@ public inline infix fun <R, reified E> TypeTryResult<R>.onExcept(
     return onExcept(E::class.java, action)
 }
 
+@InlineOnly
 public inline infix fun <R> TypeTryResult<R>.orElse(
     fallback: R
 ): R =
     if (isSuccess()) r else fallback
 
+@InlineOnly
 public inline infix fun <R> TypeTryResult<R>.orGet(
     provider: (Throwable) -> R
 ): R {
@@ -92,6 +102,7 @@ public inline infix fun <R> TypeTryResult<R>.orGet(
     return if (isSuccess()) r else provider(e)
 }
 
+@InlineOnly
 public inline fun <R> TypeTryResult<R>.orNull(): R? {
     contract {
         returns(null) implies (this@orNull is TypeTryResult.Failure)
@@ -101,6 +112,7 @@ public inline fun <R> TypeTryResult<R>.orNull(): R? {
     return if (isSuccess()) r else null
 }
 
+@InlineOnly
 public inline fun <R> TypeTryResult<R>.orThrow(): R {
     contract {
         returns() implies (this@orThrow is TypeTryResult.Success)

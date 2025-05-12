@@ -23,15 +23,23 @@ package net.llvg.loliutils.scope
 
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.internal.InlineOnly
+import net.llvg.loliutils.others.prf
 
+@InlineOnly
+@JvmSynthetic
 public inline infix fun <T> IdentifierProvider.broke(
     value: T
 ): Nothing =
     throw IdentifiedReturn(ident, value)
 
+@InlineOnly
 public inline val IdentifierProvider.broke: Nothing
+    @JvmSynthetic
     get() = throw IdentifiedReturn(ident, null)
 
+@InlineOnly
+@JvmSynthetic
 public inline fun prfWrapBlock(
     block: IdentifierProvider.() -> Unit
 ) {
@@ -39,19 +47,21 @@ public inline fun prfWrapBlock(
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
     
-    val identifier: IdentifierProvider = IdentifierProvider.Impl()
-    
-    try {
-        identifier.block()
-    } catch (e: IdentifiedReturn) {
-        if (identifier.ident === e.ident) {
-            return
-        } else {
-            throw e
+    IdentifierProvider.Impl().prf {
+        try {
+            block()
+        } catch (e: IdentifiedReturn) {
+            if (this.ident === e.ident) {
+                return
+            } else {
+                throw e
+            }
         }
     }
 }
 
+@InlineOnly
+@JvmSynthetic
 public inline fun <R> runWrapBlock(
     clazz: Class<out R>,
     block: IdentifierProvider.() -> R
@@ -60,20 +70,22 @@ public inline fun <R> runWrapBlock(
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
     
-    val identifier: IdentifierProvider = IdentifierProvider.Impl()
-    
-    @Suppress("LiftReturnOrAssignment")
-    try {
-        return identifier.block()
-    } catch (e: IdentifiedReturn) {
-        if (identifier.ident === e.ident) {
-            return clazz.cast(e.value)
-        } else {
-            throw e
+    IdentifierProvider.Impl().prf {
+        @Suppress("LiftReturnOrAssignment")
+        try {
+            return block()
+        } catch (e: IdentifiedReturn) {
+            if (ident === e.ident) {
+                return clazz.cast(e.value)
+            } else {
+                throw e
+            }
         }
     }
 }
 
+@InlineOnly
+@JvmSynthetic
 public inline fun <reified R> runWrapBlock(
     block: IdentifierProvider.() -> R
 ): R {

@@ -21,18 +21,23 @@
 
 package net.llvg.loliutils.function
 
+import kotlin.internal.InlineOnly
 import net.llvg.loliutils.type.castTo
 
+@InlineOnly
 public inline operator fun <T> Gettable<T>.invoke(): T =
     get()
 
+@InlineOnly
 public inline val <T> Gettable<T>.asLambda: () -> T
     get() = ::get
 
+@InlineOnly
 public inline fun <T> makeGettable(
     crossinline action: () -> T
 ): Gettable<T> =
     Gettable { action() }
 
+@InlineOnly
 public inline fun <R> Gettable<*>.cast(): R =
     get().castTo()

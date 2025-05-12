@@ -23,8 +23,10 @@ package net.llvg.loliutils.scope.try_scope
 
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.internal.InlineOnly
 import net.llvg.loliutils.scope.IdentifiedReturn
 
+@InlineOnly
 public inline fun VoidTryResult.isSuccess(): Boolean {
     contract {
         returns(true) implies (this@isSuccess is VoidTryResult.Success)
@@ -34,6 +36,7 @@ public inline fun VoidTryResult.isSuccess(): Boolean {
     return this is VoidTryResult.Success
 }
 
+@InlineOnly
 public inline fun VoidTryResult.isFailure(): Boolean {
     contract {
         returns(true) implies (this@isFailure is VoidTryResult.Failure)
@@ -43,6 +46,8 @@ public inline fun VoidTryResult.isFailure(): Boolean {
     return this is VoidTryResult.Failure
 }
 
+@InlineOnly
+@JvmSynthetic
 public inline fun <E> VoidTryResult.onExcept(
     clazz: Class<out E>,
     action: VoidFailureContext.(E) -> Unit
@@ -67,6 +72,8 @@ public inline fun <E> VoidTryResult.onExcept(
     return this
 }
 
+@InlineOnly
+@JvmSynthetic
 public inline infix fun <reified E> VoidTryResult.onExcept(
     action: VoidFailureContext.(E) -> Unit
 ): VoidTryResult {
@@ -77,9 +84,11 @@ public inline infix fun <reified E> VoidTryResult.onExcept(
     return onExcept(E::class.java, action)
 }
 
+@InlineOnly
 @Suppress("UnusedReceiverParameter")
 public inline fun VoidTryResult.orIgnore() = Unit
 
+@InlineOnly
 public inline infix fun VoidTryResult.orGet(provider: (Throwable) -> Unit) {
     contract {
         callsInPlace(provider, InvocationKind.AT_MOST_ONCE)
@@ -88,6 +97,7 @@ public inline infix fun VoidTryResult.orGet(provider: (Throwable) -> Unit) {
     if (isFailure()) provider(e)
 }
 
+@InlineOnly
 public inline fun VoidTryResult.orNull(): Unit? {
     contract {
         returns(null) implies (this@orNull is VoidTryResult.Failure)
@@ -97,6 +107,7 @@ public inline fun VoidTryResult.orNull(): Unit? {
     return if (isSuccess()) Unit else null
 }
 
+@InlineOnly
 public inline fun VoidTryResult.orThrow() {
     contract {
         returns() implies (this@orThrow is VoidTryResult.Success)
