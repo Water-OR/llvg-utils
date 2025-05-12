@@ -20,7 +20,7 @@
 @file:JvmName("ArrayUtils")
 @file:Suppress("ReplaceJavaStaticMethodWithKotlinAnalog")
 
-package net.llvg.array
+package net.llvg.loliutils.array
 
 import java.util.Arrays
 import kotlin.contracts.InvocationKind
