@@ -25,7 +25,6 @@ package net.llvg.loliutils.array
 import java.util.Arrays
 import kotlin.internal.InlineOnly
 import kotlin.internal.PureReifiable
-import net.llvg.loliutils.iterator.ArrayHelper
 
 @InlineOnly
 @JvmSynthetic
