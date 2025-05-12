@@ -28,7 +28,6 @@ import net.llvg.loliutils.function.Gettable
 
 @InlineOnly
 public inline val <T> KProperty0<T>.asValRef: PropertyAsValRef<T>
-    @JvmSynthetic
     get() = PropertyAsValRef(this)
 
 @InlineOnly
@@ -42,7 +41,6 @@ public inline val <T> ValRef<T>.asProperty: ValRefAsProperty<T>
     get() = ValRefAsProperty(this)
 
 @InlineOnly
-@JvmSynthetic
 public inline operator fun <T> ValRef<T>.provideDelegate(
     thisRef: Any?,
     property: KProperty<*>

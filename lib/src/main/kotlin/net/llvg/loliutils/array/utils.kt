@@ -27,7 +27,6 @@ import kotlin.internal.InlineOnly
 import kotlin.internal.PureReifiable
 
 @InlineOnly
-@JvmSynthetic
 public inline fun <T> newArray(
     type: Class<T>,
     size: Int
@@ -38,7 +37,6 @@ public inline fun <T> newArray(
     )
 
 @InlineOnly
-@JvmSynthetic
 public inline fun <@PureReifiable reified T> newArray(
     size: Int
 ): Array<T> =
@@ -47,14 +45,13 @@ public inline fun <@PureReifiable reified T> newArray(
         size
     )
 
+@InlineOnly
 @Suppress("ReplaceJavaStaticMethodWithKotlinAnalog")
 public inline val <T> Array<T>.asList: MutableList<T>
-    @JvmSynthetic
     get() = Arrays.asList(*this)
 
 @InlineOnly
 @PublishedApi
-@JvmSynthetic
 internal fun subArrayRangeCheck(
     from: Int,
     till: Int,

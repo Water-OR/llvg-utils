@@ -47,7 +47,6 @@ public inline fun VoidTryResult.isFailure(): Boolean {
 }
 
 @InlineOnly
-@JvmSynthetic
 public inline fun <E> VoidTryResult.onExcept(
     clazz: Class<out E>,
     action: VoidFailureContext.(E) -> Unit
@@ -73,7 +72,6 @@ public inline fun <E> VoidTryResult.onExcept(
 }
 
 @InlineOnly
-@JvmSynthetic
 public inline infix fun <reified E> VoidTryResult.onExcept(
     action: VoidFailureContext.(E) -> Unit
 ): VoidTryResult {

@@ -25,35 +25,28 @@ import kotlin.internal.InlineOnly
 
 @InlineOnly
 public inline val Number.double: Double
-    @JvmSynthetic
     get() = toDouble()
 
 @InlineOnly
 public inline val Number.float: Float
-    @JvmSynthetic
     get() = toFloat()
 
 @InlineOnly
 public inline val Number.long: Long
-    @JvmSynthetic
     get() = toLong()
 
 @InlineOnly
 public inline val Number.int: Int
-    @JvmSynthetic
     get() = toInt()
 
 @InlineOnly
 public inline val Number.char: Char
-    @JvmSynthetic
     get() = toInt().toChar()
 
 @InlineOnly
 public inline val Number.short: Short
-    @JvmSynthetic
     get() = toShort()
 
 @InlineOnly
 public inline val Number.byte: Byte
-    @JvmSynthetic
     get() = toByte()

@@ -26,7 +26,6 @@ import kotlin.contracts.contract
 import kotlin.internal.InlineOnly
 
 @InlineOnly
-@JvmSynthetic
 public inline fun tryPrf(
     scope: TryScope = ListTryScope(ArrayList()),
     action: TryScope.Context.() -> Unit
@@ -46,7 +45,6 @@ public inline fun tryPrf(
 }
 
 @InlineOnly
-@JvmSynthetic
 public inline fun <R> tryRun(
     scope: TryScope = ListTryScope(ArrayList()),
     action: TryScope.Context.() -> R

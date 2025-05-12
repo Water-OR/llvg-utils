@@ -28,7 +28,6 @@ import kotlin.internal.PureReifiable
 import net.llvg.loliutils.others.prf
 
 @InlineOnly
-@JvmSynthetic
 public inline infix fun <T> IdentifierProvider.broke(
     value: T
 ): Nothing =
@@ -36,11 +35,9 @@ public inline infix fun <T> IdentifierProvider.broke(
 
 @InlineOnly
 public inline val IdentifierProvider.broke: Nothing
-    @JvmSynthetic
     get() = throw IdentifiedReturn(ident, null)
 
 @InlineOnly
-@JvmSynthetic
 public inline fun prfWrapBlock(
     block: IdentifierProvider.() -> Unit
 ) {
@@ -60,7 +57,6 @@ public inline fun prfWrapBlock(
 }
 
 @InlineOnly
-@JvmSynthetic
 public inline fun <R> runWrapBlock(
     clazz: Class<out R>,
     block: IdentifierProvider.() -> R
@@ -82,7 +78,6 @@ public inline fun <R> runWrapBlock(
 }
 
 @InlineOnly
-@JvmSynthetic
 public inline fun <@PureReifiable reified R> runWrapBlock(
     block: IdentifierProvider.() -> R
 ): R {

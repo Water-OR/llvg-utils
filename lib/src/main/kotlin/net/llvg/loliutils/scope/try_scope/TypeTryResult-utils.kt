@@ -49,7 +49,6 @@ public inline fun <R> TypeTryResult<R>.isFailure(): Boolean {
 }
 
 @InlineOnly
-@JvmSynthetic
 public inline fun <R, E : Throwable> TypeTryResult<R>.onExcept(
     clazz: Class<out E>,
     action: TypeFailureContext<R>.(E) -> Unit
@@ -74,7 +73,6 @@ public inline fun <R, E : Throwable> TypeTryResult<R>.onExcept(
 }
 
 @InlineOnly
-@JvmSynthetic
 public inline infix fun <R, reified E : Throwable> TypeTryResult<R>.onExcept(
     action: TypeFailureContext<R>.(E) -> Unit
 ): TypeTryResult<R> {
