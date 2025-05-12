@@ -24,8 +24,6 @@ package net.llvg.loliutils.scope.try_scope
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.internal.InlineOnly
-import net.llvg.loliutils.others.exec
-import net.llvg.loliutils.others.prf
 
 @InlineOnly
 @JvmSynthetic
@@ -37,10 +35,11 @@ public inline fun tryPrf(
         callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
     
-    try {
-        TryScope.Context(scope).action().exec { return VoidTryResult.Success }
+    return try {
+        TryScope.Context(scope).action()
+        VoidTryResult.Success
     } catch (e: Throwable) {
-        return VoidTryResult.Failure(e)
+        VoidTryResult.Failure(e)
     } finally {
         scope.close()
     }
@@ -56,10 +55,10 @@ public inline fun <R> tryRun(
         callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
     
-    try {
-        TryScope.Context(scope).action().prf { return TypeTryResult.Success(this) }
+    return try {
+        TypeTryResult.Success(TryScope.Context(scope).action())
     } catch (e: Throwable) {
-        return TypeTryResult.Failure(e)
+        TypeTryResult.Failure(e)
     } finally {
         scope.close()
     }

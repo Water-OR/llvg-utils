@@ -24,6 +24,7 @@ package net.llvg.loliutils.scope
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.internal.InlineOnly
+import kotlin.internal.PureReifiable
 import net.llvg.loliutils.others.prf
 
 @InlineOnly
@@ -51,9 +52,7 @@ public inline fun prfWrapBlock(
         try {
             block()
         } catch (e: IdentifiedReturn) {
-            if (this.ident === e.ident) {
-                return
-            } else {
+            if (this.ident !== e.ident) {
                 throw e
             }
         }
@@ -70,23 +69,21 @@ public inline fun <R> runWrapBlock(
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
     
-    IdentifierProvider.Impl().prf {
-        @Suppress("LiftReturnOrAssignment")
+    return IdentifierProvider.Impl().run {
         try {
-            return block()
+            block()
         } catch (e: IdentifiedReturn) {
-            if (ident === e.ident) {
-                return clazz.cast(e.value)
-            } else {
+            if (ident !== e.ident) {
                 throw e
             }
+            clazz.cast(e.value)
         }
     }
 }
 
 @InlineOnly
 @JvmSynthetic
-public inline fun <reified R> runWrapBlock(
+public inline fun <@PureReifiable reified R> runWrapBlock(
     block: IdentifierProvider.() -> R
 ): R {
     contract {
