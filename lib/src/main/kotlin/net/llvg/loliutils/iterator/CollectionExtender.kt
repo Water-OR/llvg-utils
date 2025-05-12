@@ -25,17 +25,30 @@ import kotlin.contracts.contract
 @JvmInline
 public value class CollectionExtender<T, out C : MutableCollection<T>>(
     public val collection: C
-) {
-    public inline infix fun extend(
-        action: context(CollectionExtender<T, C>) C.() -> Unit
-    ): C {
-        contract {
-            callsInPlace(action, InvocationKind.EXACTLY_ONCE)
-        }
-        
-        collection.action()
-        return collection
+)
+
+public inline infix fun <T, C : MutableCollection<T>> CollectionExtender<T, C>.extend(
+    action: CollectionExtender<T, C>.() -> Unit
+): C {
+    contract {
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
     }
+    
+    action()
+    return collection
+}
+
+public inline val <T, C : MutableCollection<T>> C.extender: CollectionExtender<T, C>
+    get() = CollectionExtender(this)
+
+public inline infix fun <T, C : MutableCollection<T>> C.extend(
+    configure: CollectionExtender<T, C>.() -> Unit
+): C {
+    contract {
+        callsInPlace(configure, InvocationKind.EXACTLY_ONCE)
+    }
+    
+    return extender extend configure
 }
 
 context(extender: CollectionExtender<T, C>)
@@ -77,16 +90,3 @@ context(extender: CollectionExtender<T, C>)
 public inline operator fun <T, C : MutableCollection<T>> Sequence<T>.unaryMinus() {
     extender.collection -= this
 }
-
-public inline infix fun <T, C : MutableCollection<T>> C.extend(
-    configure: context(CollectionExtender<T, C>) C.() -> Unit
-): C {
-    contract {
-        callsInPlace(configure, InvocationKind.EXACTLY_ONCE)
-    }
-    
-    return extender extend { configure() }
-}
-
-public inline val <T, C : MutableCollection<T>> C.extender: CollectionExtender<T, C>
-    get() = CollectionExtender(this)
