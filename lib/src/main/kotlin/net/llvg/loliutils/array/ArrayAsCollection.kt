@@ -17,7 +17,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.array
+package net.llvg.loliutils.array
 
 public class ArrayAsCollection<out T>(
     public val array: Array<out T>
