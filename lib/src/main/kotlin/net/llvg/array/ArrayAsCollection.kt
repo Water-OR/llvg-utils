@@ -17,14 +17,27 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:JvmName("IteratorUtils")
+package net.llvg.array
 
-package net.llvg.loliutils.iterator
-
-import net.llvg.loliutils.type.castTo
-
-public inline fun <T> emptyIterator(): MutableListIterator<T> =
-    EmptyIterator.castTo()
-
-public inline fun <T> emptyIterable(): Iterable<T> =
-    EmptyIterable
+public class ArrayAsCollection<out T>(
+    public val array: Array<out T>
+) : Collection<T> {
+    override val size: Int
+        get() = array.size
+    
+    override fun isEmpty(): Boolean =
+        array.isEmpty()
+    
+    override fun iterator(): Iterator<T> =
+        array.iterator()
+    
+    override fun contains(
+        element: @UnsafeVariance T
+    ): Boolean =
+        array.contains(element)
+    
+    override fun containsAll(
+        elements: Collection<@UnsafeVariance T>
+    ): Boolean =
+        elements.all(array::contains)
+}

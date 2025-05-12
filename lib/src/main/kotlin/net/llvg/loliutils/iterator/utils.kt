@@ -17,27 +17,21 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+@file:JvmName("IteratorUtils")
+
 package net.llvg.loliutils.iterator
 
-public class ArrayAsCollection<T>(
-    public val array: Array<out T>
-) : Collection<T> {
-    override val size: Int
-        get() = array.size
-    
-    override fun isEmpty(): Boolean =
-        array.isEmpty()
-    
-    override fun iterator(): Iterator<T> =
-        array.iterator()
-    
-    override fun contains(
-        element: T
-    ): Boolean =
-        array.contains(element)
-    
-    override fun containsAll(
-        elements: Collection<T>
-    ): Boolean =
-        elements.all(array::contains)
-}
+public inline fun <T> emptyIterator(): Iterator<T> =
+    EmptyIterator
+
+public inline fun <T> emptyMutableIterator(): MutableIterator<T> =
+    EmptyIterator
+
+public inline fun <T> emptyListIterator(): ListIterator<T> =
+    EmptyIterator
+
+public inline fun <T> emptyIterable(): Iterable<T> =
+    EmptyIterable
+
+public inline fun <T> emptyMutableIterable(): MutableIterable<T> =
+    EmptyIterable

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Water-OR
+ * Copyright (C) 2025-2025 Water-OR
  *
  * This file is part of llvg-utils
  *
@@ -20,11 +20,12 @@
 @file:JvmName("ArrayUtils")
 @file:Suppress("ReplaceJavaStaticMethodWithKotlinAnalog")
 
-package net.llvg.loliutils.iterator
+package net.llvg.array
 
 import java.util.Arrays
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import net.llvg.loliutils.iterator.ArrayHelper
 
 public inline fun <T> newArray(
     type: Class<T>,
@@ -43,11 +44,8 @@ public inline fun <reified T> newArray(
         size
     )
 
-public inline val <T> Array<T>.asCollection: Collection<T>
-    get() = ArrayAsCollection(this)
-
 @Suppress("ReplaceJavaStaticMethodWithKotlinAnalog")
-public inline val <T> Array<T>.asList: List<T>
+public inline val <T> Array<T>.asList: MutableList<T>
     get() = Arrays.asList(*this)
 
 @PublishedApi
@@ -61,15 +59,9 @@ internal inline fun <R> subArrayRangeCheck(
         callsInPlace(onSuccess, InvocationKind.EXACTLY_ONCE)
     }
     
-    require(0 <= from) {
-        "Failed in check 0 <= from, from=$from"
-    }
-    require(from < till) {
-        "Failed in check from < till, from=$from, till=$till"
-    }
-    require(till < size) {
-        "Failed in check till < size, till=$till, size=$size"
-    }
+    require(0 <= from) { "Failed in check 0 <= from, from=$from" }
+    require(from < till) { "Failed in check from < till, from=$from, till=$till" }
+    require(till < size) { "Failed in check till < size, till=$till, size=$size" }
     
     return onSuccess(till)
 }
