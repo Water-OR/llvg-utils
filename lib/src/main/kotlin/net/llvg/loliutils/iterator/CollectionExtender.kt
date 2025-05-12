@@ -21,12 +21,14 @@ package net.llvg.loliutils.iterator
 
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.internal.InlineOnly
 
 @JvmInline
 public value class CollectionExtender<T, out C : MutableCollection<T>>(
     public val collection: C
 )
 
+@InlineOnly
 public inline infix fun <T, C : MutableCollection<T>> CollectionExtender<T, C>.extend(
     action: CollectionExtender<T, C>.() -> Unit
 ): C {
@@ -38,9 +40,11 @@ public inline infix fun <T, C : MutableCollection<T>> CollectionExtender<T, C>.e
     return collection
 }
 
+@InlineOnly
 public inline val <T, C : MutableCollection<T>> C.extender: CollectionExtender<T, C>
     get() = CollectionExtender(this)
 
+@InlineOnly
 public inline infix fun <T, C : MutableCollection<T>> C.extend(
     configure: CollectionExtender<T, C>.() -> Unit
 ): C {
@@ -52,41 +56,49 @@ public inline infix fun <T, C : MutableCollection<T>> C.extend(
 }
 
 context(extender: CollectionExtender<T, C>)
+@InlineOnly
 public inline operator fun <T, C : MutableCollection<T>> T.unaryPlus() {
     extender.collection += this
 }
 
 context(extender: CollectionExtender<T, C>)
+@InlineOnly
 public inline operator fun <T, C : MutableCollection<T>> T.unaryMinus() {
     extender.collection -= this
 }
 
 context(extender: CollectionExtender<T, C>)
+@InlineOnly
 public inline operator fun <T, C : MutableCollection<T>> Array<T>.unaryPlus() {
     extender.collection += this
 }
 
 context(extender: CollectionExtender<T, C>)
+@InlineOnly
 public inline operator fun <T, C : MutableCollection<T>> Array<T>.unaryMinus() {
     extender.collection -= this
 }
 
 context(extender: CollectionExtender<T, C>)
+@InlineOnly
 public inline operator fun <T, C : MutableCollection<T>> Iterable<T>.unaryPlus() {
     extender.collection += this
 }
 
 context(extender: CollectionExtender<T, C>)
+@InlineOnly
 public inline operator fun <T, C : MutableCollection<T>> Iterable<T>.unaryMinus() {
     extender.collection -= this
 }
 
 context(extender: CollectionExtender<T, C>)
+@InlineOnly
 public inline operator fun <T, C : MutableCollection<T>> Sequence<T>.unaryPlus() {
     extender.collection += this
 }
 
 context(extender: CollectionExtender<T, C>)
+@InlineOnly
 public inline operator fun <T, C : MutableCollection<T>> Sequence<T>.unaryMinus() {
     extender.collection -= this
 }

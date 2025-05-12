@@ -23,7 +23,9 @@ package net.llvg.loliutils.scope.try_scope
 
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.internal.InlineOnly
 
+@InlineOnly
 public inline fun tryPrf(
     scope: TryScope = ListTryScope(ArrayList()),
     action: TryScope.Context.() -> Unit
@@ -32,18 +34,17 @@ public inline fun tryPrf(
         callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
     
-    val context = TryScope.Context(scope)
-    
-    scope.use {
-        try {
-            context.action()
-            return VoidTryResult.Success
-        } catch (e: Throwable) {
-            return VoidTryResult.Failure(e)
-        }
+    return try {
+        TryScope.Context(scope).action()
+        VoidTryResult.Success
+    } catch (e: Throwable) {
+        VoidTryResult.Failure(e)
+    } finally {
+        scope.close()
     }
 }
 
+@InlineOnly
 public inline fun <R> tryRun(
     scope: TryScope = ListTryScope(ArrayList()),
     action: TryScope.Context.() -> R
@@ -52,14 +53,11 @@ public inline fun <R> tryRun(
         callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
     
-    val context = TryScope.Context(scope)
-    
-    scope.use {
-        try {
-            val r = context.action()
-            return TypeTryResult.Success(r)
-        } catch (e: Throwable) {
-            return TypeTryResult.Failure(e)
-        }
+    return try {
+        TypeTryResult.Success(TryScope.Context(scope).action())
+    } catch (e: Throwable) {
+        TypeTryResult.Failure(e)
+    } finally {
+        scope.close()
     }
 }

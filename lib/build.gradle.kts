@@ -51,8 +51,11 @@ kotlin.compilerOptions {
         "-Xjvm-default=all",
         "-Xcontext-parameters",
         "-Xnested-type-aliases",
+        "-Xallow-kotlin-package",
         "-Xexplicit-api=warning",
-        "-Xsuppress-warning=NOTHING_TO_INLINE",
-        "-opt-in=kotlin.contracts.ExperimentalContracts"
+        "-Xsuppress-warning=NOTHING_TO_INLINE"
     ).let(freeCompilerArgs::addAll)
+    
+    optIn.add("kotlin.contracts.ExperimentalContracts")
+    optIn.add("net.llvg.loliutils.KotlinInternal")
 }

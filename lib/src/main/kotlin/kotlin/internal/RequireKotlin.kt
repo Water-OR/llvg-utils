@@ -17,19 +17,19 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.iterator;
+package kotlin.internal
 
-import java.lang.reflect.Array;
+import net.llvg.loliutils.KotlinInternal
 
-@SuppressWarnings ("unused")
-public final class ArrayHelper {
-    private ArrayHelper() { }
-    
-    @SuppressWarnings ("unchecked")
-    public static <T> T[] newArray(
-      Class<? extends T> type,
-      int size
-    ) {
-        return (T[]) Array.newInstance(type, size);
-    }
-}
+@KotlinInternal
+@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY, AnnotationTarget.CONSTRUCTOR, AnnotationTarget.TYPEALIAS)
+@Retention(AnnotationRetention.SOURCE)
+@Repeatable
+@SinceKotlin("1.2")
+public annotation class RequireKotlin(
+    val version: String,
+    val message: String = "",
+    val level: DeprecationLevel = DeprecationLevel.ERROR,
+    val versionKind: RequireKotlinVersionKind = RequireKotlinVersionKind.LANGUAGE_VERSION,
+    val errorCode: Int = -1
+)

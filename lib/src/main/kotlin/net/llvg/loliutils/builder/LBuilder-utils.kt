@@ -23,7 +23,9 @@ package net.llvg.loliutils.builder
 
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.internal.InlineOnly
 
+@InlineOnly
 public inline infix fun <R, B : LBuilder<R>> LBuilderProvider<R, B>.building(
     configure: B.() -> Unit
 ): R {
@@ -34,6 +36,7 @@ public inline infix fun <R, B : LBuilder<R>> LBuilderProvider<R, B>.building(
     return builder().apply(configure).build()
 }
 
+@InlineOnly
 public inline fun <P, R, B : LBuilder<R>> LBuilderProducer<P, R, B>.building(
     parameter: P,
     configure: B.() -> Unit
@@ -45,6 +48,7 @@ public inline fun <P, R, B : LBuilder<R>> LBuilderProducer<P, R, B>.building(
     return builder(parameter).apply(configure).build()
 }
 
+@InlineOnly
 public inline infix fun <R, B : LBuilder<R>> B.build(
     configure: B.() -> Unit
 ): R =

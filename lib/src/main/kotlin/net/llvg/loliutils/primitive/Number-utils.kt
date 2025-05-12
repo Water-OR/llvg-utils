@@ -21,23 +21,32 @@
 
 package net.llvg.loliutils.primitive
 
+import kotlin.internal.InlineOnly
+
+@InlineOnly
 public inline val Number.double: Double
     get() = toDouble()
 
+@InlineOnly
 public inline val Number.float: Float
     get() = toFloat()
 
+@InlineOnly
 public inline val Number.long: Long
     get() = toLong()
 
+@InlineOnly
 public inline val Number.int: Int
     get() = toInt()
 
+@InlineOnly
 public inline val Number.char: Char
     get() = toInt().toChar()
 
+@InlineOnly
 public inline val Number.short: Short
     get() = toShort()
 
+@InlineOnly
 public inline val Number.byte: Byte
     get() = toByte()

@@ -21,20 +21,26 @@
 
 package net.llvg.loliutils.time
 
+import kotlin.internal.InlineOnly
+
 public const val nanoSecondToMicroSecond: Double = 1_000.0
 
 public const val nanoSecondToMilliSecond: Double = 1_000_000.0
 
 public const val nanoSecondToSecond: Double = 1_000_000_000.0
 
+@InlineOnly
 public inline val systemNanoTime: Long
     get() = System.nanoTime()
 
+@InlineOnly
 public inline val systemMicroTime: Double
     get() = System.nanoTime() / nanoSecondToMicroSecond
 
+@InlineOnly
 public inline val systemMilliTime: Double
     get() = System.nanoTime() / nanoSecondToMilliSecond
 
+@InlineOnly
 public inline val systemTime: Double
     get() = System.nanoTime() / nanoSecondToSecond

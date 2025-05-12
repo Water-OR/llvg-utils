@@ -21,16 +21,22 @@
 
 package net.llvg.loliutils.type
 
+import kotlin.internal.InlineOnly
+
+@InlineOnly
 public inline fun <reified T> Class<*>.isExtend(): Boolean =
     T::class.java.isAssignableFrom(this)
 
+@InlineOnly
 @Suppress("UNCHECKED_CAST")
 public inline fun <reified T> Class<*>.tryExtend(): Class<out T>? =
     if (isExtend<T>()) this as Class<out T> else null
 
+@InlineOnly
 public inline fun <reified T> Class<*>.isSuper(): Boolean =
     isAssignableFrom(T::class.java)
 
+@InlineOnly
 @Suppress("UNCHECKED_CAST")
 public inline fun <reified T> Class<*>.trySuper(): Class<in T>? =
     if (isSuper<T>()) this as Class<in T> else null

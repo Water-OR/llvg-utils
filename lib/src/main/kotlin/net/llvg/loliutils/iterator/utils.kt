@@ -21,17 +21,24 @@
 
 package net.llvg.loliutils.iterator
 
+import kotlin.internal.InlineOnly
+
+@InlineOnly
 public inline fun <T> emptyIterator(): Iterator<T> =
     EmptyIterator
 
+@InlineOnly
 public inline fun <T> emptyMutableIterator(): MutableIterator<T> =
     EmptyIterator
 
+@InlineOnly
 public inline fun <T> emptyListIterator(): ListIterator<T> =
     EmptyIterator
 
+@InlineOnly
 public inline fun <T> emptyIterable(): Iterable<T> =
     EmptyIterable
 
+@InlineOnly
 public inline fun <T> emptyMutableIterable(): MutableIterable<T> =
     EmptyIterable

@@ -23,10 +23,13 @@ package net.llvg.loliutils.others
 
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.internal.InlineOnly
 
+@InlineOnly
 public inline val Boolean.takeTrue: Boolean?
     get() = takeTrue()
 
+@InlineOnly
 public inline fun Boolean.takeTrue(): Boolean? {
     contract {
         returns(null) implies !this@takeTrue
@@ -36,9 +39,11 @@ public inline fun Boolean.takeTrue(): Boolean? {
     return if (this) true else null
 }
 
+@InlineOnly
 public inline val Boolean.takeFalse: Boolean?
     get() = takeFalse()
 
+@InlineOnly
 public inline fun Boolean.takeFalse(): Boolean? {
     contract {
         returns(null) implies this@takeFalse
@@ -48,9 +53,11 @@ public inline fun Boolean.takeFalse(): Boolean? {
     return if (this) null else false
 }
 
+@InlineOnly
 public inline val Any?.invertElvis: Unit?
     get() = invertElvis()
 
+@InlineOnly
 public inline fun Any?.invertElvis(): Unit? {
     contract {
         returns(null) implies (this@invertElvis !== null)
@@ -60,6 +67,7 @@ public inline fun Any?.invertElvis(): Unit? {
     return if (this === null) Unit else null
 }
 
+@InlineOnly
 public inline fun <T> T.prf(
     action: T.() -> Unit
 ) {
@@ -70,6 +78,7 @@ public inline fun <T> T.prf(
     action()
 }
 
+@InlineOnly
 public inline fun <T> T.act(
     action: (T) -> Unit
 ) {
@@ -80,6 +89,7 @@ public inline fun <T> T.act(
     action(this)
 }
 
+@InlineOnly
 public inline fun prf(
     action: () -> Unit
 ) {
@@ -90,6 +100,7 @@ public inline fun prf(
     action()
 }
 
+@InlineOnly
 @Suppress("UnusedReceiverParameter")
 public inline fun Any?.exec(
     action: () -> Unit
@@ -101,6 +112,7 @@ public inline fun Any?.exec(
     action()
 }
 
+@InlineOnly
 @Suppress("UnusedReceiverParameter")
 public inline fun <R> Any?.eval(
     action: () -> R

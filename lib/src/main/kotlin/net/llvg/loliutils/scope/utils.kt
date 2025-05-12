@@ -23,15 +23,21 @@ package net.llvg.loliutils.scope
 
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.internal.InlineOnly
+import kotlin.internal.PureReifiable
+import net.llvg.loliutils.others.prf
 
+@InlineOnly
 public inline infix fun <T> IdentifierProvider.broke(
     value: T
 ): Nothing =
     throw IdentifiedReturn(ident, value)
 
+@InlineOnly
 public inline val IdentifierProvider.broke: Nothing
     get() = throw IdentifiedReturn(ident, null)
 
+@InlineOnly
 public inline fun prfWrapBlock(
     block: IdentifierProvider.() -> Unit
 ) {
@@ -39,19 +45,18 @@ public inline fun prfWrapBlock(
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
     
-    val identifier: IdentifierProvider = IdentifierProvider.Impl()
-    
-    try {
-        identifier.block()
-    } catch (e: IdentifiedReturn) {
-        if (identifier.ident === e.ident) {
-            return
-        } else {
-            throw e
+    IdentifierProvider.Impl().prf {
+        try {
+            block()
+        } catch (e: IdentifiedReturn) {
+            if (this.ident !== e.ident) {
+                throw e
+            }
         }
     }
 }
 
+@InlineOnly
 public inline fun <R> runWrapBlock(
     clazz: Class<out R>,
     block: IdentifierProvider.() -> R
@@ -60,21 +65,20 @@ public inline fun <R> runWrapBlock(
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
     
-    val identifier: IdentifierProvider = IdentifierProvider.Impl()
-    
-    @Suppress("LiftReturnOrAssignment")
-    try {
-        return identifier.block()
-    } catch (e: IdentifiedReturn) {
-        if (identifier.ident === e.ident) {
-            return clazz.cast(e.value)
-        } else {
-            throw e
+    return IdentifierProvider.Impl().run {
+        try {
+            block()
+        } catch (e: IdentifiedReturn) {
+            if (ident !== e.ident) {
+                throw e
+            }
+            clazz.cast(e.value)
         }
     }
 }
 
-public inline fun <reified R> runWrapBlock(
+@InlineOnly
+public inline fun <@PureReifiable reified R> runWrapBlock(
     block: IdentifierProvider.() -> R
 ): R {
     contract {

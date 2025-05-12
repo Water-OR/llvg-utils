@@ -23,10 +23,10 @@
 package net.llvg.loliutils.array
 
 import java.util.Arrays
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
-import net.llvg.loliutils.iterator.ArrayHelper
+import kotlin.internal.InlineOnly
+import kotlin.internal.PureReifiable
 
+@InlineOnly
 public inline fun <T> newArray(
     type: Class<T>,
     size: Int
@@ -36,7 +36,8 @@ public inline fun <T> newArray(
         size
     )
 
-public inline fun <reified T> newArray(
+@InlineOnly
+public inline fun <@PureReifiable reified T> newArray(
     size: Int
 ): Array<T> =
     newArray(
@@ -44,33 +45,31 @@ public inline fun <reified T> newArray(
         size
     )
 
+@InlineOnly
 @Suppress("ReplaceJavaStaticMethodWithKotlinAnalog")
 public inline val <T> Array<T>.asList: MutableList<T>
     get() = Arrays.asList(*this)
 
+@InlineOnly
 @PublishedApi
-internal inline fun <R> subArrayRangeCheck(
+internal fun subArrayRangeCheck(
     from: Int,
     till: Int,
-    size: Int,
-    onSuccess: (Int) -> R
-): R {
-    contract {
-        callsInPlace(onSuccess, InvocationKind.EXACTLY_ONCE)
-    }
-    
+    size: Int
+): Int {
     require(0 <= from) { "Failed in check 0 <= from, from=$from" }
     require(from < till) { "Failed in check from < till, from=$from, till=$till" }
     require(till < size) { "Failed in check till < size, till=$till, size=$size" }
     
-    return onSuccess(till)
+    return till
 }
 
+@InlineOnly
 public inline fun ByteArray.subArray(
     from: Int = 0,
     size: Int = this.size - from
 ): ByteArray =
-    subArrayRangeCheck(from, from + size, this.size) { till ->
+    subArrayRangeCheck(from, from + size, this.size).let { till ->
         if (from == 0) {
             Arrays.copyOf(this, size)
         } else {
@@ -78,11 +77,12 @@ public inline fun ByteArray.subArray(
         }
     }
 
+@InlineOnly
 public inline fun ShortArray.subArray(
     from: Int = 0,
     size: Int = this.size - from
 ): ShortArray =
-    subArrayRangeCheck(from, from + size, this.size) { till ->
+    subArrayRangeCheck(from, from + size, this.size).let { till ->
         if (from == 0) {
             Arrays.copyOf(this, size)
         } else {
@@ -90,11 +90,12 @@ public inline fun ShortArray.subArray(
         }
     }
 
+@InlineOnly
 public inline fun IntArray.subArray(
     from: Int = 0,
     size: Int = this.size - from
 ): IntArray =
-    subArrayRangeCheck(from, from + size, this.size) { till ->
+    subArrayRangeCheck(from, from + size, this.size).let { till ->
         if (from == 0) {
             Arrays.copyOf(this, size)
         } else {
@@ -102,11 +103,12 @@ public inline fun IntArray.subArray(
         }
     }
 
+@InlineOnly
 public inline fun LongArray.subArray(
     from: Int = 0,
     size: Int = this.size - from
 ): LongArray =
-    subArrayRangeCheck(from, from + size, this.size) { till ->
+    subArrayRangeCheck(from, from + size, this.size).let { till ->
         if (from == 0) {
             Arrays.copyOf(this, size)
         } else {
@@ -114,11 +116,12 @@ public inline fun LongArray.subArray(
         }
     }
 
+@InlineOnly
 public inline fun CharArray.subArray(
     from: Int = 0,
     size: Int = this.size - from
 ): CharArray =
-    subArrayRangeCheck(from, from + size, this.size) { till ->
+    subArrayRangeCheck(from, from + size, this.size).let { till ->
         if (from == 0) {
             Arrays.copyOf(this, size)
         } else {
@@ -126,11 +129,12 @@ public inline fun CharArray.subArray(
         }
     }
 
+@InlineOnly
 public inline fun FloatArray.subArray(
     from: Int = 0,
     size: Int = this.size - from
 ): FloatArray =
-    subArrayRangeCheck(from, from + size, this.size) { till ->
+    subArrayRangeCheck(from, from + size, this.size).let { till ->
         if (from == 0) {
             Arrays.copyOf(this, size)
         } else {
@@ -138,11 +142,12 @@ public inline fun FloatArray.subArray(
         }
     }
 
+@InlineOnly
 public inline fun DoubleArray.subArray(
     from: Int = 0,
     size: Int = this.size - from
 ): DoubleArray =
-    subArrayRangeCheck(from, from + size, this.size) { till ->
+    subArrayRangeCheck(from, from + size, this.size).let { till ->
         if (from == 0) {
             Arrays.copyOf(this, size)
         } else {
@@ -150,11 +155,12 @@ public inline fun DoubleArray.subArray(
         }
     }
 
+@InlineOnly
 public inline fun BooleanArray.subArray(
     from: Int = 0,
     size: Int = this.size - from
 ): BooleanArray =
-    subArrayRangeCheck(from, from + size, this.size) { till ->
+    subArrayRangeCheck(from, from + size, this.size).let { till ->
         if (from == 0) {
             Arrays.copyOf(this, size)
         } else {
@@ -162,11 +168,12 @@ public inline fun BooleanArray.subArray(
         }
     }
 
+@InlineOnly
 public inline fun <T> Array<T>.subArray(
     from: Int = 0,
     size: Int = this.size - from
 ): Array<T> =
-    subArrayRangeCheck(from, from + size, this.size) { till ->
+    subArrayRangeCheck(from, from + size, this.size).let { till ->
         if (from == 0) {
             Arrays.copyOf(this, size)
         } else {

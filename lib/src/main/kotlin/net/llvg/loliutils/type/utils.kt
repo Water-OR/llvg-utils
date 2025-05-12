@@ -21,16 +21,21 @@
 
 package net.llvg.loliutils.type
 
+import kotlin.internal.InlineOnly
+
+@InlineOnly
 @Suppress("UNCHECKED_CAST")
 public inline fun <R> Any?.castTo(): R =
     this as R
 
+@InlineOnly
 @Suppress("UNCHECKED_CAST")
 public inline fun <R> cast(
     value: Any?
 ): R =
     value as R
 
+@InlineOnly
 @Suppress("UNCHECKED_CAST")
 public inline val <T> T?.asNotNull: T
     get() = this as T

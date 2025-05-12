@@ -28,7 +28,6 @@ public class ReadWriteLockRef<T>(
     private val ref: VarRef<T>,
     private val lock: ReadWriteLock = ReentrantReadWriteLock()
 ) : VarRef<T> {
-    
     override fun get(): T =
         lock.withReadLock {
             ref.get()

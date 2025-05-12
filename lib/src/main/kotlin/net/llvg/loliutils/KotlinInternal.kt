@@ -17,25 +17,9 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:JvmName("SettableUtils")
+package net.llvg.loliutils
 
-package net.llvg.loliutils.function
-
-import kotlin.internal.InlineOnly
-
-@InlineOnly
-public inline infix operator fun <T> Settable<T>.invoke(
-    value: T
-) {
-    set(value)
-}
-
-@InlineOnly
-public inline val <T> Settable<T>.asLambda: (T) -> Unit
-    get() = ::set
-
-@InlineOnly
-public inline fun <T> makeSettable(
-    crossinline action: (T) -> Unit
-): Settable<T> =
-    Settable { action(it) }
+@RequiresOptIn(message = "Unsing kotlin internal api is unsafe")
+@Retention(AnnotationRetention.BINARY)
+@Target(AnnotationTarget.CLASS, AnnotationTarget.PROPERTY, AnnotationTarget.LOCAL_VARIABLE, AnnotationTarget.VALUE_PARAMETER, AnnotationTarget.CONSTRUCTOR, AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER, AnnotationTarget.TYPEALIAS)
+public annotation class KotlinInternal

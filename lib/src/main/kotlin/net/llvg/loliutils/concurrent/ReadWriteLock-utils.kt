@@ -25,7 +25,9 @@ import java.util.concurrent.locks.ReadWriteLock
 import kotlin.concurrent.withLock
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.internal.InlineOnly
 
+@InlineOnly
 public inline fun <R> ReadWriteLock.withReadLock(
     action: () -> R
 ): R {
@@ -36,6 +38,7 @@ public inline fun <R> ReadWriteLock.withReadLock(
     return readLock().withLock(action)
 }
 
+@InlineOnly
 public inline fun <R> ReadWriteLock.withWriteLock(
     action: () -> R
 ): R {

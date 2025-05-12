@@ -21,16 +21,20 @@
 
 package net.llvg.loliutils.reference
 
+import kotlin.internal.InlineOnly
 import kotlin.reflect.KProperty
 
+@InlineOnly
 public inline val <T> ThreadLocal<T>.asRef: ThreadLocalAsRef<T>
     get() = ThreadLocalAsRef(this)
 
+@InlineOnly
 public inline fun <T> ThreadLocal(
     crossinline initializer: () -> T
 ): ThreadLocal<T> =
     ThreadLocal.withInitial { initializer() }
 
+@InlineOnly
 public inline operator fun <T> ThreadLocal<T>.provideDelegate(
     self: Any?,
     property: KProperty<*>

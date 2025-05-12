@@ -17,27 +17,11 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.iterator;
+package kotlin.internal
 
-import java.util.Iterator;
-import org.jetbrains.annotations.NotNull;
+import net.llvg.loliutils.KotlinInternal
 
-@SuppressWarnings ("unused")
-public final class VoidIterable
-  implements Iterable<Void>
-{
-    private VoidIterable() { }
-    
-    public static final VoidIterable INSTANCE = new VoidIterable();
-    
-    @SuppressWarnings ("unchecked")
-    public static <T> Iterable<T> typed() {
-        return (Iterable<T>) INSTANCE;
-    }
-    
-    @NotNull
-    @Override
-    public Iterator<Void> iterator() {
-        return VoidIterator.INSTANCE;
-    }
-}
+@KotlinInternal
+@Target(AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER)
+@Retention(AnnotationRetention.BINARY)
+public annotation class InlineOnly

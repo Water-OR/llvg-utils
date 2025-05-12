@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Water-OR
+ * Copyright (C) 2025-2025 Water-OR
  *
  * This file is part of llvg-utils
  *
@@ -17,25 +17,19 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:JvmName("SettableUtils")
+package net.llvg.loliutils.array;
 
-package net.llvg.loliutils.function
+import java.lang.reflect.Array;
 
-import kotlin.internal.InlineOnly
-
-@InlineOnly
-public inline infix operator fun <T> Settable<T>.invoke(
-    value: T
-) {
-    set(value)
+@SuppressWarnings ("unused")
+public final class ArrayHelper {
+    private ArrayHelper() { }
+    
+    @SuppressWarnings ("unchecked")
+    public static <T> T[] newArray(
+      Class<? extends T> type,
+      int size
+    ) {
+        return (T[]) Array.newInstance(type, size);
+    }
 }
-
-@InlineOnly
-public inline val <T> Settable<T>.asLambda: (T) -> Unit
-    get() = ::set
-
-@InlineOnly
-public inline fun <T> makeSettable(
-    crossinline action: (T) -> Unit
-): Settable<T> =
-    Settable { action(it) }

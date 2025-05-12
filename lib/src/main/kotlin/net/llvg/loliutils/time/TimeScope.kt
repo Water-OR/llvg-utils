@@ -19,19 +19,25 @@
 
 package net.llvg.loliutils.time
 
+import kotlin.internal.InlineOnly
+
 public class TimeScope {
     @PublishedApi
     internal val start: Long = System.nanoTime()
     
+    @InlineOnly
     public inline val currentNanoTime: Long
         get() = (System.nanoTime() - start)
     
+    @InlineOnly
     public inline val currentMicroTime: Double
         get() = (System.nanoTime() - start) / nanoSecondToMicroSecond
     
+    @InlineOnly
     public inline val currentMilliTime: Double
         get() = (System.nanoTime() - start) / nanoSecondToMilliSecond
     
+    @InlineOnly
     public inline val currentTime: Double
         get() = (System.nanoTime() - start) / nanoSecondToSecond
 }

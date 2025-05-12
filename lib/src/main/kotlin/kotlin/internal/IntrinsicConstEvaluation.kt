@@ -17,25 +17,12 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:JvmName("SettableUtils")
+package kotlin.internal
 
-package net.llvg.loliutils.function
+import net.llvg.loliutils.KotlinInternal
 
-import kotlin.internal.InlineOnly
-
-@InlineOnly
-public inline infix operator fun <T> Settable<T>.invoke(
-    value: T
-) {
-    set(value)
-}
-
-@InlineOnly
-public inline val <T> Settable<T>.asLambda: (T) -> Unit
-    get() = ::set
-
-@InlineOnly
-public inline fun <T> makeSettable(
-    crossinline action: (T) -> Unit
-): Settable<T> =
-    Settable { action(it) }
+@KotlinInternal
+@Target(AnnotationTarget.CONSTRUCTOR, AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY)
+@Retention(AnnotationRetention.BINARY)
+@SinceKotlin("1.7")
+public annotation class IntrinsicConstEvaluation
