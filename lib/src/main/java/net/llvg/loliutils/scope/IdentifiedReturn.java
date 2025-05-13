@@ -42,7 +42,7 @@ public class IdentifiedReturn
     }
     
     @SuppressWarnings ("unchecked")
-    final public <T> T value() {
+    public final <T> T value() {
         return (T) value;
     }
     
