@@ -49,7 +49,7 @@ public inline fun prfWrapBlock(
         try {
             block()
         } catch (e: IdentifiedReturn) {
-            if (this.ident !== e.ident) {
+            if (ident !== e.ident) {
                 throw e
             }
         }

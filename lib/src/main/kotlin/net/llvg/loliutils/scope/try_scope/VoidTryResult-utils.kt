@@ -24,6 +24,7 @@ package net.llvg.loliutils.scope.try_scope
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.internal.InlineOnly
+import net.llvg.loliutils.others.prf
 import net.llvg.loliutils.scope.IdentifiedReturn
 
 @InlineOnly
@@ -55,12 +56,11 @@ public inline fun <E> VoidTryResult.onExcept(
         callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
     
-    if (isFailure() && clazz.isInstance(e)) {
-        val context = VoidFailureContext.Impl()
+    if (isFailure() && clazz.isInstance(e)) VoidFailureContext.Impl().prf {
         try {
-            context.action(clazz.cast(e))
+            action(clazz.cast(e))
         } catch (fallback: IdentifiedReturn) {
-            if (fallback.ident === context) {
+            if (fallback.ident === this) {
                 return VoidTryResult.Success
             } else {
                 throw fallback
