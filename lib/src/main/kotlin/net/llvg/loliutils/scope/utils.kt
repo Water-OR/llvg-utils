@@ -34,8 +34,8 @@ public inline infix fun <T> IdentifierProvider.broke(
     throw IdentifiedReturn(ident, value)
 
 @InlineOnly
-public inline val IdentifierProvider.broke: Nothing
-    get() = throw IdentifiedReturn(ident, null)
+public inline fun IdentifierProvider.broke(): Nothing =
+    throw IdentifiedReturn(ident, null)
 
 @InlineOnly
 public inline fun prfWrapBlock(
