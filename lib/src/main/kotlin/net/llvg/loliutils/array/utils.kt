@@ -140,18 +140,19 @@ public inline fun BooleanArray.copyTo(
 }
 
 @InlineOnly
-public inline fun <@PureReifiable T> Array<out T>.copyTo(
-    dest: Array<@Exact T>,
+public inline fun <T> Array<out T>.copyTo(
+    dest: Array<T>,
     destOffset: Int = 0,
     from: Int = 0,
     length: Int = size - from
-): Array<@Exact T> {
+): Array<T> {
     System.arraycopy(this, from, dest, destOffset, length)
     return dest
 }
 
 @PublishedApi
-internal fun subArrayBeginIndexCheck(
+@InlineOnly
+internal inline fun subArrayBeginIndexCheck(
     beginIndex: Int,
     sourceSize: Int
 ) {
@@ -164,7 +165,8 @@ internal fun subArrayBeginIndexCheck(
 }
 
 @PublishedApi
-internal fun subArrayEndIndexCheck(
+@InlineOnly
+internal inline fun subArrayEndIndexCheck(
     endIndex: Int,
     sourceSize: Int
 ) {
@@ -173,8 +175,7 @@ internal fun subArrayEndIndexCheck(
     }
 }
 
-@InlineOnly
-public inline fun ByteArray.subArray(
+public fun ByteArray.subArray(
     beginIndex: Int = 0,
     length: Int = size - beginIndex
 ): ByteArray {
@@ -186,8 +187,7 @@ public inline fun ByteArray.subArray(
     return copyTo(ByteArray(length), 0, beginIndex, length)
 }
 
-@InlineOnly
-public inline fun ShortArray.subArray(
+public fun ShortArray.subArray(
     beginIndex: Int = 0,
     length: Int = size - beginIndex
 ): ShortArray {
@@ -199,8 +199,7 @@ public inline fun ShortArray.subArray(
     return copyTo(ShortArray(length), 0, beginIndex, length)
 }
 
-@InlineOnly
-public inline fun IntArray.subArray(
+public fun IntArray.subArray(
     beginIndex: Int = 0,
     length: Int = size - beginIndex
 ): IntArray {
@@ -212,8 +211,7 @@ public inline fun IntArray.subArray(
     return copyTo(IntArray(length), 0, beginIndex, length)
 }
 
-@InlineOnly
-public inline fun LongArray.subArray(
+public fun LongArray.subArray(
     beginIndex: Int = 0,
     length: Int = size - beginIndex
 ): LongArray {
@@ -225,8 +223,7 @@ public inline fun LongArray.subArray(
     return copyTo(LongArray(length), 0, beginIndex, length)
 }
 
-@InlineOnly
-public inline fun CharArray.subArray(
+public fun CharArray.subArray(
     beginIndex: Int = 0,
     length: Int = size - beginIndex
 ): CharArray {
@@ -238,8 +235,7 @@ public inline fun CharArray.subArray(
     return copyTo(CharArray(length), 0, beginIndex, length)
 }
 
-@InlineOnly
-public inline fun FloatArray.subArray(
+public fun FloatArray.subArray(
     beginIndex: Int = 0,
     length: Int = size - beginIndex
 ): FloatArray {
@@ -251,8 +247,7 @@ public inline fun FloatArray.subArray(
     return copyTo(FloatArray(length), 0, beginIndex, length)
 }
 
-@InlineOnly
-public inline fun DoubleArray.subArray(
+public fun DoubleArray.subArray(
     beginIndex: Int = 0,
     length: Int = size - beginIndex
 ): DoubleArray {
@@ -264,8 +259,7 @@ public inline fun DoubleArray.subArray(
     return copyTo(DoubleArray(length), 0, beginIndex, length)
 }
 
-@InlineOnly
-public inline fun BooleanArray.subArray(
+public fun BooleanArray.subArray(
     beginIndex: Int = 0,
     length: Int = size - beginIndex
 ): BooleanArray {
@@ -277,21 +271,7 @@ public inline fun BooleanArray.subArray(
     return copyTo(BooleanArray(length), 0, beginIndex, length)
 }
 
-@InlineOnly
-public inline fun <@PureReifiable reified T> Array<out T>.subArray(
-    beginIndex: Int = 0,
-    length: Int = size - beginIndex
-): Array<@Exact T> {
-    subArrayBeginIndexCheck(beginIndex, size)
-    
-    if (length == 0) return newTypedArray(0)
-    subArrayEndIndexCheck(beginIndex + length, size)
-    
-    return copyTo(newTypedArray<@Exact T>(length), 0, beginIndex, length)
-}
-
-@InlineOnly
-public inline fun <T> Array<out T>.subArray(
+public fun <T> Array<out T>.subArray(
     targetType: Class<T>,
     beginIndex: Int = 0,
     length: Int = size - beginIndex
@@ -305,8 +285,15 @@ public inline fun <T> Array<out T>.subArray(
 }
 
 @InlineOnly
-public inline fun <T> Array<T>.subArrayUnsafe(
+public inline fun <@PureReifiable reified T> Array<out T>.subArray(
+    beginIndex: Int = 0,
+    length: Int = size - beginIndex
+): Array<@Exact T> =
+    subArray(T::class.java, beginIndex, length)
+
+@InlineOnly
+public inline fun <T> Array<out T>.subArrayUnsafe(
     targetFrom: Int = 0,
     length: Int = size - targetFrom
-): Array<T> =
+): Array<out T> =
     subArray(cast<Class<T>>(javaClass.componentType), targetFrom, length)
