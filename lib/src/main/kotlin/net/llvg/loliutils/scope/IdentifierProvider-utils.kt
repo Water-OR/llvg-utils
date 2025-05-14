@@ -17,12 +17,18 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.scope.try_scope
+@file:JvmName("IdentifierProviderUtils")
 
-public sealed interface VoidTryResult {
-    public data object Success : VoidTryResult
-    
-    public class Failure(
-        public val e: Throwable
-    ) : VoidTryResult
-}
+package net.llvg.loliutils.scope
+
+import kotlin.internal.InlineOnly
+
+@InlineOnly
+public inline infix fun <T> IdentifierProvider.broke(
+    value: T
+): Nothing =
+    throw IdentifiedReturn(ident, value)
+
+@InlineOnly
+public inline fun IdentifierProvider.broke(): Nothing =
+    throw IdentifiedReturn(ident, null)

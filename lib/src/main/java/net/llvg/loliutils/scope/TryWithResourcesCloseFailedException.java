@@ -17,20 +17,20 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.scope.try_scope
+package net.llvg.loliutils.scope;
 
-public class ListTryScope(
-    private val list: MutableList<AutoCloseable>
-) : TryScope {
-    override fun resource(
-        resource: AutoCloseable
-    ) {
-        list += resource
-    }
+import java.util.List;
+import kotlin.Triple;
+
+@SuppressWarnings("unused")
+public final class TryWithResourcesCloseFailedException
+  extends Throwable
+{
+    public final List<Triple<Integer, AutoCloseable, Throwable>> failures;
     
-    override fun close() {
-        list.asReversed().forEach {
-            it.close()
-        }
+    public TryWithResourcesCloseFailedException(
+      List<Triple<Integer, AutoCloseable, Throwable>> failures
+    ) {
+        this.failures = failures;
     }
 }

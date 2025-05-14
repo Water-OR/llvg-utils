@@ -17,28 +17,27 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.scope.try_scope
+package net.llvg.loliutils.scope
 
-public interface TryScope : AutoCloseable {
-    public infix fun resource(resource: AutoCloseable)
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
+import kotlin.internal.InlineOnly
+
+@InlineOnly
+@Throws(TryWithResourcesCloseFailedException::class)
+public inline fun <R> tryWithResources(
+    dispatcher: TryWithResourcesDispatcher = TryWithResourcesDispatcherListImpl(ArrayList(), Throwable::printStackTrace),
+    action: TryWithResourcesContext.() -> R
+): R {
+    contract {
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
+    }
     
-    override fun close()
+    val context = TryWithResourcesContext(dispatcher)
     
-    public class Context(
-        private val scope: TryScope
-    ) {
-        public fun <T : AutoCloseable> resource(
-            resource: T
-        ): T {
-            scope resource resource
-            return resource
-        }
-        
-        public val <T : AutoCloseable> T.use: T
-            @JvmName("use")
-            get() {
-                scope resource this
-                return this
-            }
+    return try {
+        context.action()
+    } finally {
+        dispatcher.close()
     }
 }

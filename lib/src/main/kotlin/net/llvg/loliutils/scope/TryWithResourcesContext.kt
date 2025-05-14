@@ -17,17 +17,25 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.scope.try_scope
+package net.llvg.loliutils.scope
 
-import net.llvg.loliutils.scope.IdentifiedReturn
+import kotlin.internal.InlineOnly
 
-public sealed interface TypeFailureContext<in R> {
-    public fun fallback(value: R): Nothing
-    
-    public class Impl<in R> : TypeFailureContext<R> {
-        override fun fallback(
-            value: R
-        ): Nothing =
-            throw IdentifiedReturn(this, value)
+public class TryWithResourcesContext(
+    private val scope: TryWithResourcesDispatcher
+) {
+    public fun <T : AutoCloseable> include(
+        resource: T
+    ): T {
+        scope include resource
+        return resource
     }
+    
+    @InlineOnly
+    public inline val <T : AutoCloseable> T.include: T
+        get() = include(this)
+    
+    @InlineOnly
+    public inline operator fun <T : AutoCloseable> T.unaryPlus(): T =
+        include(this)
 }

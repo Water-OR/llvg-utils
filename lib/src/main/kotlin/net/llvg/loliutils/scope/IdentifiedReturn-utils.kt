@@ -17,14 +17,15 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.scope.try_scope
+@file:JvmName("IdentifiedReturnUtils")
 
-public interface TypeTryResult<out R> {
-    public class Success<out R>(
-        public val r: R
-    ) : TypeTryResult<R>
-    
-    public class Failure<out R>(
-        public val e: Throwable
-    ) : TypeTryResult<R>
-}
+package net.llvg.loliutils.scope
+
+import kotlin.internal.InlineOnly
+import net.llvg.loliutils.others.act
+
+@InlineOnly
+public inline infix fun IdentifiedReturn.check(
+    ident: Any?
+) =
+    act { if (it.ident !== ident) throw it }

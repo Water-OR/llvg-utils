@@ -17,15 +17,11 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.scope.try_scope
+package net.llvg.loliutils.scope
 
-import net.llvg.loliutils.scope.IdentifiedReturn
-
-public sealed interface VoidFailureContext {
-    public fun fallback(): Nothing
+public interface TryWithResourcesDispatcher {
+    public infix fun include(resource: AutoCloseable)
     
-    public class Impl : VoidFailureContext {
-        override fun fallback(): Nothing =
-            throw IdentifiedReturn(this, null)
-    }
+    @Throws(TryWithResourcesCloseFailedException::class)
+    public fun close()
 }
