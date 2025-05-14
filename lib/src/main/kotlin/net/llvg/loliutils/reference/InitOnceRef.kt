@@ -21,41 +21,46 @@ package net.llvg.loliutils.reference
 
 import java.util.concurrent.locks.ReadWriteLock
 import java.util.concurrent.locks.ReentrantReadWriteLock
+import kotlin.internal.InlineOnly
 import net.llvg.loliutils.concurrent.withReadLock
 import net.llvg.loliutils.concurrent.withWriteLock
-import net.llvg.loliutils.others.eval
-import net.llvg.loliutils.others.exec
+import net.llvg.loliutils.type.cast
 
 public class InitOnceRef<T> : VarRef<T> {
-    public val initialized: Boolean
-        @JvmName("isInitialized")
-        get() =
-            lock.withReadLock { box }
-              ?.eval { true } ?: false
+    public var initialized: Boolean = false
+        private set
     
     private val lock: ReadWriteLock = ReentrantReadWriteLock()
-    private var box: BoxRef<T>? = null
+    private var value: Any? = null
     
-    override fun get(): T =
-        lock.withReadLock { box }
-          ?.get() ?: throwUninitialized()
+    override fun get(): T {
+        lock.withReadLock {
+            if (!initialized) throwUninitialize()
+        }
+        
+        return cast(value)
+    }
     
     
     override fun set(
         value: T
     ) {
-        lock.withReadLock { box }
-          ?.exec { throwReinitialized() }
+        lock.withReadLock {
+            if (initialized) throwReinitialize()
+        }
         
         lock.withWriteLock {
-            box?.exec { throwReinitialized() }
-            box = value.boxed
+            if (initialized) throwReinitialize()
+            initialized = true
+            this.value = value
         }
     }
     
-    private inline fun throwUninitialized(): Nothing =
+    @InlineOnly
+    private inline fun throwUninitialize(): Nothing =
         throw IllegalStateException("Reference haven't been initialized yet")
     
-    private inline fun throwReinitialized(): Nothing =
+    @InlineOnly
+    private inline fun throwReinitialize(): Nothing =
         throw IllegalStateException("Reference has already been initialized")
 }
