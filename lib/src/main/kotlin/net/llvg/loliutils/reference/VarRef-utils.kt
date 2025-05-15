@@ -24,27 +24,20 @@ package net.llvg.loliutils.reference
 import kotlin.internal.InlineOnly
 import kotlin.reflect.KMutableProperty0
 import kotlin.reflect.KProperty
-import net.llvg.loliutils.function.Gettable
-import net.llvg.loliutils.function.Settable
 
 @InlineOnly
-public inline val <T> KMutableProperty0<T>.asVarRef: PropertyAsVarRef<T>
-    get() = PropertyAsVarRef(this)
-
-@InlineOnly
-public inline fun <T> makeRef(
-    getter: Gettable<T>,
-    setter: Settable<T>
-): LambdaVarRef<T> =
-    LambdaVarRef(getter, setter)
+public inline val <T> KMutableProperty0<T>.asVarRef: KPropertyAsVarRef<T>
+    get() = KPropertyAsVarRef(this)
 
 @InlineOnly
 public inline val <T> VarRef<T>.asProperty: VarRefAsProperty<T>
     get() = VarRefAsProperty(this)
 
 @InlineOnly
-public inline operator fun <T> VarRef<T>.provideDelegate(
+public inline operator fun <T> VarRef<T>.setValue(
     thisRef: Any?,
-    property: KProperty<*>
-): VarRefAsProperty<T> =
-    asProperty
+    property: KProperty<*>,
+    value: T
+) {
+    set(value)
+}

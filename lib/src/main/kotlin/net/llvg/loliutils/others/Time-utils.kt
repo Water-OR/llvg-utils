@@ -17,17 +17,30 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.reference
+@file:JvmName("TimeUtils")
+
+package net.llvg.loliutils.others
 
 import kotlin.internal.InlineOnly
-import kotlin.reflect.KProperty0
 
-@JvmInline
-@Suppress("OVERRIDE_BY_INLINE")
-public value class PropertyAsValRef<out T>(
-    public val property: KProperty0<T>
-) : ValRef<T> {
-    @InlineOnly
-    override inline fun get(): T =
-        property.get()
-}
+public const val nanoSecondToMicroSecond: Double = 1_000.0
+
+public const val nanoSecondToMilliSecond: Double = 1_000_000.0
+
+public const val nanoSecondToSecond: Double = 1_000_000_000.0
+
+@InlineOnly
+public inline val systemNanoTime: Long
+    get() = System.nanoTime()
+
+@InlineOnly
+public inline val systemMicroTime: Double
+    get() = System.nanoTime() / nanoSecondToMicroSecond
+
+@InlineOnly
+public inline val systemMilliTime: Double
+    get() = System.nanoTime() / nanoSecondToMilliSecond
+
+@InlineOnly
+public inline val systemTime: Double
+    get() = System.nanoTime() / nanoSecondToSecond

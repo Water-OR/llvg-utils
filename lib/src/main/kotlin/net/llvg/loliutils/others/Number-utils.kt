@@ -19,7 +19,7 @@
 
 @file:JvmName("NumberUtils")
 
-package net.llvg.loliutils.primitive
+package net.llvg.loliutils.others
 
 import kotlin.internal.InlineOnly
 

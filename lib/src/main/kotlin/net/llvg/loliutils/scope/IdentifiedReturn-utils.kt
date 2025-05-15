@@ -17,12 +17,15 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.builder
+@file:JvmName("IdentifiedReturnUtils")
 
-@LBuilder.Mark
-public interface LBuilder<out R> {
-    public fun build(): R
-    
-    @DslMarker
-    public annotation class Mark
-}
+package net.llvg.loliutils.scope
+
+import kotlin.internal.InlineOnly
+import net.llvg.loliutils.others.act
+
+@InlineOnly
+public inline infix fun IdentifiedReturn.check(
+    ident: Any?
+) =
+    act { if (it.ident !== ident) throw it }

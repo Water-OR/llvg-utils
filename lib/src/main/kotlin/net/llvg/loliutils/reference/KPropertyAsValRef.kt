@@ -17,28 +17,15 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.scope.try_scope
+package net.llvg.loliutils.reference
 
-public interface TryScope : AutoCloseable {
-    public infix fun resource(resource: AutoCloseable)
-    
-    override fun close()
-    
-    public class Context(
-        private val scope: TryScope
-    ) {
-        public fun <T : AutoCloseable> resource(
-            resource: T
-        ): T {
-            scope resource resource
-            return resource
-        }
-        
-        public val <T : AutoCloseable> T.use: T
-            @JvmName("use")
-            get() {
-                scope resource this
-                return this
-            }
-    }
+import kotlin.reflect.KProperty0
+
+@JvmInline
+@Suppress("OVERRIDE_BY_INLINE")
+public value class KPropertyAsValRef<out T>(
+    public val property: KProperty0<T>
+) : ValRef<T> {
+    public override inline fun get(): T =
+        property.get()
 }

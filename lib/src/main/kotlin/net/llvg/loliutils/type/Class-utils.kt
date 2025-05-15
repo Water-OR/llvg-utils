@@ -22,21 +22,17 @@
 package net.llvg.loliutils.type
 
 import kotlin.internal.InlineOnly
+import kotlin.internal.PureReifiable
 
 @InlineOnly
-public inline fun <reified T> Class<*>.isExtend(): Boolean =
+public inline fun <@PureReifiable reified T> Class<*>.isExtend(): Boolean =
     T::class.java.isAssignableFrom(this)
 
 @InlineOnly
-@Suppress("UNCHECKED_CAST")
-public inline fun <reified T> Class<*>.tryExtend(): Class<out T>? =
-    if (isExtend<T>()) this as Class<out T> else null
+public inline fun <@PureReifiable reified T> Class<*>.asExtend(): Class<out T>? =
+    if (isExtend<T>()) asSubclass(T::class.java) else null
 
 @InlineOnly
-public inline fun <reified T> Class<*>.isSuper(): Boolean =
-    isAssignableFrom(T::class.java)
-
-@InlineOnly
-@Suppress("UNCHECKED_CAST")
-public inline fun <reified T> Class<*>.trySuper(): Class<in T>? =
-    if (isSuper<T>()) this as Class<in T> else null
+@Deprecated("", replaceWith = ReplaceWith("asExtend<T>()", imports = ["net.llvg.loliutils.type.asExtend"]))
+public inline fun <@PureReifiable reified T> Class<*>.tryExtend(): Class<out T>? =
+    asExtend()

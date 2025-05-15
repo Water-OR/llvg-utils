@@ -17,39 +17,27 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:JvmName("LBuilderUtils")
-
-package net.llvg.loliutils.builder
+package net.llvg.loliutils.scope
 
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.internal.InlineOnly
 
 @InlineOnly
-public inline infix fun <R, B : LBuilder<R>> LBuilderProvider<R, B>.building(
-    configure: B.() -> Unit
+@Throws(TryWithResourcesCloseFailedException::class)
+public inline fun <R> tryWithResources(
+    dispatcher: TryWithResourcesDispatcher = TryWithResourcesDispatcherListImpl(ArrayList(), Throwable::printStackTrace),
+    action: TryWithResourcesContext.() -> R
 ): R {
     contract {
-        callsInPlace(configure, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
     }
     
-    return builder().apply(configure).build()
-}
-
-@InlineOnly
-public inline fun <P, R, B : LBuilder<R>> LBuilderProducer<P, R, B>.building(
-    parameter: P,
-    configure: B.() -> Unit
-): R {
-    contract {
-        callsInPlace(configure, InvocationKind.EXACTLY_ONCE)
-    }
+    val context = TryWithResourcesContext(dispatcher)
     
-    return builder(parameter).apply(configure).build()
+    return try {
+        context.action()
+    } finally {
+        dispatcher.close()
+    }
 }
-
-@InlineOnly
-public inline infix fun <R, B : LBuilder<R>> B.build(
-    configure: B.() -> Unit
-): R =
-    apply(configure).build()

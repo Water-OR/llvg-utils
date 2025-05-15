@@ -24,25 +24,18 @@ package net.llvg.loliutils.reference
 import kotlin.internal.InlineOnly
 import kotlin.reflect.KProperty
 import kotlin.reflect.KProperty0
-import net.llvg.loliutils.function.Gettable
 
 @InlineOnly
-public inline val <T> KProperty0<T>.asValRef: PropertyAsValRef<T>
-    get() = PropertyAsValRef(this)
-
-@InlineOnly
-public inline fun <T> makeRef(
-    getter: Gettable<T>
-): LambdaValRef<T> =
-    LambdaValRef(getter)
+public inline val <T> KProperty0<T>.asValRef: KPropertyAsValRef<T>
+    get() = KPropertyAsValRef(this)
 
 @InlineOnly
 public inline val <T> ValRef<T>.asProperty: ValRefAsProperty<T>
     get() = ValRefAsProperty(this)
 
 @InlineOnly
-public inline operator fun <T> ValRef<T>.provideDelegate(
+public inline operator fun <T> ValRef<T>.getValue(
     thisRef: Any?,
     property: KProperty<*>
-): ValRefAsProperty<T> =
-    asProperty
+): T =
+    get()

@@ -17,12 +17,18 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.scope.try_scope
+package net.llvg.loliutils.reference
 
-public sealed interface VoidTryResult {
-    public data object Success : VoidTryResult
+@Suppress("OVERRIDE_BY_INLINE")
+public class VarWrapperRef<T>(
+    private var value: T
+) : VarRef<T> {
+    override fun get(): T =
+        value
     
-    public class Failure(
-        public val e: Throwable
-    ) : VoidTryResult
+    override fun set(
+        value: T
+    ) {
+        this.value = value
+    }
 }

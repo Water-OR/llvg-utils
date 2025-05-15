@@ -17,25 +17,18 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:JvmName("SettableUtils")
+@file:JvmName("IdentifierProviderUtils")
 
-package net.llvg.loliutils.function
+package net.llvg.loliutils.scope
 
 import kotlin.internal.InlineOnly
 
 @InlineOnly
-public inline infix operator fun <T> Settable<T>.invoke(
+public inline infix fun <T> IdentifierProvider.broke(
     value: T
-) {
-    set(value)
-}
+): Nothing =
+    throw IdentifiedReturn(ident, value)
 
 @InlineOnly
-public inline val <T> Settable<T>.asLambda: (T) -> Unit
-    get() = ::set
-
-@InlineOnly
-public inline fun <T> makeSettable(
-    crossinline action: (T) -> Unit
-): Settable<T> =
-    Settable { action(it) }
+public inline fun IdentifierProvider.broke(): Nothing =
+    throw IdentifiedReturn(ident, null)

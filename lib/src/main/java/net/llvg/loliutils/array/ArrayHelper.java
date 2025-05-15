@@ -23,7 +23,9 @@ import java.lang.reflect.Array;
 
 @SuppressWarnings ("unused")
 public final class ArrayHelper {
-    private ArrayHelper() { }
+    private ArrayHelper() {
+        throw new IllegalStateException("");
+    }
     
     @SuppressWarnings ("unchecked")
     public static <T> T[] newArray(

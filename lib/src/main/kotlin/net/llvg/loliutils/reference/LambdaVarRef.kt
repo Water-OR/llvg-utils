@@ -21,18 +21,17 @@ package net.llvg.loliutils.reference
 
 import net.llvg.loliutils.function.Gettable
 import net.llvg.loliutils.function.Settable
-import net.llvg.loliutils.function.invoke
 
 public class LambdaVarRef<T>(
     public val getter: Gettable<T>,
     public val setter: Settable<T>
 ) : VarRef<T> {
     override fun get(): T =
-        getter()
+        getter.get()
     
     override fun set(
         value: T
     ) {
-        setter(value)
+        setter.set(value)
     }
 }

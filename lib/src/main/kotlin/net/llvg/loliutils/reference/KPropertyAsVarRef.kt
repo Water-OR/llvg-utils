@@ -17,8 +17,21 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.builder
+package net.llvg.loliutils.reference
 
-public interface LBuilderProducer<in P, out R, out B : LBuilder<R>> {
-    public fun builder(parameter: P): B
+import kotlin.reflect.KMutableProperty0
+
+@JvmInline
+@Suppress("OVERRIDE_BY_INLINE")
+public value class KPropertyAsVarRef<T>(
+    public val property: KMutableProperty0<T>
+) : VarRef<T> {
+    override inline fun get(): T =
+        property.get()
+    
+    override inline fun set(
+        value: T
+    ) {
+        property.set(value)
+    }
 }

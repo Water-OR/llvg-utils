@@ -17,14 +17,20 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.scope.try_scope
+package net.llvg.loliutils.scope;
 
-public interface TypeTryResult<out R> {
-    public class Success<out R>(
-        public val r: R
-    ) : TypeTryResult<R>
+import java.util.List;
+import kotlin.Triple;
+
+@SuppressWarnings("unused")
+public final class TryWithResourcesCloseFailedException
+  extends Throwable
+{
+    public final List<Triple<Integer, AutoCloseable, Throwable>> failures;
     
-    public class Failure<out R>(
-        public val e: Throwable
-    ) : TypeTryResult<R>
+    public TryWithResourcesCloseFailedException(
+      List<Triple<Integer, AutoCloseable, Throwable>> failures
+    ) {
+        this.failures = failures;
+    }
 }

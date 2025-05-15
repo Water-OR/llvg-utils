@@ -17,17 +17,11 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.scope.try_scope
+package net.llvg.loliutils.reference
 
-import net.llvg.loliutils.scope.IdentifiedReturn
-
-public sealed interface TypeFailureContext<in R> {
-    public fun fallback(value: R): Nothing
-    
-    public class Impl<in R> : TypeFailureContext<R> {
-        override fun fallback(
-            value: R
-        ): Nothing =
-            throw IdentifiedReturn(this, value)
-    }
+public class ValWrapperRef<out T>(
+    private val value: T
+) : ValRef<T> {
+    override fun get(): T =
+        value
 }

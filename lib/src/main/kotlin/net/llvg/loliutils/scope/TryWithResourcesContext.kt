@@ -17,27 +17,25 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.llvg.loliutils.array
+package net.llvg.loliutils.scope
 
-public class ArrayAsCollection<out T>(
-    public val array: Array<out T>
-) : Collection<T> {
-    override val size: Int
-        get() = array.size
+import kotlin.internal.InlineOnly
+
+public class TryWithResourcesContext(
+    private val scope: TryWithResourcesDispatcher
+) {
+    public fun <T : AutoCloseable> include(
+        resource: T
+    ): T {
+        scope include resource
+        return resource
+    }
     
-    override fun isEmpty(): Boolean =
-        array.isEmpty()
+    @InlineOnly
+    public inline val <T : AutoCloseable> T.include: T
+        get() = include(this)
     
-    override fun iterator(): Iterator<T> =
-        array.iterator()
-    
-    override fun contains(
-        element: @UnsafeVariance T
-    ): Boolean =
-        array.contains(element)
-    
-    override fun containsAll(
-        elements: Collection<@UnsafeVariance T>
-    ): Boolean =
-        elements.all(array::contains)
+    @InlineOnly
+    public inline operator fun <T : AutoCloseable> T.unaryPlus(): T =
+        include(this)
 }

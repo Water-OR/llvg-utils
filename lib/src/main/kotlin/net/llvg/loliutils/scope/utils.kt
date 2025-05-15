@@ -28,16 +28,6 @@ import kotlin.internal.PureReifiable
 import net.llvg.loliutils.others.prf
 
 @InlineOnly
-public inline infix fun <T> IdentifierProvider.broke(
-    value: T
-): Nothing =
-    throw IdentifiedReturn(ident, value)
-
-@InlineOnly
-public inline val IdentifierProvider.broke: Nothing
-    get() = throw IdentifiedReturn(ident, null)
-
-@InlineOnly
 public inline fun prfWrapBlock(
     block: IdentifierProvider.() -> Unit
 ) {
@@ -49,9 +39,7 @@ public inline fun prfWrapBlock(
         try {
             block()
         } catch (e: IdentifiedReturn) {
-            if (this.ident !== e.ident) {
-                throw e
-            }
+            e check ident
         }
     }
 }
@@ -69,9 +57,7 @@ public inline fun <R> runWrapBlock(
         try {
             block()
         } catch (e: IdentifiedReturn) {
-            if (ident !== e.ident) {
-                throw e
-            }
+            e check ident
             clazz.cast(e.value)
         }
     }
