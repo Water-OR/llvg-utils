@@ -1,5 +1,6 @@
 @file:Suppress("SpellCheckingInspection")
 
+import org.gradle.internal.declarativedsl.intrinsics.listOf
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
@@ -53,9 +54,13 @@ kotlin.compilerOptions {
         "-Xnested-type-aliases",
         "-Xallow-kotlin-package",
         "-Xexplicit-api=warning",
-        "-Xsuppress-warning=NOTHING_TO_INLINE"
+        "-Xsuppress-warning=NOTHING_TO_INLINE",
     ).let(freeCompilerArgs::addAll)
     
-    optIn.add("kotlin.contracts.ExperimentalContracts")
-    optIn.add("net.llvg.loliutils.KotlinInternal")
+    listOf(
+        "kotlin.contracts.ExperimentalContracts",
+        "net.llvg.loliutils.KotlinInternal",
+    ).let(optIn::addAll)
+    
+    verbose = true
 }
