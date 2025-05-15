@@ -35,8 +35,17 @@ public inline fun <T> ThreadLocal(
     ThreadLocal.withInitial { initializer() }
 
 @InlineOnly
-public inline operator fun <T> ThreadLocal<T>.provideDelegate(
+public inline operator fun <T> ThreadLocal<T>.getValue(
     self: Any?,
     property: KProperty<*>
-): ThreadLocalAsRef<T> =
-    ThreadLocalAsRef(this)
+): T =
+    get()
+
+@InlineOnly
+public inline operator fun <T> ThreadLocal<T>.setValue(
+    self: Any?,
+    property: KProperty<*>,
+    value: T
+) {
+    set(value)
+}

@@ -17,27 +17,15 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-@file:JvmName("VarRefUtils")
-
 package net.llvg.loliutils.reference
 
-import kotlin.internal.InlineOnly
-import kotlin.reflect.KMutableProperty0
-import kotlin.reflect.KProperty
+import kotlin.reflect.KProperty0
 
-@InlineOnly
-public inline val <T> KMutableProperty0<T>.asVarRef: KPropertyAsVarRef<T>
-    get() = KPropertyAsVarRef(this)
-
-@InlineOnly
-public inline val <T> VarRef<T>.asProperty: VarRefAsProperty<T>
-    get() = VarRefAsProperty(this)
-
-@InlineOnly
-public inline operator fun <T> VarRef<T>.setValue(
-    thisRef: Any?,
-    property: KProperty<*>,
-    value: T
-) {
-    set(value)
+@JvmInline
+@Suppress("OVERRIDE_BY_INLINE")
+public value class KPropertyAsValRef<out T>(
+    public val property: KProperty0<T>
+) : ValRef<T> {
+    public override inline fun get(): T =
+        property.get()
 }
