@@ -19,7 +19,7 @@
 
 @file:JvmName("TimeUtils")
 
-package net.llvg.loliutils.time
+package net.llvg.loliutils.others
 
 import kotlin.internal.InlineOnly
 
