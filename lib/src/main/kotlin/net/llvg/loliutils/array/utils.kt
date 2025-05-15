@@ -151,138 +151,95 @@ public inline fun <T> Array<out T>.copyTo(
 }
 
 @PublishedApi
-@InlineOnly
-internal inline fun subArrayBeginIndexCheck(
+internal fun <T : Any> subArray(
+    source: Any,
+    sourceSize: Int,
     beginIndex: Int,
-    sourceSize: Int
-) {
-    require(beginIndex >= 0) {
-        "beginIndex($beginIndex) must be greater than or equals to 0"
-    }
-    require(beginIndex < sourceSize) {
-        "beginIndex($beginIndex) must be less than sourceSize($sourceSize)"
+    length: Int,
+    arrayGenerator: (Int) -> T
+): T {
+    if (beginIndex < 0) {
+        throw IllegalArgumentException("beginIndex=$beginIndex must not be negative")
+    } else if (length == 0) {
+        if (beginIndex >= sourceSize) {
+            throw IllegalArgumentException("beginIndex=$beginIndex must be less than sourceSize=$sourceSize")
+        }
+        return arrayGenerator(0)
+    } else if (length > 0) {
+        if (beginIndex + length > sourceSize) {
+            throw IllegalArgumentException("beginIndex+length=${beginIndex + length} must not be greater sourceSize")
+        }
+        val result = arrayGenerator(length)
+        System.arraycopy(source, beginIndex, result, 0, length)
+        return result
+    } else {
+        throw IllegalArgumentException("length=$length must not be negative")
     }
 }
 
-@PublishedApi
 @InlineOnly
-internal inline fun subArrayEndIndexCheck(
-    endIndex: Int,
-    sourceSize: Int
-) {
-    require(endIndex <= sourceSize) {
-        "beginIndex+length=$endIndex must be less than or equal to sourceSize=$sourceSize"
-    }
-}
-
-public fun ByteArray.subArray(
+public inline fun ByteArray.subArray(
     beginIndex: Int = 0,
     length: Int = size - beginIndex
-): ByteArray {
-    subArrayBeginIndexCheck(beginIndex, size)
-    
-    if (length == 0) return ByteArray(0)
-    subArrayEndIndexCheck(beginIndex + length, size)
-    
-    return copyTo(ByteArray(length), 0, beginIndex, length)
-}
+): ByteArray =
+    subArray(this, size, beginIndex, length, ::ByteArray)
 
-public fun ShortArray.subArray(
+@InlineOnly
+public inline fun ShortArray.subArray(
     beginIndex: Int = 0,
     length: Int = size - beginIndex
-): ShortArray {
-    subArrayBeginIndexCheck(beginIndex, size)
-    
-    if (length == 0) return ShortArray(0)
-    subArrayEndIndexCheck(beginIndex + length, size)
-    
-    return copyTo(ShortArray(length), 0, beginIndex, length)
-}
+): ShortArray =
+    subArray(this, size, beginIndex, length, ::ShortArray)
 
-public fun IntArray.subArray(
+@InlineOnly
+public inline fun IntArray.subArray(
     beginIndex: Int = 0,
     length: Int = size - beginIndex
-): IntArray {
-    subArrayBeginIndexCheck(beginIndex, size)
-    
-    if (length == 0) return IntArray(0)
-    subArrayEndIndexCheck(beginIndex + length, size)
-    
-    return copyTo(IntArray(length), 0, beginIndex, length)
-}
+): IntArray =
+    subArray(this, size, beginIndex, length, ::IntArray)
 
-public fun LongArray.subArray(
+@InlineOnly
+public inline fun LongArray.subArray(
     beginIndex: Int = 0,
     length: Int = size - beginIndex
-): LongArray {
-    subArrayBeginIndexCheck(beginIndex, size)
-    
-    if (length == 0) return LongArray(0)
-    subArrayEndIndexCheck(beginIndex + length, size)
-    
-    return copyTo(LongArray(length), 0, beginIndex, length)
-}
+): LongArray =
+    subArray(this, size, beginIndex, length, ::LongArray)
 
-public fun CharArray.subArray(
+@InlineOnly
+public inline fun CharArray.subArray(
     beginIndex: Int = 0,
     length: Int = size - beginIndex
-): CharArray {
-    subArrayBeginIndexCheck(beginIndex, size)
-    
-    if (length == 0) return CharArray(0)
-    subArrayEndIndexCheck(beginIndex + length, size)
-    
-    return copyTo(CharArray(length), 0, beginIndex, length)
-}
+): CharArray =
+    subArray(this, size, beginIndex, length, ::CharArray)
 
-public fun FloatArray.subArray(
+@InlineOnly
+public inline fun FloatArray.subArray(
     beginIndex: Int = 0,
     length: Int = size - beginIndex
-): FloatArray {
-    subArrayBeginIndexCheck(beginIndex, size)
-    
-    if (length == 0) return FloatArray(0)
-    subArrayEndIndexCheck(beginIndex + length, size)
-    
-    return copyTo(FloatArray(length), 0, beginIndex, length)
-}
+): FloatArray =
+    subArray(this, size, beginIndex, length, ::FloatArray)
 
-public fun DoubleArray.subArray(
+@InlineOnly
+public inline fun DoubleArray.subArray(
     beginIndex: Int = 0,
     length: Int = size - beginIndex
-): DoubleArray {
-    subArrayBeginIndexCheck(beginIndex, size)
-    
-    if (length == 0) return DoubleArray(0)
-    subArrayEndIndexCheck(beginIndex + length, size)
-    
-    return copyTo(DoubleArray(length), 0, beginIndex, length)
-}
+): DoubleArray =
+    subArray(this, size, beginIndex, length, ::DoubleArray)
 
-public fun BooleanArray.subArray(
+@InlineOnly
+public inline fun BooleanArray.subArray(
     beginIndex: Int = 0,
     length: Int = size - beginIndex
-): BooleanArray {
-    subArrayBeginIndexCheck(beginIndex, size)
-    
-    if (length == 0) return BooleanArray(0)
-    subArrayEndIndexCheck(beginIndex + length, size)
-    
-    return copyTo(BooleanArray(length), 0, beginIndex, length)
-}
+): BooleanArray =
+    subArray(this, size, beginIndex, length, ::BooleanArray)
 
-public fun <T> Array<out T>.subArray(
+@InlineOnly
+public inline fun <T> Array<out T>.subArray(
     targetType: Class<T>,
     beginIndex: Int = 0,
     length: Int = size - beginIndex
-): Array<T> {
-    subArrayBeginIndexCheck(beginIndex, size)
-    
-    if (length == 0) return newTypedArray(targetType, 0)
-    subArrayEndIndexCheck(beginIndex + length, size)
-    
-    return copyTo(newTypedArray(targetType, length), 0, beginIndex, length)
-}
+): Array<T> =
+    subArray(this, size, beginIndex, length) { newTypedArray(targetType, it) }
 
 @InlineOnly
 public inline fun <@PureReifiable reified T> Array<out T>.subArray(
