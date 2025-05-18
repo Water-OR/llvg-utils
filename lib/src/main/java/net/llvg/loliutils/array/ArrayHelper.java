@@ -33,14 +33,14 @@ public final class ArrayHelper {
     }
     
     /**
-     * Creates a new array with the given {@link Class<T> type} and {@code size}
+     * Creates a new array with the given {@link Class type} and {@code size}
      *
      * @param type The component type class of the returned array
      * @param size The size of the returned array
      * @param <T> The type of component type class
      *
-     * @return A new array with the given {@link Class<T> type} and {@code size}
-     * @throws IllegalArgumentException   If the given {@link Class<T> type} is {@link Void#TYPE}
+     * @return A new array with the given {@link Class type} and {@code size}
+     * @throws IllegalArgumentException   If the given {@link Class type} is {@link Void#TYPE}
      * @throws NegativeArraySizeException If the given {@code size} is negative
      * 
      * @see Array#newInstance(Class, int)

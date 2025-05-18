@@ -45,6 +45,8 @@ public final class TryWithResourcesCloseFailedException
     /**
      * Constructs with the given {@code failures}
      *
+     * @param failures A list of bundle of failed index, failed resource and failure
+     *
      * @see Exception#Exception()
      */
     public TryWithResourcesCloseFailedException(
@@ -59,6 +61,9 @@ public final class TryWithResourcesCloseFailedException
     
     /**
      * Constructs with the given {@code failures} and {@code message}
+     *
+     * @param failures A list of bundle of failed index, failed resource and failure
+     * @param message The detail message which is saved for later retrieval by the {@link #getMessage()} method
      *
      * @see Exception#Exception(String)
      */
@@ -76,6 +81,10 @@ public final class TryWithResourcesCloseFailedException
     /**
      * Constructs with the given {@code failures}, {@code message} and {@code cause}
      *
+     * @param failures A list of bundle of failed index, failed resource and failure
+     * @param message The detail message which is saved for later retrieval by the {@link #getMessage()} method
+     * @param cause The cause which is saved for later retrieval by the {@link #getCause()} method
+     *
      * @see Exception#Exception(String, Throwable)
      */
     public TryWithResourcesCloseFailedException(
@@ -92,6 +101,9 @@ public final class TryWithResourcesCloseFailedException
     
     /**
      * Constructs with the given {@code failures} and {@code cause}
+     *
+     * @param failures A list of bundle of failed index, failed resource and failure
+     * @param cause The cause which is saved for later retrieval by the {@link #getCause()} method
      *
      * @see Exception#Exception(Throwable)
      */
