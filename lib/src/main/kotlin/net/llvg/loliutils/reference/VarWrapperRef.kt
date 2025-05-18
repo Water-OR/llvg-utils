@@ -19,7 +19,11 @@
 
 package net.llvg.loliutils.reference
 
-@Suppress("OVERRIDE_BY_INLINE")
+/**
+ * An implementation of [VarRef] that contains a variance in type [T]
+ *
+ * @see VarRef
+ */
 public class VarWrapperRef<T>(
     private var value: T
 ) : VarRef<T> {

@@ -22,10 +22,20 @@
 package net.llvg.loliutils.scope
 
 import kotlin.internal.InlineOnly
-import net.llvg.loliutils.others.act
 
+/**
+ * Checks if [IdentifiedReturn.ident] of the receiver is referentially equals to [ident]
+ *
+ * If they are not equals, propagate the receiver
+ *
+ * @receiver The [IdentifiedReturn] being checked. Will be propagated if the check failed
+ * @param ident The object to compare against the [IdentifiedReturn.ident] property of the receiver
+ *
+ * @throws IdentifiedReturn If [IdentifiedReturn.ident] of the receiver is not referentially equals to [ident]
+ */
 @InlineOnly
 public inline infix fun IdentifiedReturn.check(
     ident: Any?
-) =
-    act { if (it.ident !== ident) throw it }
+) {
+    if (this.ident !== ident) throw this
+}

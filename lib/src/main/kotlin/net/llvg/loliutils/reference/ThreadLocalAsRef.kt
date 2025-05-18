@@ -19,6 +19,12 @@
 
 package net.llvg.loliutils.reference
 
+/**
+ * An implementation of [VarRef] that warps a [ThreadLocal]
+ *
+ * @see VarRef
+ * @see ThreadLocal
+ */
 @JvmInline
 @Suppress("OVERRIDE_BY_INLINE")
 public value class ThreadLocalAsRef<T>(

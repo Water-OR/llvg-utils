@@ -22,6 +22,13 @@ package net.llvg.loliutils.reference
 import net.llvg.loliutils.function.Gettable
 import net.llvg.loliutils.function.Settable
 
+/**
+ * An implementation of [VarRef] with a [getter] lambda and a [setter] lambda
+ *
+ * @see ValRef
+ * @see Gettable
+ * @see Settable
+ */
 public class LambdaVarRef<T>(
     public val getter: Gettable<T>,
     public val setter: Settable<T>

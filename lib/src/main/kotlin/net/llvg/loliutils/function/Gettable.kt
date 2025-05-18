@@ -19,6 +19,9 @@
 
 package net.llvg.loliutils.function
 
+/**
+ * A functional interface that provides [get] function
+ */
 @FunctionalInterface
 public fun interface Gettable<out T> {
     public fun get(): T

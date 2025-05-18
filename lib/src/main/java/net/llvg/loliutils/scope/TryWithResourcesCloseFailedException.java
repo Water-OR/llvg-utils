@@ -20,17 +20,89 @@
 package net.llvg.loliutils.scope;
 
 import java.util.List;
+import java.util.Objects;
 import kotlin.Triple;
+import org.jetbrains.annotations.NotNull;
 
-@SuppressWarnings("unused")
+/**
+ * An {@link Exception} throws when the {@link TryWithResourcesDispatcher} catches failure
+ * while {@linkplain TryWithResourcesDispatcher#close() closing}
+ *
+ * @see Exception
+ * @see TryWithResourcesDispatcher
+ * @see TryWithResourcesKt
+ */
+@SuppressWarnings ("unused")
 public final class TryWithResourcesCloseFailedException
-  extends Throwable
+  extends Exception
 {
+    /**
+     * The given failures
+     */
+    @NotNull
     public final List<Triple<Integer, AutoCloseable, Throwable>> failures;
     
+    /**
+     * Constructs with the given {@code failures}
+     *
+     * @see Exception#Exception()
+     */
     public TryWithResourcesCloseFailedException(
+      @NotNull
       List<Triple<Integer, AutoCloseable, Throwable>> failures
     ) {
+        super();
+        Objects.requireNonNull(failures, "failures must not be null");
+        
+        this.failures = failures;
+    }
+    
+    /**
+     * Constructs with the given {@code failures} and {@code message}
+     *
+     * @see Exception#Exception(String)
+     */
+    public TryWithResourcesCloseFailedException(
+      @NotNull
+      List<Triple<Integer, AutoCloseable, Throwable>> failures,
+      String message
+    ) {
+        super(message);
+        Objects.requireNonNull(failures, "failures must not be null");
+        
+        this.failures = failures;
+    }
+    
+    /**
+     * Constructs with the given {@code failures}, {@code message} and {@code cause}
+     *
+     * @see Exception#Exception(String, Throwable)
+     */
+    public TryWithResourcesCloseFailedException(
+      @NotNull
+      List<Triple<Integer, AutoCloseable, Throwable>> failures,
+      String message,
+      Throwable cause
+    ) {
+        super(message, cause);
+        Objects.requireNonNull(failures, "failures must not be null");
+        
+        this.failures = failures;
+    }
+    
+    /**
+     * Constructs with the given {@code failures} and {@code cause}
+     *
+     * @see Exception#Exception(Throwable)
+     */
+    public TryWithResourcesCloseFailedException(
+      @NotNull
+      List<Triple<Integer, AutoCloseable, Throwable>> failures,
+      Throwable cause
+    ) {
+        super(cause);
+        Objects.requireNonNull(failures, "failures must not be null");
+        
         this.failures = failures;
     }
 }

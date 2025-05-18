@@ -21,6 +21,12 @@ package net.llvg.loliutils.reference
 
 import kotlin.reflect.KProperty0
 
+/**
+ * An implementation of [ValRef] that warps a [KProperty0]
+ *
+ * @see ValRef
+ * @see KProperty0
+ */
 @JvmInline
 @Suppress("OVERRIDE_BY_INLINE")
 public value class KPropertyAsValRef<out T>(

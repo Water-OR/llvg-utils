@@ -19,27 +19,33 @@
 
 package net.llvg.loliutils.scope
 
-import java.util.concurrent.locks.ReadWriteLock
-import java.util.concurrent.locks.ReentrantReadWriteLock
-import net.llvg.loliutils.concurrent.withReadLock
-import net.llvg.loliutils.concurrent.withWriteLock
+import net.llvg.loliutils.array.asList
+import net.llvg.loliutils.others.act
 
+/**
+ * An implementation of [TryWithResourcesDispatcher] that uses a [list] to store [AutoCloseable] objects
+ *
+ * @see TryWithResourcesDispatcher
+ */
 public class TryWithResourcesDispatcherListImpl(
     private val list: MutableList<AutoCloseable>,
-    private val logger: (Throwable) -> Unit
+    private val logger: (Int, AutoCloseable, Throwable) -> Unit
 ) : TryWithResourcesDispatcher {
+    public constructor(
+        list: MutableList<AutoCloseable>
+    ) : this(
+        list,
+        { id, it, e -> RuntimeException("Failed to close #$id entry, its class is ${it.javaClass}", e).printStackTrace() }
+    )
     
     @Volatile
     private var closed: Boolean = false
-    private val closeLock: ReadWriteLock = ReentrantReadWriteLock()
     
     @Synchronized
     override fun include(
         resource: AutoCloseable
     ) {
-        closeLock.withReadLock {
-            if (closed) throw UnsupportedOperationException("dispatcher already closed")
-        }
+        if (closed) throw UnsupportedOperationException("dispatcher already closed")
         
         list += resource
     }
@@ -47,26 +53,30 @@ public class TryWithResourcesDispatcherListImpl(
     @Synchronized
     @Throws(TryWithResourcesCloseFailedException::class)
     override fun close() {
-        closeLock.withReadLock {
-            if (closed) return
-        }
+        if (closed) return
+        closed = true
         
-        closeLock.withWriteLock {
-            if (closed) return
-            closed = true
-        }
-        
-        val failures = mutableListOf<Triple<Int, AutoCloseable, Throwable>>()
-        list.asReversed().forEachIndexed { id, it ->
-            try {
-                it.close()
-            } catch (e: Throwable) {
-                logger(RuntimeException("Failed to close #$id entry, its class is ${it.javaClass}", e))
-                failures += Triple(id, it, e)
-            }
-        }
-        if (failures.isNotEmpty()) {
-            throw TryWithResourcesCloseFailedException(failures)
-        }
+        list.toTypedArray().asList
+          .run { listIterator(size) }
+          .run {
+              buildList {
+                  while (hasPrevious()) {
+                      val id = previousIndex()
+                      val i = previous()
+                      
+                      try {
+                          i.close()
+                      } catch (e: Throwable) {
+                          logger(id, i, e)
+                          Triple(id, i, e).act(::add)
+                      }
+                  }
+              }
+          }
+          .run {
+              if (isNotEmpty()) {
+                  throw TryWithResourcesCloseFailedException(this)
+              }
+          }
     }
 }

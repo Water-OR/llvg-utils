@@ -24,10 +24,20 @@ package net.llvg.loliutils.reference
 import kotlin.internal.InlineOnly
 import kotlin.reflect.KProperty
 
+/**
+ * @return A [VarRef] that warps the receiver [ThreadLocal]
+ */
 @InlineOnly
 public inline val <T> ThreadLocal<T>.asRef: ThreadLocalAsRef<T>
     get() = ThreadLocalAsRef(this)
 
+/**
+ * Constructs a [ThreadLocal] with initial value
+ *
+ * @param initializer The initial value supplier
+ * 
+ * @see ThreadLocal.withInitial
+ */
 @InlineOnly
 public inline fun <T> ThreadLocal(
     crossinline initializer: () -> T

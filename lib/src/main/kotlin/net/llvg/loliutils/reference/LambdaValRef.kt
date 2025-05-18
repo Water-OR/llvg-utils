@@ -21,6 +21,12 @@ package net.llvg.loliutils.reference
 
 import net.llvg.loliutils.function.Gettable
 
+/**
+ * An implementation of [ValRef] with a [getter] lambda
+ *
+ * @see ValRef
+ * @see Gettable
+ */
 public class LambdaValRef<out T>(
     public val getter: Gettable<T>
 ) : ValRef<T> {
