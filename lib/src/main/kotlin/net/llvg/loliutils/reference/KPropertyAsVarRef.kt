@@ -21,6 +21,12 @@ package net.llvg.loliutils.reference
 
 import kotlin.reflect.KMutableProperty0
 
+/**
+ * An implementation of [VarRef] that warps a [KMutableProperty0]
+ *
+ * @see VarRef
+ * @see KMutableProperty0
+ */
 @JvmInline
 @Suppress("OVERRIDE_BY_INLINE")
 public value class KPropertyAsVarRef<T>(

@@ -22,6 +22,12 @@ package net.llvg.loliutils.reference
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
+/**
+ * An implementation of [ReadWriteProperty] that wraps a [VarRef]
+ *
+ * @see VarRef
+ * @see ReadWriteProperty
+ */
 @JvmInline
 @Suppress("OVERRIDE_BY_INLINE")
 public value class VarRefAsProperty<T>(

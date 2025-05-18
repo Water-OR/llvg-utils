@@ -19,6 +19,9 @@
 
 package net.llvg.loliutils.reference
 
+/**
+ * An implementation of [ValRef] that warps a value in type [T]
+ */
 @JvmInline
 @Suppress("OVERRIDE_BY_INLINE")
 public value class BoxRef<out T>(

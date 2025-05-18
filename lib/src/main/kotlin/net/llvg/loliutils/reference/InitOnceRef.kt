@@ -19,48 +19,29 @@
 
 package net.llvg.loliutils.reference
 
-import java.util.concurrent.locks.ReadWriteLock
-import java.util.concurrent.locks.ReentrantReadWriteLock
-import kotlin.internal.InlineOnly
-import net.llvg.loliutils.concurrent.withReadLock
-import net.llvg.loliutils.concurrent.withWriteLock
-import net.llvg.loliutils.type.cast
-
+/**
+ * An implementation of [VarRef] that the [set] function can be called once at most once
+ *
+ * @see VarRef
+ */
 public class InitOnceRef<T> : VarRef<T> {
+    @Volatile
     public var initialized: Boolean = false
         private set
     
-    private val lock: ReadWriteLock = ReentrantReadWriteLock()
-    private var value: Any? = null
+    private var ref: ValRef<T>? = null
     
     override fun get(): T {
-        lock.withReadLock {
-            if (!initialized) throwUninitialize()
-        }
-        
-        return cast(value)
+        return ref?.get() ?: throw IllegalStateException("Reference haven't been initialized yet")
     }
     
-    
+    @Synchronized
     override fun set(
         value: T
     ) {
-        lock.withReadLock {
-            if (initialized) throwReinitialize()
-        }
+        if (ref !== null) throw IllegalStateException("Reference has already been initialized")
         
-        lock.withWriteLock {
-            if (initialized) throwReinitialize()
-            initialized = true
-            this.value = value
-        }
+        ref = value.boxed
     }
     
-    @InlineOnly
-    private inline fun throwUninitialize(): Nothing =
-        throw IllegalStateException("Reference haven't been initialized yet")
-    
-    @InlineOnly
-    private inline fun throwReinitialize(): Nothing =
-        throw IllegalStateException("Reference has already been initialized")
 }

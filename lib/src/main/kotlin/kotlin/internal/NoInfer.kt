@@ -21,6 +21,11 @@ package kotlin.internal
 
 import net.llvg.loliutils.KotlinInternal
 
+/**
+ * Specifies that the corresponding type should be ignored during type inference.
+ *
+ * @see KotlinInternal
+ */
 @KotlinInternal
 @Target(AnnotationTarget.TYPE)
 @Retention(AnnotationRetention.BINARY)

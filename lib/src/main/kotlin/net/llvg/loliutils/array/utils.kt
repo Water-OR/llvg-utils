@@ -24,19 +24,31 @@ package net.llvg.loliutils.array
 import java.util.Arrays
 import kotlin.internal.Exact
 import kotlin.internal.InlineOnly
+import kotlin.internal.NoInfer
 import kotlin.internal.PureReifiable
-import net.llvg.loliutils.type.cast
 
+/**
+ * @param type The class of component type of the returning array
+ * @param size The size of the returning array
+ *
+ * @return A new array in [type] class with [size]
+ */
 @InlineOnly
 public inline fun <T> newTypedArray(
-    type: Class<T>,
+    type: Class<@Exact T>,
     size: Int
-): Array<T> =
+): Array<@NoInfer T> =
     ArrayHelper.newArray(
         type,
         size
     )
 
+/**
+ * @param size The size of the returning array
+ * @param T The component type of the returning array
+ *
+ * @return A new array in type [T] with [size]
+ */
 @InlineOnly
 public inline fun <@PureReifiable reified T> newTypedArray(
     size: Int
@@ -46,11 +58,31 @@ public inline fun <@PureReifiable reified T> newTypedArray(
         size
     )
 
+
+/**
+ * @return A fixed-size [MutableList] that warps the receiver [Array]
+ *
+ * @see Arrays.asList
+ */
 @InlineOnly
 @Suppress("ReplaceJavaStaticMethodWithKotlinAnalog")
 public inline val <T> Array<T>.asList: MutableList<T>
     get() = Arrays.asList(*this)
 
+/**
+ * Copies a subsequence of the receiver [ByteArray] components to [dest]
+ *
+ * @receiver The [ByteArray] to be copied
+ * @param dest The destination [ByteArray]
+ * @param destOffset The beginning index (Inclusive) of the [dest] to copy into
+ * @param from The beginning index (Inclusive) of the subsequence to copy, default is 0
+ * @param length The length of the subsequence to copy, default is [size][ByteArray.size] - [from]
+ *
+ * @return [dest]
+ * @throws IndexOutOfBoundsException If copying would cause access of data outside array bounds.
+ *
+ * @see System.arraycopy
+ */
 @InlineOnly
 public inline fun ByteArray.copyTo(
     dest: ByteArray,
@@ -62,6 +94,20 @@ public inline fun ByteArray.copyTo(
     return dest
 }
 
+/**
+ * Copies a subsequence of the receiver [ShortArray] components to [dest]
+ *
+ * @receiver The [ShortArray] to be copied
+ * @param dest The destination [ShortArray]
+ * @param destOffset The beginning index (Inclusive) of the [dest] to copy into
+ * @param from The beginning index (Inclusive) of the subsequence to copy, default is 0
+ * @param length The length of the subsequence to copy, default is [size][ShortArray.size] - [from]
+ *
+ * @return [dest]
+ * @throws IndexOutOfBoundsException If copying would cause access of data outside array bounds.
+ *
+ * @see System.arraycopy
+ */
 @InlineOnly
 public inline fun ShortArray.copyTo(
     dest: ShortArray,
@@ -73,6 +119,20 @@ public inline fun ShortArray.copyTo(
     return dest
 }
 
+/**
+ * Copies a subsequence of the receiver [IntArray] components to [dest]
+ *
+ * @receiver The [IntArray] to be copied
+ * @param dest The destination [IntArray]
+ * @param destOffset The beginning index (Inclusive) of the [dest] to copy into
+ * @param from The beginning index (Inclusive) of the subsequence to copy, default is 0
+ * @param length The length of the subsequence to copy, default is [size][IntArray.size] - [from]
+ *
+ * @return [dest]
+ * @throws IndexOutOfBoundsException If copying would cause access of data outside array bounds.
+ *
+ * @see System.arraycopy
+ */
 @InlineOnly
 public inline fun IntArray.copyTo(
     dest: IntArray,
@@ -84,6 +144,20 @@ public inline fun IntArray.copyTo(
     return dest
 }
 
+/**
+ * Copies a subsequence of the receiver [LongArray] components to [dest]
+ *
+ * @receiver The [LongArray] to be copied
+ * @param dest The destination [LongArray]
+ * @param destOffset The beginning index (Inclusive) of the [dest] to copy into
+ * @param from The beginning index (Inclusive) of the subsequence to copy, default is 0
+ * @param length The length of the subsequence to copy, default is [size][LongArray.size] - [from]
+ *
+ * @return [dest]
+ * @throws IndexOutOfBoundsException If copying would cause access of data outside array bounds.
+ *
+ * @see System.arraycopy
+ */
 @InlineOnly
 public inline fun LongArray.copyTo(
     dest: LongArray,
@@ -95,6 +169,20 @@ public inline fun LongArray.copyTo(
     return dest
 }
 
+/**
+ * Copies a subsequence of the receiver [CharArray] components to [dest]
+ *
+ * @receiver The [CharArray] to be copied
+ * @param dest The destination [CharArray]
+ * @param destOffset The beginning index (Inclusive) of the [dest] to copy into
+ * @param from The beginning index (Inclusive) of the subsequence to copy, default is 0
+ * @param length The length of the subsequence to copy, default is [size][CharArray.size] - [from]
+ *
+ * @return [dest]
+ * @throws IndexOutOfBoundsException If copying would cause access of data outside array bounds.
+ *
+ * @see System.arraycopy
+ */
 @InlineOnly
 public inline fun CharArray.copyTo(
     dest: CharArray,
@@ -106,6 +194,20 @@ public inline fun CharArray.copyTo(
     return dest
 }
 
+/**
+ * Copies a subsequence of the receiver [FloatArray] components to [dest]
+ *
+ * @receiver The [FloatArray] to be copied
+ * @param dest The destination [FloatArray]
+ * @param destOffset The beginning index (Inclusive) of the [dest] to copy into
+ * @param from The beginning index (Inclusive) of the subsequence to copy, default is 0
+ * @param length The length of the subsequence to copy, default is [size][FloatArray.size] - [from]
+ *
+ * @return [dest]
+ * @throws IndexOutOfBoundsException If copying would cause access of data outside array bounds.
+ *
+ * @see System.arraycopy
+ */
 @InlineOnly
 public inline fun FloatArray.copyTo(
     dest: FloatArray,
@@ -117,6 +219,20 @@ public inline fun FloatArray.copyTo(
     return dest
 }
 
+/**
+ * Copies a subsequence of the receiver [DoubleArray] components to [dest]
+ *
+ * @receiver The [DoubleArray] to be copied
+ * @param dest The destination [DoubleArray]
+ * @param destOffset The beginning index (Inclusive) of the [dest] to copy into
+ * @param from The beginning index (Inclusive) of the subsequence to copy, default is 0
+ * @param length The length of the subsequence to copy, default is [size][DoubleArray.size] - [from]
+ *
+ * @return [dest]
+ * @throws IndexOutOfBoundsException If copying would cause access of data outside array bounds.
+ *
+ * @see System.arraycopy
+ */
 @InlineOnly
 public inline fun DoubleArray.copyTo(
     dest: DoubleArray,
@@ -128,6 +244,20 @@ public inline fun DoubleArray.copyTo(
     return dest
 }
 
+/**
+ * Copies a subsequence of the receiver [BooleanArray] components to [dest]
+ *
+ * @receiver The [BooleanArray] to be copied
+ * @param dest The destination [BooleanArray]
+ * @param destOffset The beginning index (Inclusive) of the [dest] to copy into
+ * @param from The beginning index (Inclusive) of the subsequence to copy, default is 0
+ * @param length The length of the subsequence to copy, default is [size][BooleanArray.size] - [from]
+ *
+ * @return [dest]
+ * @throws IndexOutOfBoundsException If copying would cause access of data outside array bounds.
+ *
+ * @see System.arraycopy
+ */
 @InlineOnly
 public inline fun BooleanArray.copyTo(
     dest: BooleanArray,
@@ -139,118 +269,27 @@ public inline fun BooleanArray.copyTo(
     return dest
 }
 
+/**
+ * Copies a subsequence of the receiver [Array] components to [dest]
+ *
+ * @receiver The [Array] to be copied
+ * @param dest The destination [Array]
+ * @param destOffset The beginning index (Inclusive) of the [dest] to copy into
+ * @param from The beginning index (Inclusive) of the subsequence to copy, default is 0
+ * @param length The length of the subsequence to copy, default is [size][Array.size] - [from]
+ *
+ * @return [dest]
+ * @throws IndexOutOfBoundsException If copying would cause access of data outside array bounds.
+ *
+ * @see System.arraycopy
+ */
 @InlineOnly
 public inline fun <T> Array<out T>.copyTo(
-    dest: Array<T>,
+    dest: Array<@Exact T>,
     destOffset: Int = 0,
     from: Int = 0,
     length: Int = size - from
-): Array<T> {
+): Array<@NoInfer T> {
     System.arraycopy(this, from, dest, destOffset, length)
     return dest
 }
-
-@PublishedApi
-internal fun <T : Any> subArray(
-    source: Any,
-    sourceSize: Int,
-    beginIndex: Int,
-    length: Int,
-    arrayGenerator: (Int) -> T
-): T {
-    if (beginIndex < 0) {
-        throw IllegalArgumentException("beginIndex=$beginIndex must not be negative")
-    } else if (length == 0) {
-        if (beginIndex >= sourceSize) {
-            throw IllegalArgumentException("beginIndex=$beginIndex must be less than sourceSize=$sourceSize")
-        }
-        return arrayGenerator(0)
-    } else if (length > 0) {
-        if (beginIndex + length > sourceSize) {
-            throw IllegalArgumentException("beginIndex+length=${beginIndex + length} must not be greater sourceSize")
-        }
-        val result = arrayGenerator(length)
-        System.arraycopy(source, beginIndex, result, 0, length)
-        return result
-    } else {
-        throw IllegalArgumentException("length=$length must not be negative")
-    }
-}
-
-@InlineOnly
-public inline fun ByteArray.subArray(
-    beginIndex: Int = 0,
-    length: Int = size - beginIndex
-): ByteArray =
-    subArray(this, size, beginIndex, length, ::ByteArray)
-
-@InlineOnly
-public inline fun ShortArray.subArray(
-    beginIndex: Int = 0,
-    length: Int = size - beginIndex
-): ShortArray =
-    subArray(this, size, beginIndex, length, ::ShortArray)
-
-@InlineOnly
-public inline fun IntArray.subArray(
-    beginIndex: Int = 0,
-    length: Int = size - beginIndex
-): IntArray =
-    subArray(this, size, beginIndex, length, ::IntArray)
-
-@InlineOnly
-public inline fun LongArray.subArray(
-    beginIndex: Int = 0,
-    length: Int = size - beginIndex
-): LongArray =
-    subArray(this, size, beginIndex, length, ::LongArray)
-
-@InlineOnly
-public inline fun CharArray.subArray(
-    beginIndex: Int = 0,
-    length: Int = size - beginIndex
-): CharArray =
-    subArray(this, size, beginIndex, length, ::CharArray)
-
-@InlineOnly
-public inline fun FloatArray.subArray(
-    beginIndex: Int = 0,
-    length: Int = size - beginIndex
-): FloatArray =
-    subArray(this, size, beginIndex, length, ::FloatArray)
-
-@InlineOnly
-public inline fun DoubleArray.subArray(
-    beginIndex: Int = 0,
-    length: Int = size - beginIndex
-): DoubleArray =
-    subArray(this, size, beginIndex, length, ::DoubleArray)
-
-@InlineOnly
-public inline fun BooleanArray.subArray(
-    beginIndex: Int = 0,
-    length: Int = size - beginIndex
-): BooleanArray =
-    subArray(this, size, beginIndex, length, ::BooleanArray)
-
-@InlineOnly
-public inline fun <T> Array<out T>.subArray(
-    targetType: Class<T>,
-    beginIndex: Int = 0,
-    length: Int = size - beginIndex
-): Array<T> =
-    subArray(this, size, beginIndex, length) { newTypedArray(targetType, it) }
-
-@InlineOnly
-public inline fun <@PureReifiable reified T> Array<out T>.subArray(
-    beginIndex: Int = 0,
-    length: Int = size - beginIndex
-): Array<@Exact T> =
-    subArray(T::class.java, beginIndex, length)
-
-@InlineOnly
-public inline fun <T> Array<out T>.subArrayUnsafe(
-    targetFrom: Int = 0,
-    length: Int = size - targetFrom
-): Array<out T> =
-    subArray(cast<Class<T>>(javaClass.componentType), targetFrom, length)

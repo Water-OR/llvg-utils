@@ -22,6 +22,12 @@ package net.llvg.loliutils.reference
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
+/**
+ * An implementation of [ReadOnlyProperty] that warps a [ValRef]
+ *
+ * @see ValRef
+ * @see ReadOnlyProperty
+ */
 @JvmInline
 @Suppress("OVERRIDE_BY_INLINE")
 public value class ValRefAsProperty<out T>(

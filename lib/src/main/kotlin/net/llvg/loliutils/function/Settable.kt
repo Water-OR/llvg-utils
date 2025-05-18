@@ -19,6 +19,9 @@
 
 package net.llvg.loliutils.function
 
+/**
+ * A functional interface that provides [set] function
+ */
 @FunctionalInterface
 public fun interface Settable<in T> {
     public infix fun set(value: T)

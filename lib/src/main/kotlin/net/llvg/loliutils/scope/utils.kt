@@ -27,49 +27,66 @@ import kotlin.internal.InlineOnly
 import kotlin.internal.PureReifiable
 import net.llvg.loliutils.others.prf
 
+/**
+ * Calls the [action] with [IdentifierProvider] as its receiver
+ *
+ * @param action The action to be called
+ */
 @InlineOnly
-public inline fun prfWrapBlock(
-    block: IdentifierProvider.() -> Unit
+public inline fun prfIdentified(
+    action: IdentifierProvider.() -> Unit
 ) {
     contract {
-        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
+        callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
     
     IdentifierProvider.Impl().prf {
         try {
-            block()
+            action()
         } catch (e: IdentifiedReturn) {
             e check ident
         }
     }
 }
 
+/**
+ * Calls the [action] with [IdentifierProvider] as its receiver and returns its result
+ *
+ * @param type The return type class
+ * @param action The action to be called
+ */
 @InlineOnly
-public inline fun <R> runWrapBlock(
-    clazz: Class<out R>,
-    block: IdentifierProvider.() -> R
+public inline fun <R> runIdentified(
+    type: Class<out R>,
+    action: IdentifierProvider.() -> R
 ): R {
     contract {
-        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
+        callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
     
-    return IdentifierProvider.Impl().run {
+    IdentifierProvider.Impl().prf {
         try {
-            block()
+            return action()
         } catch (e: IdentifiedReturn) {
             e check ident
-            clazz.cast(e.value)
+            return e.value(type)
         }
     }
 }
 
+/**
+ * Calls the [action] with [IdentifierProvider] as its receiver and returns its result
+ *
+ * @param action The action to be called
+ * @param R The return type
+ */
 @InlineOnly
-public inline fun <@PureReifiable reified R> runWrapBlock(
-    block: IdentifierProvider.() -> R
+public inline fun <@PureReifiable reified R> runIdentified(
+    action: IdentifierProvider.() -> R
 ): R {
     contract {
-        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
+        callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
     
-    return runWrapBlock(R::class.java, block)
+    return runIdentified(R::class.java, action)
 }
