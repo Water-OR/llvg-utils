@@ -7,7 +7,25 @@ import kotlin.internal.NoInfer
 import kotlin.internal.PureReifiable
 
 /**
- * Check if the receiver [Class] is extended from class [T]
+ * @param T The type provided the java class
+ *
+ * @return The java class of type [T]
+ */
+@InlineOnly
+public inline fun <@PureReifiable reified T> jClass(): Class<T> =
+    T::class.java
+
+/**
+ * @receiver The object provided it's class
+ *
+ * @return The java class of the receiver object
+ */
+@InlineOnly
+public inline val <T : Any> T.jClass: Class<T>
+    get() = cast(cast<Object>().`class`)
+
+/**
+ * Check if the receiver [Class] is extended from type [T]
  *
  * @receiver The [Class] being checked
  * @param T The type to check against
@@ -21,12 +39,12 @@ public inline fun <@PureReifiable reified T> Class<*>.isExtend(): Boolean =
     T::class.java.isAssignableFrom(this)
 
 /**
- * Casts the receiver [Class] as extending [T] if possible, otherwise returns `null`
+ * Casts the receiver [Class] to subclass of type [T] if possible, otherwise returns `null`
  *
  * @receiver The [Class] to attempt casting on
  * @param T The target type to cast to
  *
- * @return The receiver [Class] being cast as extending [T] if possible, otherwise `null`
+ * @return The receiver [Class] being cast to subclass of type [T] if possible, otherwise `null`
  *
  * @see isExtend
  */
@@ -35,12 +53,25 @@ public inline fun <@PureReifiable reified T> Class<*>.asExtend(): Class<out @NoI
     if (isExtend<T>()) asSubclass(T::class.java) else null
 
 /**
- * Casts the receiver [Class] to subclass of [T] if possible, otherwise returns `null`
+ * Casts the receiver [Class] to subclass of type [T]
+ *
+ * @receiver The [Class] to attempt casting on
+ * @param T the target type to cast to
+ *
+ * @return The receiver [Class] being cast to subclass of type [T]
+ * @throws ClassCastException If the receiver [Class] can not be cast to subclass of type [T]
+ */
+@InlineOnly
+public inline fun <@PureReifiable reified T> Class<*>.toExtend(): Class<out @NoInfer T>? =
+    asSubclass(T::class.java)
+
+/**
+ * Casts the receiver [Class] to subclass of type [T] if possible, otherwise returns `null`
  *
  * @receiver The [Class] to attempt casting on
  * @param T The target type to cast to
  *
- * @return The receiver [Class] being cast to subclass of [T] if possible, otherwise `null`
+ * @return The receiver [Class] being cast to subclass of type [T] if possible, otherwise `null`
  *
  * @see isExtend
  */
