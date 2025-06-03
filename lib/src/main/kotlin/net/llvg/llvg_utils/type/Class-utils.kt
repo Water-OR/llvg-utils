@@ -62,7 +62,7 @@ public inline fun <@PureReifiable reified T> Class<*>.asExtend(): Class<out @NoI
  * @throws ClassCastException If the receiver [Class] can not be cast to subclass of type [T]
  */
 @InlineOnly
-public inline fun <@PureReifiable reified T> Class<*>.toExtend(): Class<out @NoInfer T>? =
+public inline fun <@PureReifiable reified T> Class<*>.toExtend(): Class<out @NoInfer T> =
     asSubclass(T::class.java)
 
 /**
