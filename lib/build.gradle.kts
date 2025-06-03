@@ -48,11 +48,11 @@ kotlin.compilerOptions {
     
     freeCompilerArgs.addAll(
         "-Xwhen-guards",
-        "-Xjvm-default=all",
         "-Xcontext-parameters",
         "-Xnested-type-aliases",
         "-Xallow-kotlin-package",
         "-Xexplicit-api=warning",
+        "-Xjvm-default=all-compatibility",
         "-Xsuppress-warning=NOTHING_TO_INLINE",
     )
     
