@@ -9,7 +9,7 @@ import kotlin.internal.PureReifiable
 /**
  * @param T The type provided the java class
  *
- * @return The java class of type [T]
+ * @return The java [Class] object of type [T]
  */
 @InlineOnly
 public inline fun <@PureReifiable reified T> jClass(): Class<T> =
@@ -18,10 +18,10 @@ public inline fun <@PureReifiable reified T> jClass(): Class<T> =
 /**
  * @receiver The object provided it's class
  *
- * @return The java class of the receiver object
+ * @return The java [Class] object of the receiver object
  */
 @InlineOnly
-public inline val <T : Any> T.jClass: Class<T>
+public inline val <T : Any> T.jClass: Class<out T>
     get() = cast(cast<Object>().`class`)
 
 /**
