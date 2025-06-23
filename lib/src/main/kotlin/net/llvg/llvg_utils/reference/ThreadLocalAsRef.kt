@@ -1,5 +1,8 @@
 package net.llvg.llvg_utils.reference
 
+import kotlin.internal.InlineOnly
+import kotlin.reflect.KProperty
+
 /**
  * An implementation of [VarRef] that warps a [ThreadLocal]
  *
@@ -14,7 +17,23 @@ public value class ThreadLocalAsRef<T>(
     override inline fun get(): T =
         threadLocal.get()
     
+    @InlineOnly
+    public inline operator fun getValue(
+        thisRef: Any?,
+        property: KProperty<*>
+    ): T =
+        threadLocal.get()
+    
     override inline fun set(
+        value: T
+    ) {
+        threadLocal.set(value)
+    }
+    
+    @InlineOnly
+    public inline operator fun getValue(
+        thisRef: Any?,
+        property: KProperty<*>,
         value: T
     ) {
         threadLocal.set(value)

@@ -1,5 +1,7 @@
 package net.llvg.llvg_utils.reference
 
+import kotlin.internal.InlineOnly
+import kotlin.reflect.KProperty
 import kotlin.reflect.KProperty0
 
 /**
@@ -15,4 +17,11 @@ public value class KPropertyAsValRef<out T>(
 ) : ValRef<T> {
     public override inline fun get(): T =
         property.get()
+    
+    @InlineOnly
+    public inline operator fun getValue(
+        thisRef: Any?,
+        property: KProperty<*>
+    ): T =
+        this.property.get()
 }
