@@ -14,7 +14,7 @@ import kotlin.internal.InlineOnly
  */
 @InlineOnly
 @Suppress("UNCHECKED_CAST")
-@Deprecated("", ReplaceWith("cast<R>()", "net.llvg.llvg_utils.cast"))
+@Deprecated("", ReplaceWith("cast<R>()", "net.llvg.llvg_utils.type.cast"))
 public inline fun <R> Any?.castTo(): R =
     this as R
 
