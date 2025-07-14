@@ -6,7 +6,6 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 
 plugins {
     kotlin("jvm") version libs.versions.kotlin
-    
     `java-library`
 }
 
@@ -22,7 +21,7 @@ repositories {
 
 @Suppress("UnstableApiUsage")
 testing.suites {
-    getByName<JvmTestSuite>("test") {
+    "test"(JvmTestSuite::class) {
         useKotlinTest(libs.versions.kotlin)
     }
 }
@@ -47,18 +46,18 @@ kotlin.compilerOptions {
     jvmTarget = JvmTarget.JVM_1_8
     
     freeCompilerArgs.addAll(
-        "-Xwhen-guards",
+        "-Xjvm-expose-boxed",
         "-Xcontext-parameters",
         "-Xnested-type-aliases",
         "-Xallow-kotlin-package",
         "-Xexplicit-api=warning",
-        "-Xjvm-default=all-compatibility",
-        "-Xsuppress-warning=NOTHING_TO_INLINE",
+        "-Xcontext-sensitive-resolution",
+        "-Xwarning-level=NOTHING_TO_INLINE:disabled",
     )
     
     optIn.addAll(
         "kotlin.contracts.ExperimentalContracts",
-        "net.llvg.llvg_utils.KotlinInternal"
+        "net.llvg.utilities.KotlinInternal"
     )
     
     verbose = true

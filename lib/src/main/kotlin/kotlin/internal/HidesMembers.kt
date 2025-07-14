@@ -1,12 +1,10 @@
 package kotlin.internal
 
-import net.llvg.llvg_utils.KotlinInternal
+import net.llvg.utilities.KotlinInternal
 
 /**
  * Specifies that the corresponding member has the highest priority in overload resolution. Effectively this means that
  * an extension annotated with this annotation will win in overload resolution over a member with the same signature.
- *
- * @see KotlinInternal
  */
 @KotlinInternal
 @Target(AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY)

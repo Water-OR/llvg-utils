@@ -1,11 +1,9 @@
 package kotlin.internal
 
-import net.llvg.llvg_utils.KotlinInternal
+import net.llvg.utilities.KotlinInternal
 
 /**
  * Specifies that a corresponding member has the lowest priority in overload resolution.
- *
- * @see KotlinInternal
  */
 @KotlinInternal
 @Target(AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY, AnnotationTarget.CONSTRUCTOR)
