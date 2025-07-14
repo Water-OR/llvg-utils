@@ -20,15 +20,6 @@ public inline fun Any?.isNull(): Boolean {
 }
 
 @InlineOnly
-public inline fun <R> Any?.onNull(action: () -> R): R? {
-    contract {
-        callsInPlace(action, InvocationKind.AT_MOST_ONCE)
-    }
-    
-    return if (isNull()) action() else null
-}
-
-@InlineOnly
 public inline fun Any?.notNull(): Boolean {
     contract {
         returns(true) implies (this@notNull !== null)
@@ -46,6 +37,15 @@ public inline fun Any?.invNull(): Unit? {
     }
     
     return if (isNull()) Unit else null
+}
+
+@InlineOnly
+public inline fun <R> Any?.onNull(action: () -> R): R? {
+    contract {
+        callsInPlace(action, InvocationKind.AT_MOST_ONCE)
+    }
+    
+    return if (isNull()) action() else null
 }
 
 @InlineOnly
