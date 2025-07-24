@@ -2,6 +2,8 @@
 
 package net.llvg.utilities.scope
 
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.internal.InlineOnly
 import net.llvg.utilities.noExcept
 
@@ -27,6 +29,10 @@ internal data class TryWithResourcesScopeImpl(
 
 @InlineOnly
 public inline fun <R> tryWithResources(action: TryWithResourcesScope.() -> R): R {
+    contract {
+        callsInPlace(action, InvocationKind.EXACTLY_ONCE)
+    }
+    
     val resources: MutableList<AutoCloseable> = ArrayList()
     return try {
         TryWithResourcesScopeImpl(resources).action()
